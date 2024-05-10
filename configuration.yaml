@@ -1,0 +1,210 @@
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+##########################################
+### CONFIG FILES
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+# modbus: !include modbus.yaml
+google_assistant: !include google_assistant.yaml
+
+##########################################
+### SENSORS
+template: !include_dir_list sensors/
+
+##########################################
+### Log levels
+logger:
+  default: info
+  logs:
+    custom_components.hacs: debug
+    aiogithubapi: debug
+
+##########################################
+### Cloudflare tunnel
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.30.33.0/24
+
+##########################################
+### Google nest audio
+nest:
+  client_id: !secret nest_client_id
+  client_secret: !secret nest_client_secret
+  # "Project ID" in the Device Access Console (not Cloud Project ID!)
+  project_id: !secret nest_project_id
+
+# IKEA Home
+# Home Assistant will automatically discover the gateway’s presence on your local network if discovery: is present
+#discovery:
+
+# Frigate HACS. Note: You will need media_source enabled in your Home Assistant configuration for the Media Browser to appear
+# https://www.home-assistant.io/integrations/media_source/
+media_source:
+
+# Activate raspberry pi integrated camera port
+rpi_camera:
+
+# Lovelace is not setup correctly
+lovelace:
+  # mode: yaml
+  resources:
+    - url: /hacsfiles/custom-header/custom-header.js
+      type: module
+
+    - url: /hacsfiles/frigate-hass-card/frigate-hass-card.js
+      type: module
+
+    - url: /hacsfiles/apexcharts-card.js
+      type: module
+
+    - type: module
+      url: /local/apexcharts-card.js
+
+    - url: /local/vacuum-card.js
+      type: module
+
+    - url: /webrtc/webrtc-camera.js
+      type: module
+nordpool:
+
+###################################################
+### WMbusmeters - Multical 21 -
+mqtt:
+  sensor:
+    - state_topic: "wmbusmeters/76553017"
+      json_attributes_topic: "wmbusmeters/76553017"
+      unit_of_measurement: m³
+      value_template: "{{ value_json.total_m3 }}"
+      name: Water usage
+      unique_id: wmbus.76553017
+      icon: "mdi:gauge"
+      state_class: total_increasing
+      device_class: water
+
+sensor:
+  #######################################################################
+  ### Nordpool integration
+  - platform: nordpool
+    # https://github.com/custom-components/nordpool#example-configuration
+    VAT: false
+    currency: "SEK"
+    price_in_cents: true
+    region: "SE3"
+    precision: 3
+    price_type: kWh
+    low_price_cutoff: 0.95
+    # Template to specify additional cost to be added to the tariff.
+    # The template price is in EUR, DKK, NOK or SEK (not in cents).
+    # For example: "{{ current_price * 0.19 + 0.023 | float}}"
+    # additional_costs: "{{ (current_price + 0.30) * 0.25 |float}}"
+
+  ### Nordpool cheapest Hour
+  - platform: template
+    sensors:
+      cheapest_hours_energy_tomorrow:
+        device_class: timestamp
+        friendly_name: Cheapest sequential electricity hours
+        value_template: >
+          {%- set numberOfSequentialHours = 3 -%}
+          {%- set lastHour = 23 -%}
+          {%- set firstHour = 0 -%}
+          {%- if state_attr('sensor.nordpool_kwh_se3_sek_3_095_0', 'tomorrow_valid') == true -%}
+            {%- set ns = namespace(counter=0, list=[], cheapestHour=today_at("00:00") + timedelta( hours = (24)), cheapestPrice=999.00) -%}
+            {%- for i in range(firstHour + numberOfSequentialHours, lastHour+1) -%}
+              {%- set ns.counter = 0.0 -%}
+              {%- for j in range(i-numberOfSequentialHours, i) -%}
+                {%- set ns.counter = ns.counter + state_attr('sensor.nordpool_kwh_se3_sek_3_095_0', 'tomorrow')[j] -%}
+              {%- endfor -%}
+              {%- set ns.list = ns.list + [ns.counter] -%}
+              {%- if ns.counter < ns.cheapestPrice -%}
+                {%- set ns.cheapestPrice = ns.counter -%}
+                {%- set ns.cheapestHour = today_at("00:00") + timedelta( hours = (24 + i - numberOfSequentialHours)) -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {{ ns.cheapestHour }}
+            {%- set ns.cheapestPrice = ns.cheapestPrice / numberOfSequentialHours -%}
+          {%- endif -%}
+
+  ### Electricity prices in SEK instead of öre.
+  - platform: template
+    sensors:
+      total_el_price:
+        friendly_name: "Total Electicity buying Price"
+        unit_of_measurement: "kr/kWh"
+        value_template: >
+          {% set ElNordpool = states('sensor.nordpool_kwh_se3_sek_3_095_0') | float %}
+          {% set Elöverföring = 20 %}
+          {% set Energiskatt = 39.20 %}
+          {% set KlimatEl = 1.78 %}
+          {% set Elcertifikat = 0.55 %}
+          {% set BooPåslag = 2.9 %}
+          {% set inkMoms = (ElNordpool + Elöverföring + Energiskatt + KlimatEl + Elcertifikat + BooPåslag) * 1.25 %}
+          {% set iKr = inkMoms / 100 %}
+          {{ iKr | round(2)}}
+      total_el_sell_price:
+        friendly_name: "Total Electicity selling Price"
+        unit_of_measurement: "kr/kWh"
+        value_template: >
+          {% set tekniska_verken_buy_price = 0.042 %}
+          {{ ((states('sensor.nordpool_kwh_se3_sek_3_095_0')  | float
+          / 100 | float) * 0.75) + tekniska_verken_buy_price | round (2) }}
+
+##########################
+### InfluxDB
+influxdb:
+  host: a0d7b954-influxdb
+  port: 8086
+  database: homeassistant
+  username: !secret influxdb_username
+  password: !secret influxdb_password
+  max_retries: 3
+  default_measurement: state
+
+## HACS battery Notes Repo
+battery_notes:
+
+# Notification groups ALL_DEVICES
+notify:
+  - name: ALL_DEVICES
+    platform: group
+    services:
+      - service: mobile_app_anders_s21fe
+
+#########################################
+### Text To Speach
+tts:
+  - platform: google_translate
+    cache: true
+    cache_dir: tts_cache
+    time_memory: 300
+    service_name: google_say
+    # base_url: http://192.168.50.85
+
+  # Example configuration.yaml entry
+  - platform: google_cloud
+    key_file: SERVICE_ACCOUNT.JSON
+    language: en-US
+    gender: male
+    voice: en-US-Wavenet-F
+    encoding: linear16
+    speed: 0.9
+    pitch: -2.5
+    gain: -5.0
+    text_type: ssml
+    profiles:
+      - telephony-class-application
+      - wearable-class-device
+
+##########################################
+### Web cams
+camera:
+  - platform: ffmpeg
+    name: "Rpi3 RTSP stream"
+    input: !secret rpi3_rtsp_connection_string

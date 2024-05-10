@@ -1,0 +1,2 @@
+streams:
+  roborock1: !secret go2rtc_roborock_stream

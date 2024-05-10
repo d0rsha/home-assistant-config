@@ -1,0 +1,148 @@
+##########################################
+########## MODBUS CONFIG FILE ############
+
+# - name: "sma"
+#   type: tcp
+#   host: 192.168.50.33 # ip address of sma inverter
+#   port: 502
+#   sensors:
+#     - name: "SMA Energy Total"
+#       slave: 3
+#       data_type: uint64
+#       address: 30513
+#       scan_interval: 10
+#       unit_of_measurement: "Wh"
+#       state_class: "total"
+#       device_class: "energy"
+#     - name: "SMA Energy Today"
+#       slave: 3
+#       data_type: uint64
+#       address: 30517
+#       scan_interval: 10
+#       unit_of_measurement: "Wh"
+#     - name: "SMA Current Power"
+#       slave: 3
+#       data_type: int32
+#       address: 30775
+#       scan_interval: 10
+#       unit_of_measurement: "W"
+#     - name: "SMA Internal Temperature"
+#       slave: 3
+#       data_type: int32
+#       scale: 0.1
+#       address: 30953
+#       scan_interval: 10
+#       unit_of_measurement: "°C"
+#     - name: "SMA Status Code"
+#       slave: 3
+#       data_type: uint32
+#       address: 30201
+#       scan_interval: 10
+##########################################
+### Config - PV Inverter
+## Sunny Tripower (STP 15000TL-30 550)
+## Configure the Inverter at https://ennexos.sunnyportal.com > Configuration > Parameters
+## Modbus enabled
+## Webconnect enabled
+# - name: "sma"
+#   type: tcp
+#   host: 192.168.50.33 # ip address of sma inverter
+#   port: 502
+#   sensors:
+#     - name: "SMA Energy Total"
+#       slave: 3
+#       data_type: uint64
+#       address: 30513
+#       scan_interval: 10
+#       unit_of_measurement: "Wh"
+#       state_class: "total_increasing"
+#       device_class: "energy"
+#     - name: "SMA Energy Today"
+#       slave: 3
+#       data_type: uint64
+#       address: 30517
+#       scan_interval: 10
+#       unit_of_measurement: "Wh"
+#     - name: "SMA Current Power"
+#       slave: 3
+#       data_type: int32
+#       address: 30775
+#       scan_interval: 10
+#       unit_of_measurement: "W"
+#     - name: "SMA Internal Temperature"
+#       slave: 3
+#       data_type: int32
+#       scale: 0.1
+#       address: 30953
+#       scan_interval: 10
+#       unit_of_measurement: "°C"
+#     - name: "SMA Status Code"
+#       slave: 3
+#       data_type: uint32
+#       address: 30201
+#       scan_interval: 10
+#############
+# Not used
+# - name: sma
+#   type: tcp
+#   host: 192.168.50.33 # SMA TriPower
+#   port: 502
+#   close_comm_on_error: true
+#   delay: 5
+#   timeout: 5
+# sensors:
+#   - name: PV_Status
+#     data_type: int32
+#     unit_of_measurement: "status"
+#     slave: 3
+#     address: 30201
+#     count: 2
+#   - name: PV_Gesamtertrag
+#     unit_of_measurement: "kWh"
+#     slave: 3
+#     address: 30531
+#     input_type: input
+#     count: 2
+#   - name: PV_Leistung
+#     unit_of_measurement: "W"
+#     slave: 3
+#     address: 30775
+#     input_type: input
+#     count: 2
+#   - name: PV_Tagesertrag
+#     unit_of_measurement: "Wh"
+#     slave: 3
+#     address: 30517
+#     count: 4
+#     data_type: int
+#   - name: Netzverbrauch
+#     slave: 3
+#     address: 30865
+#     unit_of_measurement: "W"
+#     count: 2
+#     data_type: uint
+#   - name: PV_Temperatur
+#     data_type: int32
+#     device_class: "temperature"
+#     unit_of_measurement: "°C"
+#     slave: 3
+#     address: 30953
+#     count: 2
+#     scale: 0.1
+#   - name: PV_Spannung
+#     data_type: int32
+#     device_class: "voltage"
+#     unit_of_measurement: "V"
+#     slave: 3
+#     address: 30783
+#     count: 2
+#     scale: 0.01
+#     precision: 2
+#   - name: PV_Frequenz
+#     data_type: int32
+#     unit_of_measurement: "Hz"
+#     slave: 3
+#     address: 30803
+#     count: 2
+#     scale: 0.01
+#     precision: 2

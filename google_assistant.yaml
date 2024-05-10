@@ -1,0 +1,36 @@
+project_id: home-assistant-406621
+service_account: !include SERVICE_ACCOUNT.JSON
+report_state: true
+exposed_domains:
+  - switch
+  - light
+entity_config:
+  switch.vardagsrummet:
+    name: Vardagsrummet_switch
+    aliases:
+      - BRIGHT_LIGHTS
+      - LIVING_ROOM
+    room: LIVING_ROOM
+  light.vardagsrummet:
+    name: Vardagsrummet_light
+    room: LIVING_ROOM
+    aliases:
+      - LIVING_ROOM
+  # light.Kök:
+  #   name: Kitchen_light
+  #   aliases:
+  #     - KÖKET_LIGHTS
+  #     - KITCHEN_LIGHTS
+  #   room: KITCHEN
+  # switch.Kök:
+  #   name: Kitchen_switch
+  #   aliases:
+  #     - KÖKET_SWITCH
+  #     - KITCHEN_SWITCH
+  #   room: KITCHEN
+  # light.Nedervåning:
+  #   name: Alla_lampor
+  #   aliases:
+  #     - BRIGHT_LIGHTS
+  #     - ENTRY_LIGHTS
+  #   room: BOTTOM_FLOOR

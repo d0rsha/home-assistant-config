@@ -1,0 +1,176 @@
+- id: backups_went_stale
+  alias: Backup went stale
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.backups_stale
+      from: "off"
+      to: "on"
+  condition: []
+  actions:
+    - action: notify.mobile_app_anders_s21fe
+      data:
+        title: Backups are Stale
+        message:
+          Please visit the 'Home Assistant Google Drive Backup ' add-on status
+          page for details.
+- id: "1704797823456"
+  alias: Anders Is home
+  description: Notify Anders when Anders is home
+  use_blueprint:
+    path: homeassistant/notify_leaving_zone.yaml
+    input:
+      person_entity: person.anders
+      zone_entity: zone.home
+      notify_device: f326594e961a48756bccbda5b2185cd2
+- id: Frigate_rpi3_camera
+  alias: Cellar camera notifications
+  description: Frigate Notifications (0.12.0.2)
+  use_blueprint:
+    path: SgtBatten/Stable.yaml
+    input:
+      camera: camera.mousecam
+      notify_device: f326594e961a48756bccbda5b2185cd2
+      alert_once: true
+      attachment: snapshot
+      debug: false
+      message: "{{ label }} detected - {{ camera_name }}"
+      title: Mousecam - {{camera_name}}
+      color: steelblue
+      channel: Frigate
+      update_thumbnail: false
+      labels:
+        - mouse
+        - mice
+        - rat
+- id: frigate_motion_detected
+  alias: Notify of events
+  triggers:
+    trigger: mqtt
+    topic: frigate/events
+  actions:
+    - action: notify.mobile_app_anders_s21fe
+      data_template:
+        message:
+          A {{trigger.payload_json["after"]["label"]}} was detected at {{ trigger.payload_json["after"]["camera"]
+          }} .
+        data:
+          image: http://ccab4aaf-frigate-fa:5000/events/{{trigger.payload_json["after"]["id"]}}/snapshot.jpg?format=android
+          tag: '{{trigger.payload_json["after"]["id"]}}'
+          when: '{{trigger.payload_json["after"]["start_time"]|int}}'
+          attachment:
+            url: /api/frigate/notifications/{{id}}/snapshot.jpg
+- id: "1705350809026"
+  alias: Anylist Add Item
+  description: Lägg till {item} [till] inköpslista
+  use_blueprint:
+    path: kevdliu/anylist_add_item.yaml
+    input:
+      sentence: Lägg till {item} till [min] shoppinglista
+      postscript:
+        - service: notify.mobile_app_anders_s21fe
+          metadata: {}
+          data:
+            title: Anylist
+            message: "{{ trigger.slots.item }}"
+- id: "1705351353616"
+  alias: Anylist Add Item EN
+  description: Anylist Add Item EN
+  use_blueprint:
+    path: kevdliu/anylist_add_item.yaml
+    input:
+      sentence: add {item} to [my] shopping list
+      postscript:
+        - service: notify.mobile_app_anders_s21fe
+          metadata: {}
+          data:
+            message: Added {{ trigger.slots.item }}
+            title: Anylist add
+- id: "1718178028987"
+  alias: Trådfri dimmer automation
+  description: Styr belysning nedervåning från trådfri dimmer
+  use_blueprint:
+    path: EPMatt/ikea_e1524_e1810.yaml
+    input:
+      integration: ZHA
+      helper_last_controller_event: input_text.tradfri_dimmer_last_event
+      action_button_left_short: []
+      action_button_center_short:
+        - metadata: {}
+          data: {}
+          target:
+            floor_id: nedervaning
+          action: switch.toggle
+        - metadata: {}
+          data: {}
+          target:
+            floor_id: nedervaning
+          action: light.toggle
+      controller_device: fe60358f1c852f68702ff1aa55f0b0f7
+- id: "1718202810350"
+  alias: Knapp Olles rum
+  description: Belysniong Olles rum
+  use_blueprint:
+    path: EPMatt/ikea_e1743.yaml
+    input:
+      integration: ZHA
+      controller_device: a44a1e7f9cc0825f0833bbc13164503e
+      action_button_up_short:
+        - metadata: {}
+          data: {}
+          target:
+            area_id: olles_rum
+          action: light.turn_on
+        - action: switch.turn_on
+          metadata: {}
+          data: {}
+          target:
+            device_id: 6f205474276711900175565cd22e16f5
+      action_button_up_long: []
+      action_button_down_short:
+        - metadata: {}
+          data: {}
+          target:
+            area_id: olles_rum
+          action: light.turn_off
+        - action: switch.turn_off
+          metadata: {}
+          data: {}
+          target:
+            device_id: 6f205474276711900175565cd22e16f5
+      helper_last_controller_event: input_text.knapp_olles_rum_hjalpare
+- id: "1719410217121"
+  alias: Water usage exceeds 0.5 m3 for 60 minutes
+  description: ""
+  triggers:
+    - trigger: numeric_state
+      entity_id:
+        - sensor.water_usage
+      above: 0.25
+      for:
+        hours: 0
+        minutes: 30
+        seconds: 0
+  condition: []
+  actions:
+    - action: notify.notify
+      data:
+        message:
+          Huset har använt mer är 250 L vatten under 30 minuter!Water usage has
+          exceeded 0.5 for 60 minutes.
+  mode: single
+- id: "1724842623807"
+  alias: "MouseCamera notifications "
+  description: "Imou 5se cam "
+  use_blueprint:
+    path: SgtBatten/Stable.yaml
+    input:
+      camera: camera.mousecam
+      notify_device: f326594e961a48756bccbda5b2185cd2
+      base_url: !secret external_base_url
+      title: MouseCam1
+      labels:
+        - mouse
+        - mice
+        - rat
+      debug: true
+      message: "Mus detecterad \U0001F631"
