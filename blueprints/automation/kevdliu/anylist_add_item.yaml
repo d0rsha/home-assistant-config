@@ -1,0 +1,33 @@
+blueprint:
+  name: Anylist Add Item
+  description: Add an item to Anylist using Home Assistant intents
+  author: kevdliu
+  domain: automation
+  homeassistant:
+    min_version: 2023.8.0
+  input:
+    sentence:
+      name: Custom Sentence Trigger
+      description: The command you wish to use to add an item to Anylist. The setence
+        must include "{item}" as the placeholder for the name of the item. The trigger
+        setence supports [custom setence syntax](https://developers.home-assistant.io/docs/voice/intent-recognition/template-sentence-syntax/).
+      selector:
+        text: {}
+    postscript:
+      name: Custom Actions
+      description: Any actions you wish to perform after the item has been added to
+        Anylist. The name of the item is contained in the `{{ trigger.slots.item }}`
+        variable.
+      selector:
+        action: {}
+  source_url: https://gist.github.com/kevdliu/0c37c29173de949c1c49953ad2cea2ac
+trigger:
+- platform: conversation
+  command: !input sentence
+action:
+- service: anylist.add_item
+  data:
+    name: '{{ trigger.slots.item }}'
+- repeat:
+    count: 1
+    sequence: !input postscript

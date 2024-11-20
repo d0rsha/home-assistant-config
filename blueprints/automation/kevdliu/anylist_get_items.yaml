@@ -1,0 +1,31 @@
+blueprint:
+  name: Anylist Get Items
+  description: Get the items on your Anylist using Home Assistant intents
+  author: kevdliu
+  domain: automation
+  homeassistant:
+    min_version: 2023.8.0
+  input:
+    sentence:
+      name: Custom Sentence Trigger
+      description: The command you wish to use to get the items on your Anylist. The
+        trigger setence supports [custom setence syntax](https://developers.home-assistant.io/docs/voice/intent-recognition/template-sentence-syntax/).
+      selector:
+        text: {}
+    postscript:
+      name: Custom Actions
+      description: Any actions you wish to perform with the list of items from Anylist.
+        The list of items is contained in the `{{ anylist["items"] }}` variable.
+      selector:
+        action: {}
+  source_url: https://gist.github.com/kevdliu/537e292c8a930f36412d507321a43d86
+trigger:
+- platform: conversation
+  command: !input sentence
+action:
+- service: anylist.get_items
+  data: {}
+  response_variable: anylist
+- repeat:
+    count: 1
+    sequence: !input postscript
