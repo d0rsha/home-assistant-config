@@ -72,8 +72,8 @@ lovelace:
 
     - url: /webrtc/webrtc-camera.js
       type: module
-nordpool:
 
+nordpool:
 ###################################################
 ### WMbusmeters - Multical 21 -
 mqtt:
