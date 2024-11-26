@@ -1,8 +1,11 @@
+# Yaml mode not enabled. Changes are persissted in .storage/lovelace
+
+##########################
+### Lovelace yaml file
+# @link https://www.home-assistant.io/lovelace/
 # Lovelace not configured correctly. WTF, how to configure?
 # Try to find more info on hass.io
 lovelace:
-  mode: yaml
-
   resources:
     - url: /hacsfiles/custom-header/custom-header.js
       type: module
@@ -25,22 +28,3 @@ lovelace:
 views:
   - title: Home
     icon: "mdi:home"
-#    background: 'center / cover no-repeat url("/local/background.jpeg") fixed'
-# cards:
-# type: 'custom:apexcharts-card'
-#   graph_span: 24h
-#   header:
-#     title: Energy price today (snt/kWh)
-#     show: true
-#   span:
-#     start: day
-#   now:
-#     show: true
-#     label: Now
-#   series:
-#     - entity: sensor.nordpool_kwh_fi_eur_3_10_024
-#       type: column
-#       data_generator: |
-#         return entity.attributes.raw_today.map((start, index) => {
-#           return [new Date(start["start"]).getTime(), entity.attributes.raw_today[index]["value"]];
-#         });
