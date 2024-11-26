@@ -234,3 +234,8 @@ ingress:
     title: "Codeproject AI"
     icon: mdi:cctv
     url: http://192.168.50.12:32168
+  portainer:
+    ui_mode: toolbar
+    title: "Portainer"
+    icon: mdi:cctv
+    url: https://192.168.50.12:9443
