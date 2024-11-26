@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace_dashboards",
+  "data": {
+    "items": [
+      {
+        "id": "dashboard_admin",
+        "show_in_sidebar": false,
+        "icon": "mdi:account-plus",
+        "title": "Admin",
+        "require_admin": true,
+        "mode": "storage",
+        "url_path": "dashboard-admin"
+      },
+      {
+        "id": "map",
+        "icon": "mdi:map",
+        "title": "Map",
+        "url_path": "map",
+        "require_admin": false,
+        "mode": "storage",
+        "show_in_sidebar": true
+      }
+    ]
+  }
+}

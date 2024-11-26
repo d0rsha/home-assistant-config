@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace_resources",
+  "data": {
+    "items": [
+      {
+        "id": "351aa731defb4976b20e12c5c8cc248d",
+        "url": "/hacsfiles/frigate-hass-card/frigate-hass-card.js?hacstag=394082552520",
+        "type": "module"
+      },
+      {
+        "id": "7ee4d905b0aa451e9f86a597650cdd6b",
+        "url": "/hacsfiles/apexcharts-card/apexcharts-card.js?hacstag=331701152204",
+        "type": "module"
+      },
+      {
+        "id": "85cd9030879046609c9efd6e0866e176",
+        "url": "/hacsfiles/ha-heatmap-card/heatmap-card.js?hacstag=61665747682168",
+        "type": "module"
+      },
+      {
+        "id": "58353232d81848f98863954e20cbb9ad",
+        "url": "/hacsfiles/vacuum-card/vacuum-card.js?hacstag=2612912952101",
+        "type": "module"
+      }
+    ]
+  }
+}

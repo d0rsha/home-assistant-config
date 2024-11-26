@@ -1,0 +1,1409 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace",
+  "data": {
+    "config": {
+      "title": "Hem",
+      "views": [
+        {
+          "path": "default_view",
+          "title": "Home",
+          "icon": "mdi:home",
+          "badges": [],
+          "cards": [
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "condition": "state",
+                  "entity": "binary_sensor.backups_stale",
+                  "state_not": "off"
+                }
+              ],
+              "card": {
+                "type": "markdown",
+                "content": "Backups are stale! Please visit the \"Home Assistant Google Drive Backup\" add-on status page for details.",
+                "title": "Stale Backups!"
+              }
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "light.soffbordet_lampa",
+                  "name": "Soffbordet"
+                },
+                {
+                  "entity": "light.koksbord_1_lampa"
+                },
+                {
+                  "entity": "light.koksbord_2_lampa"
+                },
+                {
+                  "entity": "light.under_trapp_e27_lampa"
+                },
+                {
+                  "entity": "switch.tradfri_outlet_2_brytare"
+                }
+              ],
+              "title": "Nedervåning (timerstyrd)",
+              "state_color": false
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "light.sovrum_1_lampa_2"
+                },
+                {
+                  "entity": "light.sovrum_2_lampa"
+                },
+                {
+                  "entity": "light.taklampa_olles_rum_lampa"
+                },
+                {
+                  "entity": "light.tradfri_e14_lampa"
+                },
+                {
+                  "entity": "switch.tradfri_uttag_1_brytare"
+                }
+              ],
+              "title": "Övervåning"
+            },
+            {
+              "type": "grid",
+              "square": false,
+              "columns": 1,
+              "cards": [
+                {
+                  "type": "entities",
+                  "entities": [
+                    "remote.the_frame"
+                  ],
+                  "title": "Vardagsrum"
+                },
+                {
+                  "type": "media-control",
+                  "entity": "media_player.the_frame"
+                }
+              ]
+            },
+            {
+              "type": "media-control",
+              "entity": "media_player.vardagsrum"
+            },
+            {
+              "type": "media-control",
+              "entity": "media_player.kok"
+            },
+            {
+              "type": "weather-forecast",
+              "entity": "weather.forecast_hem",
+              "show_forecast": false
+            },
+            {
+              "type": "alarm-panel",
+              "entity": "alarm_control_panel.verisure_alarm"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "binary_sensor.verisure_alarm_ethernet_tillstand",
+                  "name": "Ethernet tillstånd"
+                }
+              ],
+              "title": "Verisure Alarm"
+            },
+            {
+              "type": "picture-elements",
+              "elements": [
+                {
+                  "type": "state-label",
+                  "entity": "sensor.entre_temperatur",
+                  "style": {
+                    "top": "68%",
+                    "left": "38%",
+                    "color": "green",
+                    "font-size": "10px",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.entre_hall_temperatur",
+                  "style": {
+                    "top": "61%",
+                    "left": "32%",
+                    "color": "green",
+                    "font-size": "10px",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.vardagsrum_temperatur",
+                  "style": {
+                    "top": "16%",
+                    "left": "75%",
+                    "color": "green",
+                    "font-size": "10px",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.mi_7_temperatur",
+                  "style": {
+                    "top": "39%",
+                    "left": "38%",
+                    "color": "green",
+                    "font-size": "10px",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.mi_2_temperatur",
+                  "style": {
+                    "top": "30%",
+                    "left": "92%",
+                    "color": "green",
+                    "font-size": "10px",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "image",
+                  "entity": "light.nedervaning",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "26%",
+                    "left": "57%",
+                    "width": "7%",
+                    "padding": "10px"
+                  }
+                }
+              ],
+              "image": "/local/assets/floor_plans/bottenplan_lightmode.png",
+              "dark_mode_image": "/local/assets/floor_plans/bottenplan_darkmode.png"
+            },
+            {
+              "type": "picture-elements",
+              "elements": [
+                {
+                  "type": "state-label",
+                  "entity": "sensor.mi_3_temperatur",
+                  "style": {
+                    "top": "48%",
+                    "left": "8%",
+                    "color": "green",
+                    "font-size": "10x",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.mi_4_temperatur",
+                  "style": {
+                    "top": "64%",
+                    "left": "72%",
+                    "color": "green",
+                    "font-size": "10px",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.mi_5_uterum_temperatur",
+                  "style": {
+                    "top": "68%",
+                    "left": "52%",
+                    "color": "green",
+                    "font-size": "10px",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "image",
+                  "entity": "light.tradfri_e14_lampa",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "80%",
+                    "left": "60%",
+                    "width": "7%",
+                    "padding": "8px"
+                  }
+                },
+                {
+                  "type": "image",
+                  "entity": "light.taklampa_olles_rum_lampa",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "72%",
+                    "left": "70%",
+                    "width": "7%",
+                    "padding": "8px"
+                  }
+                }
+              ],
+              "image": "/local/assets/floor_plans/ovreplan_lightmode.png",
+              "dark_mode_image": "/local/assets/floor_plans/ovreplan_darkmode.png"
+            },
+            {
+              "initial_view": "dayGridDay",
+              "type": "calendar",
+              "entities": [
+                "calendar.veckonummer",
+                "calendar.familj",
+                "calendar.avrethem_gmail_com"
+              ]
+            },
+            {
+              "type": "grid",
+              "square": false,
+              "columns": 1,
+              "cards": [
+                {
+                  "type": "entities",
+                  "entities": [
+                    "vacuum.roborock_s6_maxv"
+                  ],
+                  "title": "Robban"
+                },
+                {
+                  "type": "picture",
+                  "image_entity": "image.robban_bottenplan"
+                }
+              ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "switch.pax_levante_50_boostmode",
+                  "name": "BoostMode"
+                }
+              ],
+              "title": "Pax Levante 50"
+            },
+            {
+              "type": "custom:vacuum-card",
+              "entity": "vacuum.roborock_s6_maxv",
+              "actions": {
+                "start": {
+                  "service": "vacuum.start",
+                  "service_data": {
+                    "entity_id": "vacuum.roborock_s6_maxv"
+                  }
+                }
+              },
+              "stats": {
+                "default": [
+                  {
+                    "attribute": "filter_left",
+                    "unit": "hours",
+                    "subtitle": "Filter"
+                  },
+                  {
+                    "attribute": "side_brush_left",
+                    "unit": "hours",
+                    "subtitle": "Side brush"
+                  },
+                  {
+                    "attribute": "main_brush_left",
+                    "unit": "hours",
+                    "subtitle": "Main brush"
+                  },
+                  {
+                    "attribute": "sensor_dirty_left",
+                    "unit": "hours",
+                    "subtitle": "Sensors"
+                  }
+                ],
+                "cleaning": [
+                  {
+                    "entity_id": "sensor.vacuum_main_brush_left",
+                    "value_template": "{{ (value | float(0) / 3600) | round(1) }}",
+                    "subtitle": "Main brush",
+                    "unit": "hours"
+                  },
+                  {
+                    "attribute": "cleaning_time",
+                    "unit": "minutes",
+                    "subtitle": "Cleaning time"
+                  }
+                ]
+              },
+              "shortcuts": [
+                {
+                  "name": "Clean living room",
+                  "service": "script.stada_vardagsrum",
+                  "icon": "mdi:sofa"
+                },
+                {
+                  "name": "Clean Hallway",
+                  "service": "script.st",
+                  "icon": "mdi:bed-empty"
+                },
+                {
+                  "name": "Clean kitchen",
+                  "service": "script.stada_koket",
+                  "icon": "mdi:silverware-fork-knife"
+                }
+              ],
+              "map": "image.robban_bottenplan",
+              "compact_view": false,
+              "image": "default",
+              "show_toolbar": true
+            }
+          ]
+        },
+        {
+          "title": "Energi",
+          "path": "energi-overview",
+          "icon": "mdi:lightning-bolt",
+          "type": "sections",
+          "max_columns": 6,
+          "subview": false,
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "entities",
+                  "entities": [
+                    {
+                      "entity": "sensor.p1_meter_effekt",
+                      "name": "Effekt"
+                    },
+                    {
+                      "entity": "sensor.p1_meter_energy_export",
+                      "name": "Energy export"
+                    },
+                    {
+                      "entity": "sensor.p1_meter_energy_import",
+                      "name": "Energy import"
+                    },
+                    {
+                      "entity": "sensor.p1_meter_power_phase_1",
+                      "name": "Power phase 1"
+                    },
+                    {
+                      "entity": "sensor.p1_meter_power_phase_2",
+                      "name": "Power phase 2"
+                    },
+                    {
+                      "entity": "sensor.p1_meter_power_phase_3",
+                      "name": "Power phase 3"
+                    }
+                  ],
+                  "title": "P1 meter"
+                },
+                {
+                  "type": "custom:apexcharts-card",
+                  "apex_config": {
+                    "chart": {
+                      "height": 400
+                    }
+                  },
+                  "header": {
+                    "show": true,
+                    "title": "Elpriser Nodpool",
+                    "show_states": true
+                  },
+                  "graph_span": "2d",
+                  "span": {
+                    "start": "day"
+                  },
+                  "now": {
+                    "show": true,
+                    "label": "Nu"
+                  },
+                  "series": [
+                    {
+                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "name": "idag",
+                      "show": {
+                        "legend_value": false,
+                        "extremas": true
+                      },
+                      "type": "line",
+                      "extend_to": "now",
+                      "color": "blue",
+                      "float_precision": 3,
+                      "data_generator": "return entity.attributes.raw_today.map((entry) => {\n  return [new Date(entry.start), entry.value];\n});\n"
+                    },
+                    {
+                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "name": "I morgon",
+                      "show": {
+                        "legend_value": false,
+                        "extremas": true
+                      },
+                      "group_by": {
+                        "func": "last",
+                        "duration": "1h"
+                      },
+                      "type": "line",
+                      "color": "orange",
+                      "float_precision": 3,
+                      "data_generator": "return entity.attributes.raw_tomorrow.map((entry) => {\n  return [new Date(entry.start), entry.value];\n});\n"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:apexcharts-card",
+                  "header": {
+                    "show": true,
+                    "title": "ApexCharts-Card",
+                    "show_states": true,
+                    "colorize_states": true
+                  },
+                  "graph_span": "24h",
+                  "span": {
+                    "start": "day",
+                    "offset": "+0H"
+                  },
+                  "series": [
+                    {
+                      "entity": "sensor.water_usage"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "custom:apexcharts-card",
+                  "apex_config": {
+                    "chart": {
+                      "height": 400
+                    }
+                  },
+                  "graph_span": "24h",
+                  "header": {
+                    "title": "Elpriser idag [kr/kWh]",
+                    "show": true,
+                    "show_states": true
+                  },
+                  "span": {
+                    "start": "day",
+                    "offset": "+0H"
+                  },
+                  "now": {
+                    "show": true,
+                    "label": "Nu"
+                  },
+                  "series": [
+                    {
+                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "name": "Idag",
+                      "type": "column",
+                      "color": "orange",
+                      "float_precision": 2,
+                      "extend_to": "end",
+                      "data_generator": "return entity.attributes.raw_today.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today[index][\"value\"]];\n});\n",
+                      "show": {
+                        "in_header": "before_now",
+                        "extremas": true
+                      }
+                    },
+                    {
+                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "name": "AVG",
+                      "type": "line",
+                      "group_by": {
+                        "duration": "24 hour",
+                        "func": "avg"
+                      },
+                      "color": "darkblue",
+                      "float_precision": 2,
+                      "data_generator": "return entity.attributes.raw_today.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today[index][\"value\"]];\n});\n"
+                    }
+                  ],
+                  "yaxis": [
+                    {
+                      "min": 0
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:apexcharts-card",
+                  "graph_span": "24h",
+                  "stacked": true,
+                  "header": {
+                    "title": "Energy Price Breakdown",
+                    "show": true
+                  },
+                  "span": {
+                    "start": "day"
+                  },
+                  "now": {
+                    "show": true,
+                    "label": "Now"
+                  },
+                  "apex_config": {
+                    "legend": {
+                      "show": true
+                    }
+                  },
+                  "series": [
+                    {
+                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "name": "Tax",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": false,
+                      "color": "red",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), Math.min(0, entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow)[index][\"value\"]) * 0.8 + 0.428];\n});\n"
+                    },
+                    {
+                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "name": "Transfer",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": false,
+                      "color": "orange",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), 0.2456];\n});\n"
+                    },
+                    {
+                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "name": "E.ON add",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": false,
+                      "color": "yellow",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), 0.06];\n});\n"
+                    },
+                    {
+                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "name": "VAT",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": false,
+                      "color": "blue",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow)[index][\"value\"] *0.2 + 0.1834 ];\n});\n"
+                    },
+                    {
+                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "name": "Spot",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": false,
+                      "color": "green",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow)[index][\"value\"] * 0.8];\n});\n"
+                    },
+                    {
+                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "name": "AVG",
+                      "type": "line",
+                      "group_by": {
+                        "duration": "24 hour",
+                        "func": "avg"
+                      },
+                      "color": "black",
+                      "float_precision": 2,
+                      "data_generator": "return entity.attributes.raw_today.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today[index][\"value\"]];\n});\n"
+                    }
+                  ]
+                },
+                {
+                  "type": "entities",
+                  "entities": [
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_ac_power"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_energy_lifetime"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_energy_daily"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_inverter_status"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_inverter_running_temp"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_timestamp"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_ac_power_line_1"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_array1_pdc"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_array2_pdc"
+                    }
+                  ],
+                  "title": "Solpaneler",
+                  "show_header_toggle": true
+                },
+                {
+                  "title": "Grid energy usage",
+                  "type": "custom:heatmap-card",
+                  "entity": "sensor.p1_meter_energy_import",
+                  "data": {
+                    "min": 0,
+                    "max": 10
+                  },
+                  "days": 20,
+                  "scale": "iron red"
+                },
+                {
+                  "type": "custom:apexcharts-card",
+                  "graph_span": "24h",
+                  "stacked": true,
+                  "header": {
+                    "title": "Energy Price Breakdown v2",
+                    "show": true
+                  },
+                  "span": {
+                    "start": "day"
+                  },
+                  "now": {
+                    "show": true,
+                    "label": "Now"
+                  },
+                  "apex_config": {
+                    "legend": {
+                      "show": true
+                    }
+                  },
+                  "series": [
+                    {
+                      "entity": "sensor.nordpool_with_taxes_and_fees",
+                      "name": "Tax",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": false,
+                      "color": "red",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), Math.min(0, entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow)[index][\"value\"]) * 0.8 + 0.428];\n});\n"
+                    },
+                    {
+                      "entity": "sensor.nordpool_with_taxes_and_fees",
+                      "name": "Transfer",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": false,
+                      "color": "orange",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), 0.2456];\n});\n"
+                    },
+                    {
+                      "entity": "sensor.nordpool_with_taxes_and_fees",
+                      "name": "E.ON add",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": false,
+                      "color": "yellow",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), 0.06];\n});\n"
+                    },
+                    {
+                      "entity": "sensor.nordpool_with_taxes_and_fees",
+                      "name": "VAT",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": false,
+                      "color": "blue",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow)[index][\"value\"] *0.2 + 0.1834 ];\n});\n"
+                    },
+                    {
+                      "entity": "sensor.nordpool_with_taxes_and_fees",
+                      "name": "Spot",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": false,
+                      "color": "green",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow)[index][\"value\"] * 0.8];\n});\n"
+                    },
+                    {
+                      "entity": "sensor.nordpool_with_taxes_and_fees",
+                      "name": "AVG",
+                      "type": "line",
+                      "group_by": {
+                        "duration": "24 hour",
+                        "func": "avg"
+                      },
+                      "color": "black",
+                      "float_precision": 2,
+                      "data_generator": "return entity.attributes.raw_today.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today[index][\"value\"]];\n});\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "graph": "line",
+                  "type": "sensor",
+                  "entity": "sensor.total_el_price",
+                  "detail": 1,
+                  "name": "Kostnad importerad el",
+                  "icon": "mdi:transmission-tower-import",
+                  "theme": "Google Theme",
+                  "hours_to_show": 168
+                },
+                {
+                  "graph": "line",
+                  "type": "sensor",
+                  "entity": "sensor.total_el_sell_price",
+                  "detail": 1,
+                  "name": "Inkomst exporterad el",
+                  "icon": "mdi:transmission-tower-import",
+                  "theme": "Google Theme",
+                  "hours_to_show": 168
+                },
+                {
+                  "chart_type": "bar",
+                  "period": "day",
+                  "type": "statistics-graph",
+                  "entities": [
+                    {
+                      "entity": "sensor.p1_meter_energy_import"
+                    },
+                    {
+                      "entity": "sensor.p1_meter_energy_export"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_energy_lifetime"
+                    }
+                  ],
+                  "stat_types": [
+                    "change"
+                  ],
+                  "days_to_show": 30,
+                  "hide_legend": false,
+                  "logarithmic_scale": false
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.water_usage_cost",
+                  "vertical": false,
+                  "hide_state": false,
+                  "show_entity_picture": false,
+                  "name": "Vattenkostnad",
+                  "state_content": [
+                    "state",
+                    "last-changed",
+                    "last_reset"
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.water_usage"
+                },
+                {
+                  "type": "tile",
+                  "entity": "weather.forecast_hem"
+                },
+                {
+                  "type": "custom:apexcharts-card",
+                  "graph_span": "24h",
+                  "stacked": true,
+                  "header": {
+                    "title": "Energy Actual Buying Price",
+                    "show": true
+                  },
+                  "span": {
+                    "start": "day"
+                  },
+                  "now": {
+                    "show": true,
+                    "label": "Now"
+                  },
+                  "apex_config": {
+                    "legend": {
+                      "show": true
+                    }
+                  },
+                  "series": [
+                    {
+                      "entity": "sensor.total_el_price_normalized",
+                      "name": "Tax",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": "end",
+                      "color": "red",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "const raw = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); const filledData = []; const now = new Date(); const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()); for (let i = 0; i < 48; i++) {\n  const timestamp = startOfDay.getTime() + i * 1800000;\n  const entry = raw.find(data => new Date(data.start).getTime() === timestamp);\n  filledData.push([timestamp, entry ? Math.min(0, entry.value) * 0.8 + 0.428 : 0]);\n} return filledData;\n"
+                    },
+                    {
+                      "entity": "sensor.total_el_price_normalized",
+                      "name": "Transfer",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": "end",
+                      "color": "orange",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "const raw = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); const filledData = []; const now = new Date(); const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()); for (let i = 0; i < 48; i++) {\n  const timestamp = startOfDay.getTime() + i * 1800000;\n  const entry = raw.find(data => new Date(data.start).getTime() === timestamp);\n  filledData.push([timestamp, entry ? 0.2456 : 0]);\n} return filledData;\n"
+                    },
+                    {
+                      "entity": "sensor.total_el_price_normalized",
+                      "name": "E.ON add",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": "end",
+                      "color": "yellow",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "const raw = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); const filledData = []; const now = new Date(); const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()); for (let i = 0; i < 48; i++) {\n  const timestamp = startOfDay.getTime() + i * 1800000;\n  const entry = raw.find(data => new Date(data.start).getTime() === timestamp);\n  filledData.push([timestamp, entry ? 0.06 : 0]);\n} return filledData;\n"
+                    },
+                    {
+                      "entity": "sensor.total_el_price_normalized",
+                      "name": "VAT",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": "end",
+                      "color": "blue",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "const raw = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); const filledData = []; const now = new Date(); const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()); for (let i = 0; i < 48; i++) {\n  const timestamp = startOfDay.getTime() + i * 1800000;\n  const entry = raw.find(data => new Date(data.start).getTime() === timestamp);\n  filledData.push([timestamp, entry ? entry.value * 0.2 + 0.1834 : 0]);\n} return filledData;\n"
+                    },
+                    {
+                      "entity": "sensor.total_el_price_normalized",
+                      "name": "Spot",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": "end",
+                      "color": "green",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "const raw = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); const filledData = []; const now = new Date(); const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()); for (let i = 0; i < 48; i++) {\n  const timestamp = startOfDay.getTime() + i * 1800000;\n  const entry = raw.find(data => new Date(data.start).getTime() === timestamp);\n  filledData.push([timestamp, entry ? entry.value * 0.8 : 0]);\n} return filledData;\n"
+                    },
+                    {
+                      "entity": "sensor.total_el_price_normalized",
+                      "name": "AVG",
+                      "type": "line",
+                      "group_by": {
+                        "duration": "24 hour",
+                        "func": "avg"
+                      },
+                      "color": "black",
+                      "extend_to": "end",
+                      "float_precision": 2,
+                      "data_generator": "const raw = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); const filledData = []; const now = new Date(); const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()); for (let i = 0; i < 48; i++) {\n  const timestamp = startOfDay.getTime() + i * 1800000;\n  const entry = raw.find(data => new Date(data.start).getTime() === timestamp);\n  filledData.push([timestamp, entry ? entry.value : null]);\n} return filledData;\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Solar production forecast"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.power_production_now_2"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.energy_production_today_2"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.energy_production_tomorrow_2"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.energy_production_today_remaining_2"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.energy_next_hour_2"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.energy_current_hour_2"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.power_highest_peak_time_today_2"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.power_highest_peak_time_tomorrow_2"
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Electricity Maps"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.electricity_maps_co2_intensitet"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.electricity_maps_procent_fossila_branslen_i_elnatet"
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "HAOS-SBFspot"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_ac_power"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_ac_power_line_1"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_array1_idc"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_array1_pdc"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_array1_udc"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_array2_idc"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_array2_pdc"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_array2_udc"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_dc_all_strings"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_energy_daily"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_energy_lifetime"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_grid_frequency"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_grid_phase_1_current"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_grid_phase_1_voltage"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_timestamp"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_inverter_running_temp"
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "HAOS-SBFspot"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_bluetooth_signal"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_device_model"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_inverter_nom"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_inverter_status"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_plantname"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_time_inverter"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_total_feed_in_time"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.haos_sbfspot_sma_total_op_time"
+                }
+              ]
+            }
+          ],
+          "cards": [],
+          "background": {}
+        },
+        {
+          "title": "Surveillance",
+          "path": "mdi-cctv",
+          "icon": "mdi:cctv",
+          "theme": "Google Theme",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "New section"
+                },
+                {
+                  "type": "entities",
+                  "entities": [
+                    "person.anders",
+                    "person.frida",
+                    "person.fridasandroid",
+                    "person.iphone5s",
+                    "person.s10e"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "New section"
+                }
+              ]
+            }
+          ],
+          "cards": []
+        },
+        {
+          "title": "Temp",
+          "path": "temperature",
+          "icon": "mdi:temperature-celsius",
+          "theme": "Google Theme",
+          "cards": [
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.mi_1_temperatur",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_2_temperatur",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_3_temperatur",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_4_temperatur"
+                },
+                {
+                  "entity": "sensor.mi_5_uterum_temperatur",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_6_kallare_temperatur",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_7_temperatur",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_1_luftfuktighet",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_2_luftfuktighet",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_3_luftfuktighet",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_4_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.mi_5_uterum_luftfuktighet",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_6_kallare_luftfuktighet",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_7_luftfuktighet",
+                  "secondary_info": "last-updated"
+                }
+              ],
+              "title": "Temperatur / luftfuktighet"
+            },
+            {
+              "type": "custom:apexcharts-card",
+              "header": {
+                "show": true,
+                "title": "ApexCharts-Card",
+                "show_states": false,
+                "colorize_states": true
+              },
+              "graph_span": "10d",
+              "apex_config": {
+                "chart": {
+                  "height": "500px"
+                }
+              },
+              "series": [
+                {
+                  "entity": "sensor.vardagsrum_temperatur"
+                },
+                {
+                  "entity": "sensor.ovre_hall_temperatur"
+                },
+                {
+                  "entity": "sensor.entre_hall_temperatur"
+                },
+                {
+                  "entity": "sensor.mi_1_temperatur"
+                },
+                {
+                  "entity": "sensor.mi_2_temperatur"
+                },
+                {
+                  "entity": "sensor.mi_3_temperatur"
+                },
+                {
+                  "entity": "sensor.mi_4_temperatur"
+                }
+              ]
+            },
+            {
+              "type": "custom:apexcharts-card",
+              "header": {
+                "show": true,
+                "title": "ApexCharts-Card",
+                "show_states": false,
+                "colorize_states": true
+              },
+              "graph_span": "10d",
+              "apex_config": {
+                "chart": {
+                  "height": "500px"
+                }
+              },
+              "series": [
+                {
+                  "entity": "sensor.vardagsrum_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.ovre_hall_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.entre_hall_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.mi_1_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.mi_2_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.mi_3_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.mi_4_luftfuktighet"
+                }
+              ]
+            },
+            {
+              "type": "gauge",
+              "entity": "sensor.sm_g970f_battery_level",
+              "min": 0,
+              "max": 100,
+              "needle": true,
+              "severity": {
+                "green": 30,
+                "yellow": 15,
+                "red": 0
+              },
+              "name": "Samsung s10e"
+            },
+            {
+              "type": "gauge",
+              "entity": "sensor.sm_g965f_battery_level",
+              "min": 0,
+              "max": 100,
+              "needle": true,
+              "severity": {
+                "green": 30,
+                "yellow": 15,
+                "red": 0
+              },
+              "name": "Samsung s5"
+            },
+            {
+              "type": "gauge",
+              "entity": "sensor.sm_g970f_battery_level",
+              "min": 0,
+              "max": 100,
+              "needle": true,
+              "severity": {
+                "green": 30,
+                "yellow": 15,
+                "red": 0
+              },
+              "name": "Samsung s10e"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.pax_levante_50_flow",
+                  "name": "Flow"
+                },
+                {
+                  "entity": "sensor.pax_levante_50_humidity",
+                  "name": "Humidity"
+                },
+                {
+                  "entity": "sensor.pax_levante_50_light",
+                  "name": "Light"
+                },
+                {
+                  "entity": "sensor.pax_levante_50_rpm",
+                  "name": "RPM"
+                },
+                {
+                  "entity": "sensor.pax_levante_50_state",
+                  "name": "State"
+                },
+                {
+                  "entity": "sensor.pax_levante_50_temperature",
+                  "name": "Temperature"
+                }
+              ],
+              "title": "Pax Levante 50"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
