@@ -8,6 +8,7 @@ frontend:
 ##########################################
 ### CONFIG FILES
 automation: !include automations.yaml
+automation secret: !include automations_secret.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 # modbus: !include modbus.yaml
