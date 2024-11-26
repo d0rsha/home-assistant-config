@@ -233,10 +233,10 @@ ingress:
     work_mode: ingress
     ui_mode: toolbar
     title: "Codeproject AI"
-    icon: mdi:cctv
+    icon: mdi:brain
     url: http://192.168.50.12:32168
   portainer:
     ui_mode: toolbar
     title: "Portainer"
-    icon: mdi:cctv
+    icon: mdi:docker
     url: https://192.168.50.12:9443
