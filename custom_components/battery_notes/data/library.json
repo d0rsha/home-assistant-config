@@ -259,6 +259,11 @@
             "battery_type": "CR2032"
         },
         {
+            "manufacturer": "_TZ3000_saiqcn0y",
+            "model": "TS0201",
+            "battery_type": "CR2450"
+        },
+        {
             "manufacturer": "_TZ3000_sj7jbgks",
             "model": "TS0043",
             "battery_type": "CR2032"
@@ -382,6 +387,11 @@
             "model": "TS0601",
             "battery_type": "AA",
             "battery_quantity": 2
+        },
+        {
+            "manufacturer": "_TZE200_iba1ckek",
+            "model": "TS0601",
+            "battery_type": "CR2450"
         },
         {
             "manufacturer": "_TZE200_kb5noeto",
@@ -1605,6 +1615,11 @@
             "battery_type": "MANUAL"
         },
         {
+            "manufacturer": "Ecowitt",
+            "model": "GW2001",
+            "battery_type": "MANUAL"
+        },
+        {
             "manufacturer": "ECOWITT",
             "model": "WH51",
             "battery_type": "AA"
@@ -2780,6 +2795,11 @@
             "model": "Duette",
             "battery_type": "AA",
             "battery_quantity": 12
+        },
+        {
+            "manufacturer": "Hunter Douglas",
+            "model": "Duette by Hunter Douglas",
+            "battery_type": "Rechargeable"
         },
         {
             "manufacturer": "Hunter Douglas",
@@ -5188,6 +5208,18 @@
             "battery_type": "C",
             "battery_quantity": 4,
             "model_match_method": "startswith"
+        },
+        {
+            "manufacturer": "SwitchBot",
+            "model": "Meter",
+            "battery_type": "AAA",
+            "battery_quantity": 2
+        },
+        {
+            "manufacturer": "SwitchBot",
+            "model": "MeterPlus",
+            "battery_type": "AAA",
+            "battery_quantity": 2
         },
         {
             "manufacturer": "SwitchBot",

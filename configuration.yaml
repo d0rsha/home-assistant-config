@@ -208,3 +208,29 @@ camera:
   - platform: ffmpeg
     name: "Rpi3 RTSP stream"
     input: !secret rpi3_rtsp_connection_string
+
+##########################################
+### Custom sidepanel entries
+ingress:
+  link_automation:
+    work_mode: iframe
+    ui_mode: replace
+    title: Automations
+    icon: mdi:link
+    url: /config/automation/dashboard
+  frigate:
+    ui_mode: toolbar
+    title: Frigate
+    icon: mdi:cctv
+    url: http://192.168.50.12:5000
+  frigate_mousecam:
+    ui_mode: toolbar
+    title: "Frigate mousecam"
+    icon: mdi:cctv
+    url: http://192.168.50.12:5001
+  codeproject_ai:
+    work_mode: ingress
+    ui_mode: toolbar
+    title: "Codeproject AI"
+    icon: mdi:cctv
+    url: http://192.168.50.12:32168
