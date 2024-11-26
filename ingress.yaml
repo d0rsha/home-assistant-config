@@ -1,0 +1,27 @@
+link_automation:
+  work_mode: iframe
+  ui_mode: replace
+  title: Automations
+  icon: mdi:link
+  url: /config/automation/dashboard
+frigate:
+  ui_mode: toolbar
+  title: Frigate
+  icon: mdi:cctv
+  url: !secret url_frigate
+frigate_mousecam:
+  ui_mode: toolbar
+  title: "Frigate mousecam"
+  icon: mdi:cctv
+  url: !secret url_frigate_mousecam
+codeproject_ai:
+  work_mode: ingress
+  ui_mode: toolbar
+  title: "Codeproject AI"
+  icon: mdi:brain
+  url: !secret url_code_project_ai
+portainer:
+  ui_mode: toolbar
+  title: "Portainer"
+  icon: mdi:docker
+  url: !secret url_portainer
