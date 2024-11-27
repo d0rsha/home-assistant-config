@@ -9,7 +9,8 @@ from homeassistant.const import STATE_UNAVAILABLE, STATE_UNKNOWN
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.restore_state import RestoreEntity
 
-from .const import DOMAIN, CONF_NAME, CONF_MAC
+from .const import DOMAIN, CONF_NAME
+from .const import DeviceModel
 from .entity import PaxCalimaEntity
 
 _LOGGER = logging.getLogger(__name__)
@@ -23,81 +24,22 @@ OPTIONS["boostmodespeed"] = OptionsTuple(1000, 2400, 25)
 
 PaxEntity = namedtuple('PaxEntity', ['key', 'entityName', 'units', 'deviceClass', 'category', 'icon', 'options'])
 ENTITIES = [
-    PaxEntity(
-        "fanspeed_humidity",
-        "Fanspeed Humidity",
-        REVOLUTIONS_PER_MINUTE,
-        None,
-        EntityCategory.CONFIG,
-        "mdi:engine",
-        OPTIONS["fanspeed"],
-    ),
-    PaxEntity(
-        "fanspeed_light",
-        "Fanspeed Light",
-        REVOLUTIONS_PER_MINUTE,
-        None,
-        EntityCategory.CONFIG,
-        "mdi:engine",
-        OPTIONS["fanspeed"],
-    ),
-    PaxEntity(
-        "fanspeed_trickle",
-        "Fanspeed Trickle",
-        REVOLUTIONS_PER_MINUTE,
-        None,
-        EntityCategory.CONFIG,
-        "mdi:engine",
-        OPTIONS["fanspeed"],
-    ),
-    PaxEntity(
-        "heatdistributorsettings_temperaturelimit",
-        "HeatDistributorSettings TemperatureLimit",
-        UnitOfTemperature.CELSIUS,
-        NumberDeviceClass.TEMPERATURE,
-        EntityCategory.CONFIG,
-        None,
-        OPTIONS["temperature"],
-    ),
-    PaxEntity(
-        "heatdistributorsettings_fanspeedbelow",
-        "HeatDistributorSettings FanSpeedBelow",
-        REVOLUTIONS_PER_MINUTE,
-        None,
-        EntityCategory.CONFIG,
-        "mdi:engine",
-        OPTIONS["fanspeed"],
-    ),
-    PaxEntity(
-        "heatdistributorsettings_fanspeedabove",
-        "HeatDistributorSettings FanSpeedAbove",
-        REVOLUTIONS_PER_MINUTE,
-        None,
-        EntityCategory.CONFIG,
-        "mdi:engine",
-        OPTIONS["fanspeed"],
-    ),
+    PaxEntity("fanspeed_humidity","Fanspeed Humidity",REVOLUTIONS_PER_MINUTE,None,EntityCategory.CONFIG,"mdi:engine",OPTIONS["fanspeed"],),
+    PaxEntity("fanspeed_trickle","Fanspeed Trickle",REVOLUTIONS_PER_MINUTE,None,EntityCategory.CONFIG,"mdi:engine",OPTIONS["fanspeed"],),
 ]
-
+CALIMA_ENTITIES = [
+    PaxEntity("heatdistributorsettings_temperaturelimit","HeatDistributorSettings TemperatureLimit",UnitOfTemperature.CELSIUS,NumberDeviceClass.TEMPERATURE,EntityCategory.CONFIG,None,OPTIONS["temperature"],),
+    PaxEntity("heatdistributorsettings_fanspeedbelow","HeatDistributorSettings FanSpeedBelow",REVOLUTIONS_PER_MINUTE,None,EntityCategory.CONFIG,"mdi:engine",OPTIONS["fanspeed"],),
+    PaxEntity("heatdistributorsettings_fanspeedabove","HeatDistributorSettings FanSpeedAbove",REVOLUTIONS_PER_MINUTE,None,EntityCategory.CONFIG,"mdi:engine",OPTIONS["fanspeed"],),
+    PaxEntity("fanspeed_light","Fanspeed Light",REVOLUTIONS_PER_MINUTE,None,EntityCategory.CONFIG,"mdi:engine",OPTIONS["fanspeed"],),
+]
+SVENSA_ENTITIES = [
+    PaxEntity("fanspeed_airing","Fanspeed Airing",REVOLUTIONS_PER_MINUTE,None,EntityCategory.CONFIG,"mdi:engine",OPTIONS["fanspeed"],),    
+    PaxEntity("fanspeed_sensor","Fanspeed Sensor",REVOLUTIONS_PER_MINUTE,None,EntityCategory.CONFIG,"mdi:engine",OPTIONS["fanspeed"],),
+]
 RESTOREENTITIES = [
-    PaxEntity(
-        "boostmodesecwrite",
-        "BoostMode Time",
-        UnitOfTime.SECONDS,
-        None,
-        EntityCategory.CONFIG,
-        "mdi:timer-outline",
-        OPTIONS["boostmodesec"],
-    ),
-    PaxEntity(
-        "boostmodespeedwrite",
-        "BoostMode Speed",
-        REVOLUTIONS_PER_MINUTE,
-        None,
-        EntityCategory.CONFIG,
-        "mdi:engine",
-        OPTIONS["boostmodespeed"],
-    ),
+    PaxEntity("boostmodesecwrite","BoostMode Time",UnitOfTime.SECONDS,None,EntityCategory.CONFIG,"mdi:timer-outline",OPTIONS["boostmodesec"],),
+    PaxEntity("boostmodespeedwrite","BoostMode Speed",REVOLUTIONS_PER_MINUTE,None,EntityCategory.CONFIG,      "mdi:engine",OPTIONS["boostmodespeed"],),
 ]
 
 async def async_setup_entry(hass, config_entry, async_add_devices):
@@ -114,6 +56,17 @@ async def async_setup_entry(hass, config_entry, async_add_devices):
         # Create entities for this device
         for paxentity in ENTITIES:
             ha_entities.append(PaxCalimaNumberEntity(coordinator, paxentity))
+
+        # Device specific entities
+        match coordinator._model:
+            case DeviceModel.CALIMA.value | DeviceModel.SVARA.value:
+                for paxentity in CALIMA_ENTITIES:
+                    ha_entities.append(PaxCalimaNumberEntity(coordinator, paxentity))
+            case DeviceModel.SVENSA.value:
+                for paxentity in SVENSA_ENTITIES:
+                    ha_entities.append(PaxCalimaNumberEntity(coordinator, paxentity))
+
+        # Entities with local datas
         for paxentity in RESTOREENTITIES:
             ha_entities.append(PaxCalimaRestoreNumberEntity(coordinator, paxentity))
 

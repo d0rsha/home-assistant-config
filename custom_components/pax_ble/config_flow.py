@@ -12,18 +12,20 @@ from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers import selector
 from typing import Any
 
-from .calima import Calima
+from .devices.base_device import BaseDevice
 
 from homeassistant.const import CONF_DEVICES
 from .const import CONF_ACTION, CONF_ADD_DEVICE, CONF_EDIT_DEVICE, CONF_REMOVE_DEVICE
-from .const import DOMAIN, CONF_NAME, CONF_MAC, CONF_PIN, CONF_SCAN_INTERVAL, CONF_SCAN_INTERVAL_FAST
+from .const import DOMAIN, CONF_NAME, CONF_MODEL, CONF_MAC, CONF_PIN, CONF_SCAN_INTERVAL, CONF_SCAN_INTERVAL_FAST
 from .const import DEFAULT_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL_FAST
+from .const import DeviceModel
 
 CONFIG_ENTRY_NAME = "Pax BLE"
 SELECTED_DEVICE = "selected_device"
 
 DEVICE_DATA = {
             CONF_NAME: "",
+            CONF_MODEL: "",
             CONF_MAC: "",
             CONF_PIN: "",
             CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL,
@@ -101,7 +103,7 @@ class PaxConfigFlowHandler(ConfigFlow, domain=DOMAIN):
                                         description_placeholders={"dev_name": dev_mac}
                                         )
 
-            fan = Calima(self.hass, dev_mac, user_input[CONF_PIN])
+            fan = BaseDevice(self.hass, dev_mac, user_input[CONF_PIN])
 
             if await fan.connect():
                 await fan.setAuth(user_input[CONF_PIN])
@@ -193,13 +195,12 @@ class PaxOptionsFlowHandler(OptionsFlow):
                     }
                 )
 
-            fan = Calima(self.hass, user_input[CONF_MAC], user_input[CONF_PIN])
+            fan = BaseDevice(self.hass, user_input[CONF_MAC], user_input[CONF_PIN])
 
             if await fan.connect():
                 await fan.setAuth(user_input[CONF_PIN])
                 pin_verified = await fan.checkAuth()
                 await fan.disconnect()
-                pin_verified = True
 
                 if pin_verified:
                     # Add device to config entry
@@ -353,11 +354,16 @@ CONFIGURE_SCHEMA = vol.Schema(
 """ ################################################### """
 # Schema taking device details when adding
 def getDeviceSchemaAdd(user_input: dict[str, Any] | None = None) -> vol.Schema:
+    DEVICE_MODELS = list(DeviceModel)
+
     data_schema = vol.Schema(
         {
             vol.Required(
                 CONF_NAME, description="Name", default=user_input[CONF_NAME]
             ): cv.string,
+            vol.Required(
+                CONF_MODEL, description="Model", default=user_input[CONF_MODEL]
+            ): vol.In(DEVICE_MODELS),
             vol.Required(
                 CONF_MAC, description="MAC Address", default=user_input[CONF_MAC]
             ): cv.string,
