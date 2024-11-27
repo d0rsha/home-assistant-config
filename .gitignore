@@ -28,6 +28,7 @@ ip_bans.yaml
 secrets.yaml
 known_devices.yaml
 frigate.yml
+go2rtc.yaml
 
 # other
 themes
