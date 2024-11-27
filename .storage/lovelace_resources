@@ -23,6 +23,11 @@
         "id": "58353232d81848f98863954e20cbb9ad",
         "url": "/hacsfiles/vacuum-card/vacuum-card.js?hacstag=2612912952101",
         "type": "module"
+      },
+      {
+        "id": "505b0351f74c4895bfe954a9a21dfb70",
+        "url": "/webrtc/webrtc-camera.js?v=v3.6.0",
+        "type": "module"
       }
     ]
   }
