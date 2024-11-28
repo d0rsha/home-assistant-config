@@ -124,9 +124,8 @@
                   "entity": "sensor.entre_temperatur",
                   "style": {
                     "top": "68%",
-                    "left": "38%",
+                    "left": "36%",
                     "color": "green",
-                    "font-size": "10px",
                     "font-weight": "bold"
                   }
                 },
@@ -137,7 +136,6 @@
                     "top": "61%",
                     "left": "32%",
                     "color": "green",
-                    "font-size": "10px",
                     "font-weight": "bold"
                   }
                 },
@@ -148,7 +146,6 @@
                     "top": "16%",
                     "left": "75%",
                     "color": "green",
-                    "font-size": "10px",
                     "font-weight": "bold"
                   }
                 },
@@ -157,9 +154,8 @@
                   "entity": "sensor.mi_7_temperatur",
                   "style": {
                     "top": "39%",
-                    "left": "38%",
+                    "left": "36%",
                     "color": "green",
-                    "font-size": "10px",
                     "font-weight": "bold"
                   }
                 },
@@ -170,8 +166,28 @@
                     "top": "30%",
                     "left": "92%",
                     "color": "green",
-                    "font-size": "10px",
                     "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "image",
+                  "entity": "switch.tradfri_outlet_2_brytare",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "12%",
+                    "left": "48%",
+                    "width": "7%",
+                    "padding": "10px"
                   }
                 },
                 {
@@ -189,8 +205,71 @@
                     "off": "brightness(80%) saturate(0.8)"
                   },
                   "style": {
-                    "top": "26%",
-                    "left": "57%",
+                    "top": "37%",
+                    "left": "52%",
+                    "width": "7%",
+                    "padding": "10px"
+                  }
+                },
+                {
+                  "type": "image",
+                  "entity": "light.under_trapp_e27_lampa",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "45%",
+                    "left": "82%",
+                    "width": "7%",
+                    "padding": "10px"
+                  }
+                },
+                {
+                  "type": "image",
+                  "entity": "light.koksbord_1_lampa",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "72%",
+                    "left": "72%",
+                    "width": "7%",
+                    "padding": "10px"
+                  }
+                },
+                {
+                  "type": "image",
+                  "entity": "light.koksbord_2_lampa",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "72%",
+                    "left": "80%",
                     "width": "7%",
                     "padding": "10px"
                   }
@@ -209,7 +288,6 @@
                     "top": "48%",
                     "left": "8%",
                     "color": "green",
-                    "font-size": "10x",
                     "font-weight": "bold"
                   }
                 },
@@ -220,7 +298,6 @@
                     "top": "64%",
                     "left": "72%",
                     "color": "green",
-                    "font-size": "10px",
                     "font-weight": "bold"
                   }
                 },
@@ -229,9 +306,18 @@
                   "entity": "sensor.mi_5_uterum_temperatur",
                   "style": {
                     "top": "68%",
-                    "left": "52%",
+                    "left": "49%",
                     "color": "green",
-                    "font-size": "10px",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.ovre_hall_temperatur",
+                  "style": {
+                    "top": "55%",
+                    "left": "69%",
+                    "color": "green",
                     "font-weight": "bold"
                   }
                 },
