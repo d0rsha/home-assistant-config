@@ -121,6 +121,16 @@
               "elements": [
                 {
                   "type": "state-label",
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_temperature",
+                  "style": {
+                    "top": "48%",
+                    "left": "12%",
+                    "color": "green",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
                   "entity": "sensor.entre_temperatur",
                   "style": {
                     "top": "68%",
@@ -281,6 +291,16 @@
             {
               "type": "picture-elements",
               "elements": [
+                {
+                  "type": "state-label",
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl03_temperature_2",
+                  "style": {
+                    "top": "28%",
+                    "left": "68%",
+                    "color": "green",
+                    "font-weight": "bold"
+                  }
+                },
                 {
                   "type": "state-label",
                   "entity": "sensor.mi_3_temperatur",
