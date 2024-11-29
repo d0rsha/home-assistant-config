@@ -1318,7 +1318,8 @@
                   "secondary_info": "last-updated"
                 },
                 {
-                  "entity": "sensor.mi_4_temperatur"
+                  "entity": "sensor.mi_4_temperatur",
+                  "secondary_info": "last-updated"
                 },
                 {
                   "entity": "sensor.mi_5_uterum_temperatur",
@@ -1330,6 +1331,14 @@
                 },
                 {
                   "entity": "sensor.mi_7_temperatur",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_temperature",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl03_temperature_2",
                   "secondary_info": "last-updated"
                 },
                 {
@@ -1345,7 +1354,8 @@
                   "secondary_info": "last-updated"
                 },
                 {
-                  "entity": "sensor.mi_4_luftfuktighet"
+                  "entity": "sensor.mi_4_luftfuktighet",
+                  "secondary_info": "last-updated"
                 },
                 {
                   "entity": "sensor.mi_5_uterum_luftfuktighet",
@@ -1357,6 +1367,14 @@
                 },
                 {
                   "entity": "sensor.mi_7_luftfuktighet",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_humidity",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl03_humidity_2",
                   "secondary_info": "last-updated"
                 }
               ],
@@ -1397,6 +1415,21 @@
                 },
                 {
                   "entity": "sensor.mi_4_temperatur"
+                },
+                {
+                  "entity": "sensor.mi_5_uterum_temperatur"
+                },
+                {
+                  "entity": "sensor.mi_6_kallare_temperatur"
+                },
+                {
+                  "entity": "sensor.mi_7_temperatur"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_temperature"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl03_temperature_2"
                 }
               ]
             },
@@ -1435,47 +1468,23 @@
                 },
                 {
                   "entity": "sensor.mi_4_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.mi_5_uterum_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.mi_6_kallare_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.mi_7_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_humidity"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl03_humidity_2"
                 }
               ]
-            },
-            {
-              "type": "gauge",
-              "entity": "sensor.sm_g970f_battery_level",
-              "min": 0,
-              "max": 100,
-              "needle": true,
-              "severity": {
-                "green": 30,
-                "yellow": 15,
-                "red": 0
-              },
-              "name": "Samsung s10e"
-            },
-            {
-              "type": "gauge",
-              "entity": "sensor.sm_g965f_battery_level",
-              "min": 0,
-              "max": 100,
-              "needle": true,
-              "severity": {
-                "green": 30,
-                "yellow": 15,
-                "red": 0
-              },
-              "name": "Samsung s5"
-            },
-            {
-              "type": "gauge",
-              "entity": "sensor.sm_g970f_battery_level",
-              "min": 0,
-              "max": 100,
-              "needle": true,
-              "severity": {
-                "green": 30,
-                "yellow": 15,
-                "red": 0
-              },
-              "name": "Samsung s10e"
             },
             {
               "type": "entities",
@@ -1506,6 +1515,277 @@
                 }
               ],
               "title": "Pax Levante 50"
+            },
+            {
+              "type": "picture-elements",
+              "elements": [
+                {
+                  "type": "state-label",
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_temperature",
+                  "style": {
+                    "top": "48%",
+                    "left": "12%",
+                    "color": "green",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.entre_temperatur",
+                  "style": {
+                    "top": "68%",
+                    "left": "36%",
+                    "color": "green",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.entre_hall_temperatur",
+                  "style": {
+                    "top": "61%",
+                    "left": "32%",
+                    "color": "green",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.vardagsrum_temperatur",
+                  "style": {
+                    "top": "16%",
+                    "left": "75%",
+                    "color": "green",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.mi_7_temperatur",
+                  "style": {
+                    "top": "39%",
+                    "left": "36%",
+                    "color": "green",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.mi_2_temperatur",
+                  "style": {
+                    "top": "30%",
+                    "left": "92%",
+                    "color": "green",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "image",
+                  "entity": "switch.tradfri_outlet_2_brytare",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "12%",
+                    "left": "48%",
+                    "width": "7%",
+                    "padding": "10px"
+                  }
+                },
+                {
+                  "type": "image",
+                  "entity": "light.nedervaning",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "37%",
+                    "left": "52%",
+                    "width": "7%",
+                    "padding": "10px"
+                  }
+                },
+                {
+                  "type": "image",
+                  "entity": "light.under_trapp_e27_lampa",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "45%",
+                    "left": "82%",
+                    "width": "7%",
+                    "padding": "10px"
+                  }
+                },
+                {
+                  "type": "image",
+                  "entity": "light.koksbord_1_lampa",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "72%",
+                    "left": "72%",
+                    "width": "7%",
+                    "padding": "10px"
+                  }
+                },
+                {
+                  "type": "image",
+                  "entity": "light.koksbord_2_lampa",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "72%",
+                    "left": "80%",
+                    "width": "7%",
+                    "padding": "10px"
+                  }
+                }
+              ],
+              "image": "/local/assets/floor_plans/bottenplan_lightmode.png",
+              "dark_mode_image": "/local/assets/floor_plans/bottenplan_darkmode.png"
+            },
+            {
+              "type": "picture-elements",
+              "elements": [
+                {
+                  "type": "state-label",
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl03_temperature_2",
+                  "style": {
+                    "top": "28%",
+                    "left": "68%",
+                    "color": "green",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.mi_3_temperatur",
+                  "style": {
+                    "top": "48%",
+                    "left": "8%",
+                    "color": "green",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.mi_4_temperatur",
+                  "style": {
+                    "top": "64%",
+                    "left": "72%",
+                    "color": "green",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.mi_5_uterum_temperatur",
+                  "style": {
+                    "top": "68%",
+                    "left": "49%",
+                    "color": "green",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.ovre_hall_temperatur",
+                  "style": {
+                    "top": "55%",
+                    "left": "69%",
+                    "color": "green",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "image",
+                  "entity": "light.tradfri_e14_lampa",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "80%",
+                    "left": "60%",
+                    "width": "7%",
+                    "padding": "8px"
+                  }
+                },
+                {
+                  "type": "image",
+                  "entity": "light.taklampa_olles_rum_lampa",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "72%",
+                    "left": "70%",
+                    "width": "7%",
+                    "padding": "8px"
+                  }
+                }
+              ],
+              "image": "/local/assets/floor_plans/ovreplan_lightmode.png",
+              "dark_mode_image": "/local/assets/floor_plans/ovreplan_darkmode.png"
             }
           ]
         }
