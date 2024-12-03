@@ -397,24 +397,6 @@
               ]
             },
             {
-              "type": "grid",
-              "square": false,
-              "columns": 1,
-              "cards": [
-                {
-                  "type": "entities",
-                  "entities": [
-                    "vacuum.roborock_s6_maxv"
-                  ],
-                  "title": "Robban"
-                },
-                {
-                  "type": "picture",
-                  "image_entity": "image.robban_bottenplan"
-                }
-              ]
-            },
-            {
               "type": "entities",
               "entities": [
                 {
@@ -493,6 +475,10 @@
               "compact_view": false,
               "image": "default",
               "show_toolbar": true
+            },
+            {
+              "type": "picture-entity",
+              "entity": "camera.robban_map"
             }
           ]
         },
