@@ -193,15 +193,26 @@
   use_blueprint:
     path: Blackshome/low-battery-notifications-and-actions.yaml
     input:
-      include_button: disable_button_trigger
+      include_button: enable_button_trigger
       include_time: time_enabled
       time: '17:00:00'
       battery_level: 10
       exclude_sensors:
-        entity_id: []
+        entity_id:
+        - sensor.tradfri_on_off_switch_battery_plus
+        - sensor.roborock_s6_maxv_batteri
+        - sensor.tradfri_on_off_switch_2_battery_plus
+        - sensor.frida_iphone1_battery_plus
+        - sensor.knapp_ikea_battery_plus
+        - sensor.tradfri_dimmer_battery_plus
+        - binary_sensor.tradfri_on_off_switch_battery_low
+        - binary_sensor.tradfri_on_off_switch_2_battery_low
+        - binary_sensor.frida_iphone1_battery_plus_low
         device_id: 7d14e7d4bcd8ee6b80815bb2f9e58b05
       include_easy_notify: enable_easy_notify
-      include_persistent_notification: enable_persistent_notification
-      sensor_selection: enable_battery_sensors_custom_group
+      include_persistent_notification: enable_persistent_okay_notification
+      sensor_selection: enable_all_and_custom_group_sensors
       notify_device:
       - f326594e961a48756bccbda5b2185cd2
+      button_entity: input_button.check_battery_levels
+      global_conditions: []
