@@ -187,3 +187,21 @@
     data:
       message: Musfälla vinden rörelse detekterad
   mode: single
+- id: '1733299378579'
+  alias: Check battery levels
+  description: 'Automation that notifies if battery levels are low or unavailable '
+  use_blueprint:
+    path: Blackshome/low-battery-notifications-and-actions.yaml
+    input:
+      include_button: disable_button_trigger
+      include_time: time_enabled
+      time: '17:00:00'
+      battery_level: 10
+      exclude_sensors:
+        entity_id: []
+        device_id: 7d14e7d4bcd8ee6b80815bb2f9e58b05
+      include_easy_notify: enable_easy_notify
+      include_persistent_notification: enable_persistent_notification
+      sensor_selection: enable_battery_sensors_custom_group
+      notify_device:
+      - f326594e961a48756bccbda5b2185cd2
