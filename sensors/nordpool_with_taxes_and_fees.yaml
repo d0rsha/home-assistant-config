@@ -4,18 +4,15 @@ sensor:
   - name: "Nordpool with taxes and fees"
     unit_of_measurement: "öre/kWh"
     state: >
-      {% set ElNordpool = states('sensor.nordpool_kwh_se3_sek_3_095_0') | float(0) %}
-      {% set Elöverföring = 20 %}
-      {% set Energiskatt = 39.20 %}
-      {% set KlimatEl = 1.78 %}
-      {% set Elcertifikat = 0.55 %}
-      {% set BooPåslag = 2.9 %}
-      {% set inkMoms = (ElNordpool + Elöverföring + Energiskatt + KlimatEl + Elcertifikat + BooPåslag) * 1.25 %}
+      {% set Elpris = states('sensor.nordpool_kwh_se3_sek_3_095_0') | float %}
+      {% set Elöverföring = 13.20 %}
+      {% set Energiskatt = 53.50 %}
+      {% set inkMoms = (Elpris * 1.25) + Elöverföring + Energiskatt %}
       {{ inkMoms | round(2) }}
     attributes:
       unit: "{{ state_attr('sensor.nordpool_kwh_se3_sek_3_095_0', 'unit') }}"
       currency: "{{ state_attr('sensor.nordpool_kwh_se3_sek_3_095_0', 'currency') }}"
-      price_in_cents: "false"
+      price_in_cents: "true"
       device_class: monetary
       icon: mdi:flash
       raw_today: >
@@ -23,17 +20,18 @@ sensor:
         {% if raw_today %}
           {% set ns = namespace(adjusted_entries=[]) %}
           {% for entry in raw_today %}
-            {% set ElNordpool = entry['value'] | float(0) %}
-            {% set Elöverföring = 20 %}
-            {% set Energiskatt = 39.20 %}
-            {% set KlimatEl = 1.78 %}
-            {% set Elcertifikat = 0.55 %}
-            {% set BooPåslag = 2.9 %}
-            {% set inkMoms = (ElNordpool + Elöverföring + Energiskatt + KlimatEl + Elcertifikat + BooPåslag) * 1.25 %}
+            {% set Elpris = entry['value'] | float(0) %}
+            {% set Elöverföring = 13.20 %}
+            {% set Energiskatt = 53.50 %}
+            {% set inkMoms = (Elpris * 1.25) + Elöverföring + Energiskatt %}
             {% set adjusted_entry = {
               "start": entry['start'].isoformat(),
               "end": entry['end'].isoformat(),
-              "value": (inkMoms | round(2))
+              "value": (inkMoms | round(2)),
+              "spot": (Elpris | round(2)),
+              "eon": 0.06,
+              "tax": ((inkMoms - (Elpris + Elöverföring)) | round(2)),
+              "transfer": (Elöverföring | round(2))
             } %}
             {% set ns.adjusted_entries = ns.adjusted_entries + [adjusted_entry] %}
           {% endfor %}
@@ -46,17 +44,18 @@ sensor:
         {% if raw_tomorrow %}
           {% set ns = namespace(adjusted_entries=[]) %}
           {% for entry in raw_tomorrow %}
-            {% set ElNordpool = entry['value'] | float(0) %}
-            {% set Elöverföring = 20 %}
-            {% set Energiskatt = 39.20 %}
-            {% set KlimatEl = 1.78 %}
-            {% set Elcertifikat = 0.55 %}
-            {% set BooPåslag = 2.9 %}
-            {% set inkMoms = (ElNordpool + Elöverföring + Energiskatt + KlimatEl + Elcertifikat + BooPåslag) * 1.25 %}
+            {% set Elpris = entry['value'] | float(0) %}
+            {% set Elöverföring = 13.20 %}
+            {% set Energiskatt = 53.50 %}
+            {% set inkMoms = (Elpris * 1.25) + Elöverföring + Energiskatt %}
             {% set adjusted_entry = {
               "start": entry['start'].isoformat(),
               "end": entry['end'].isoformat(),
-              "value": (inkMoms | round(2))
+              "value": (inkMoms | round(2)),
+              "spot": Elpris | round(2),
+              "eon": 0.06,
+              "tax": ((inkMoms - (Elpris + Elöverföring)) | round(2)),
+              "transfer": (Elöverföring | round(2))
             } %}
             {% set ns.adjusted_entries = ns.adjusted_entries + [adjusted_entry] %}
           {% endfor %}
