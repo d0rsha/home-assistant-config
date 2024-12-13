@@ -616,6 +616,23 @@
                       }
                     }
                   ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.water_usage_cost",
+                  "vertical": false,
+                  "hide_state": false,
+                  "show_entity_picture": false,
+                  "name": "Vattenkostnad",
+                  "state_content": [
+                    "state",
+                    "last-changed",
+                    "last_reset"
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.water_usage"
                 }
               ]
             },
@@ -641,6 +658,7 @@
                   },
                   "now": {
                     "show": true,
+                    "color": "red",
                     "label": "Nu"
                   },
                   "series": [
@@ -677,6 +695,9 @@
                   ]
                 },
                 {
+                  "type": "energy-usage-graph"
+                },
+                {
                   "type": "custom:apexcharts-card",
                   "graph_span": "24h",
                   "stacked": true,
@@ -689,6 +710,7 @@
                   },
                   "now": {
                     "show": true,
+                    "color": "red",
                     "label": "Now"
                   },
                   "apex_config": {
@@ -698,7 +720,7 @@
                   },
                   "series": [
                     {
-                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "entity": "sensor.nordpool_with_taxes_and_fees",
                       "name": "Tax",
                       "type": "column",
                       "float_precision": 2,
@@ -708,10 +730,10 @@
                       "show": {
                         "legend_value": false
                       },
-                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), Math.min(0, entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow)[index][\"value\"]) * 0.8 + 0.428];\n});\n"
+                      "data_generator": "const data = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); return data.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), start[\"tax\"]];\n});\n"
                     },
                     {
-                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "entity": "sensor.nordpool_with_taxes_and_fees",
                       "name": "Transfer",
                       "type": "column",
                       "float_precision": 2,
@@ -721,11 +743,11 @@
                       "show": {
                         "legend_value": false
                       },
-                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), 0.2456];\n});\n"
+                      "data_generator": "const data = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); return data.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), start[\"transfer\"]];\n});\n"
                     },
                     {
-                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
-                      "name": "E.ON add",
+                      "entity": "sensor.nordpool_with_taxes_and_fees",
+                      "name": "EON",
                       "type": "column",
                       "float_precision": 2,
                       "extend_to": false,
@@ -734,23 +756,10 @@
                       "show": {
                         "legend_value": false
                       },
-                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), 0.06];\n});\n"
+                      "data_generator": "const data = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); return data.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), start[\"eon\"]];\n});\n"
                     },
                     {
-                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
-                      "name": "VAT",
-                      "type": "column",
-                      "float_precision": 2,
-                      "extend_to": false,
-                      "color": "blue",
-                      "unit": " ",
-                      "show": {
-                        "legend_value": false
-                      },
-                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow)[index][\"value\"] *0.2 + 0.1834 ];\n});\n"
-                    },
-                    {
-                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "entity": "sensor.nordpool_with_taxes_and_fees",
                       "name": "Spot",
                       "type": "column",
                       "float_precision": 2,
@@ -760,10 +769,10 @@
                       "show": {
                         "legend_value": false
                       },
-                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow)[index][\"value\"] * 0.8];\n});\n"
+                      "data_generator": "const data = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); return data.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), start[\"spot\"]];\n});\n"
                     },
                     {
-                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "entity": "sensor.nordpool_with_taxes_and_fees",
                       "name": "AVG",
                       "type": "line",
                       "group_by": {
@@ -775,40 +784,6 @@
                       "data_generator": "return entity.attributes.raw_today.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today[index][\"value\"]];\n});\n"
                     }
                   ]
-                },
-                {
-                  "type": "entities",
-                  "entities": [
-                    {
-                      "entity": "sensor.haos_sbfspot_sma_ac_power"
-                    },
-                    {
-                      "entity": "sensor.haos_sbfspot_sma_energy_lifetime"
-                    },
-                    {
-                      "entity": "sensor.haos_sbfspot_sma_energy_daily"
-                    },
-                    {
-                      "entity": "sensor.haos_sbfspot_sma_inverter_status"
-                    },
-                    {
-                      "entity": "sensor.haos_sbfspot_sma_inverter_running_temp"
-                    },
-                    {
-                      "entity": "sensor.haos_sbfspot_sma_timestamp"
-                    },
-                    {
-                      "entity": "sensor.haos_sbfspot_sma_ac_power_line_1"
-                    },
-                    {
-                      "entity": "sensor.haos_sbfspot_sma_array1_pdc"
-                    },
-                    {
-                      "entity": "sensor.haos_sbfspot_sma_array2_pdc"
-                    }
-                  ],
-                  "title": "Solpaneler",
-                  "show_header_toggle": true
                 },
                 {
                   "title": "Grid energy usage",
@@ -822,104 +797,15 @@
                   "scale": "iron red"
                 },
                 {
-                  "type": "custom:apexcharts-card",
-                  "graph_span": "24h",
-                  "stacked": true,
-                  "header": {
-                    "title": "Energy Price Breakdown v2",
-                    "show": true
+                  "title": "Water usage",
+                  "type": "custom:heatmap-card",
+                  "entity": "sensor.water_usage",
+                  "data": {
+                    "min": "auto",
+                    "max": "auto"
                   },
-                  "span": {
-                    "start": "day"
-                  },
-                  "now": {
-                    "show": true,
-                    "label": "Now"
-                  },
-                  "apex_config": {
-                    "legend": {
-                      "show": true
-                    }
-                  },
-                  "series": [
-                    {
-                      "entity": "sensor.nordpool_with_taxes_and_fees",
-                      "name": "Tax",
-                      "type": "column",
-                      "float_precision": 2,
-                      "extend_to": false,
-                      "color": "red",
-                      "unit": " ",
-                      "show": {
-                        "legend_value": false
-                      },
-                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), Math.min(0, entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow)[index][\"value\"]) * 0.8 + 0.428];\n});\n"
-                    },
-                    {
-                      "entity": "sensor.nordpool_with_taxes_and_fees",
-                      "name": "Transfer",
-                      "type": "column",
-                      "float_precision": 2,
-                      "extend_to": false,
-                      "color": "orange",
-                      "unit": " ",
-                      "show": {
-                        "legend_value": false
-                      },
-                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), 0.2456];\n});\n"
-                    },
-                    {
-                      "entity": "sensor.nordpool_with_taxes_and_fees",
-                      "name": "E.ON add",
-                      "type": "column",
-                      "float_precision": 2,
-                      "extend_to": false,
-                      "color": "yellow",
-                      "unit": " ",
-                      "show": {
-                        "legend_value": false
-                      },
-                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), 0.06];\n});\n"
-                    },
-                    {
-                      "entity": "sensor.nordpool_with_taxes_and_fees",
-                      "name": "VAT",
-                      "type": "column",
-                      "float_precision": 2,
-                      "extend_to": false,
-                      "color": "blue",
-                      "unit": " ",
-                      "show": {
-                        "legend_value": false
-                      },
-                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow)[index][\"value\"] *0.2 + 0.1834 ];\n});\n"
-                    },
-                    {
-                      "entity": "sensor.nordpool_with_taxes_and_fees",
-                      "name": "Spot",
-                      "type": "column",
-                      "float_precision": 2,
-                      "extend_to": false,
-                      "color": "green",
-                      "unit": " ",
-                      "show": {
-                        "legend_value": false
-                      },
-                      "data_generator": "return entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow).map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow)[index][\"value\"] * 0.8];\n});\n"
-                    },
-                    {
-                      "entity": "sensor.nordpool_with_taxes_and_fees",
-                      "name": "AVG",
-                      "type": "line",
-                      "group_by": {
-                        "duration": "24 hour",
-                        "func": "avg"
-                      },
-                      "color": "black",
-                      "float_precision": 2,
-                      "data_generator": "return entity.attributes.raw_today.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today[index][\"value\"]];\n});\n"
-                    }
-                  ]
+                  "days": 20,
+                  "scale": "iron red"
                 }
               ]
             },
@@ -969,132 +855,10 @@
                   "logarithmic_scale": false
                 },
                 {
-                  "type": "tile",
-                  "entity": "sensor.water_usage_cost",
-                  "vertical": false,
-                  "hide_state": false,
-                  "show_entity_picture": false,
-                  "name": "Vattenkostnad",
-                  "state_content": [
-                    "state",
-                    "last-changed",
-                    "last_reset"
-                  ]
-                },
-                {
-                  "type": "tile",
-                  "entity": "sensor.water_usage"
-                },
-                {
-                  "type": "tile",
-                  "entity": "weather.forecast_hem"
-                },
-                {
-                  "type": "custom:apexcharts-card",
-                  "graph_span": "24h",
-                  "stacked": true,
-                  "header": {
-                    "title": "Energy Actual Buying Price",
-                    "show": true
-                  },
-                  "span": {
-                    "start": "day"
-                  },
-                  "now": {
-                    "show": true,
-                    "label": "Now"
-                  },
-                  "apex_config": {
-                    "legend": {
-                      "show": true
-                    }
-                  },
-                  "series": [
-                    {
-                      "entity": "sensor.total_el_price_normalized",
-                      "name": "Tax",
-                      "type": "column",
-                      "float_precision": 2,
-                      "extend_to": "end",
-                      "color": "red",
-                      "unit": " ",
-                      "show": {
-                        "legend_value": false
-                      },
-                      "data_generator": "const raw = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); const filledData = []; const now = new Date(); const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()); for (let i = 0; i < 48; i++) {\n  const timestamp = startOfDay.getTime() + i * 1800000;\n  const entry = raw.find(data => new Date(data.start).getTime() === timestamp);\n  filledData.push([timestamp, entry ? Math.min(0, entry.value) * 0.8 + 0.428 : 0]);\n} return filledData;\n"
-                    },
-                    {
-                      "entity": "sensor.total_el_price_normalized",
-                      "name": "Transfer",
-                      "type": "column",
-                      "float_precision": 2,
-                      "extend_to": "end",
-                      "color": "orange",
-                      "unit": " ",
-                      "show": {
-                        "legend_value": false
-                      },
-                      "data_generator": "const raw = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); const filledData = []; const now = new Date(); const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()); for (let i = 0; i < 48; i++) {\n  const timestamp = startOfDay.getTime() + i * 1800000;\n  const entry = raw.find(data => new Date(data.start).getTime() === timestamp);\n  filledData.push([timestamp, entry ? 0.2456 : 0]);\n} return filledData;\n"
-                    },
-                    {
-                      "entity": "sensor.total_el_price_normalized",
-                      "name": "E.ON add",
-                      "type": "column",
-                      "float_precision": 2,
-                      "extend_to": "end",
-                      "color": "yellow",
-                      "unit": " ",
-                      "show": {
-                        "legend_value": false
-                      },
-                      "data_generator": "const raw = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); const filledData = []; const now = new Date(); const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()); for (let i = 0; i < 48; i++) {\n  const timestamp = startOfDay.getTime() + i * 1800000;\n  const entry = raw.find(data => new Date(data.start).getTime() === timestamp);\n  filledData.push([timestamp, entry ? 0.06 : 0]);\n} return filledData;\n"
-                    },
-                    {
-                      "entity": "sensor.total_el_price_normalized",
-                      "name": "VAT",
-                      "type": "column",
-                      "float_precision": 2,
-                      "extend_to": "end",
-                      "color": "blue",
-                      "unit": " ",
-                      "show": {
-                        "legend_value": false
-                      },
-                      "data_generator": "const raw = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); const filledData = []; const now = new Date(); const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()); for (let i = 0; i < 48; i++) {\n  const timestamp = startOfDay.getTime() + i * 1800000;\n  const entry = raw.find(data => new Date(data.start).getTime() === timestamp);\n  filledData.push([timestamp, entry ? entry.value * 0.2 + 0.1834 : 0]);\n} return filledData;\n"
-                    },
-                    {
-                      "entity": "sensor.total_el_price_normalized",
-                      "name": "Spot",
-                      "type": "column",
-                      "float_precision": 2,
-                      "extend_to": "end",
-                      "color": "green",
-                      "unit": " ",
-                      "show": {
-                        "legend_value": false
-                      },
-                      "data_generator": "const raw = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); const filledData = []; const now = new Date(); const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()); for (let i = 0; i < 48; i++) {\n  const timestamp = startOfDay.getTime() + i * 1800000;\n  const entry = raw.find(data => new Date(data.start).getTime() === timestamp);\n  filledData.push([timestamp, entry ? entry.value * 0.8 : 0]);\n} return filledData;\n"
-                    },
-                    {
-                      "entity": "sensor.total_el_price_normalized",
-                      "name": "AVG",
-                      "type": "line",
-                      "group_by": {
-                        "duration": "24 hour",
-                        "func": "avg"
-                      },
-                      "color": "black",
-                      "extend_to": "end",
-                      "float_precision": 2,
-                      "data_generator": "const raw = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); const filledData = []; const now = new Date(); const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()); for (let i = 0; i < 48; i++) {\n  const timestamp = startOfDay.getTime() + i * 1800000;\n  const entry = raw.find(data => new Date(data.start).getTime() === timestamp);\n  filledData.push([timestamp, entry ? entry.value : null]);\n} return filledData;\n"
-                    }
-                  ]
-                },
-                {
-                  "type": "energy-usage-graph"
-                },
-                {
                   "type": "energy-date-selection"
+                },
+                {
+                  "type": "energy-distribution"
                 }
               ]
             },
@@ -1136,15 +900,16 @@
                 {
                   "type": "tile",
                   "entity": "sensor.power_highest_peak_time_tomorrow_2"
-                },
-                {
-                  "type": "energy-distribution"
                 }
               ]
             },
             {
               "type": "grid",
               "cards": [
+                {
+                  "type": "tile",
+                  "entity": "weather.forecast_hem"
+                },
                 {
                   "type": "heading",
                   "heading": "Electricity Maps"
@@ -1162,6 +927,40 @@
             {
               "type": "grid",
               "cards": [
+                {
+                  "type": "entities",
+                  "entities": [
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_ac_power"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_energy_lifetime"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_energy_daily"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_inverter_status"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_inverter_running_temp"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_timestamp"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_ac_power_line_1"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_array1_pdc"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_array2_pdc"
+                    }
+                  ],
+                  "title": "Solpaneler",
+                  "show_header_toggle": true
+                },
                 {
                   "type": "heading",
                   "heading": "HAOS-SBFspot"
