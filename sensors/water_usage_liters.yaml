@@ -1,0 +1,8 @@
+##########################################
+### The new tamplate syntax
+sensor:
+  - name: "Water usage in liters"
+    unit_of_measurement: "L"
+    state: >
+      {% set water_usage_cubic_meters = states('sensor.water_usage') | float %}
+      {{ water_usage_cubic_meters * 1000 }}
