@@ -497,7 +497,7 @@
           "path": "energi-overview",
           "icon": "mdi:lightning-bolt",
           "type": "sections",
-          "max_columns": 6,
+          "max_columns": 3,
           "subview": false,
           "sections": [
             {
@@ -538,12 +538,141 @@
                   "apex_config": {
                     "chart": {
                       "height": 400
+                    },
+                    "legend": {
+                      "show": true
+                    }
+                  },
+                  "graph_span": "24h",
+                  "stacked": true,
+                  "header": {
+                    "title": "Energy Price Breakdown",
+                    "show": true,
+                    "show_states": true,
+                    "colorize_states": true
+                  },
+                  "span": {
+                    "start": "day"
+                  },
+                  "now": {
+                    "show": true,
+                    "color": "red",
+                    "label": "Now"
+                  },
+                  "experimental": {
+                    "color_threshold": true
+                  },
+                  "series": [
+                    {
+                      "entity": "sensor.nordpool_with_taxes_and_fees",
+                      "name": "Transfer",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": false,
+                      "color": "#B200ED",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "const data = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); return data.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), start[\"transfer\"]];\n});\n"
+                    },
+                    {
+                      "entity": "sensor.nordpool_with_taxes_and_fees",
+                      "name": "Tax",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": false,
+                      "color": "#DE73FF",
+                      "unit": " ",
+                      "show": {
+                        "legend_value": false
+                      },
+                      "data_generator": "const data = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); return data.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), start[\"tax\"]];\n});\n"
+                    },
+                    {
+                      "entity": "sensor.nordpool_with_taxes_and_fees",
+                      "name": "Spot",
+                      "type": "column",
+                      "float_precision": 2,
+                      "extend_to": false,
+                      "unit": " ",
+                      "show": {
+                        "extremas": false,
+                        "header_color_threshold": true,
+                        "legend_value": false
+                      },
+                      "data_generator": "const data = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); return data.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), start[\"spot\"]];\n});\n",
+                      "color_threshold": [
+                        {
+                          "value": 0,
+                          "color": "#04822e"
+                        },
+                        {
+                          "value": 50,
+                          "color": "#12A141"
+                        },
+                        {
+                          "value": 80,
+                          "color": "#79B92C"
+                        },
+                        {
+                          "value": 120,
+                          "color": "#C4D81D"
+                        },
+                        {
+                          "value": 160,
+                          "color": "#F3DC0C"
+                        },
+                        {
+                          "value": 200,
+                          "color": "#F4C616"
+                        },
+                        {
+                          "value": 250,
+                          "color": "#EFA51E"
+                        },
+                        {
+                          "value": 300,
+                          "color": "#E76821"
+                        },
+                        {
+                          "value": 350,
+                          "color": "#E33F20"
+                        },
+                        {
+                          "value": 400,
+                          "color": "#DC182F"
+                        }
+                      ]
+                    },
+                    {
+                      "entity": "sensor.nordpool_with_taxes_and_fees",
+                      "name": "AVG",
+                      "type": "line",
+                      "group_by": {
+                        "duration": "24 hour",
+                        "func": "avg"
+                      },
+                      "show": {
+                        "legend_value": false
+                      },
+                      "color": "black",
+                      "float_precision": 1,
+                      "data_generator": "return entity.attributes.raw_today.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today[index][\"value\"]];\n});\n"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:apexcharts-card",
+                  "apex_config": {
+                    "chart": {
+                      "height": 400
                     }
                   },
                   "header": {
                     "show": true,
                     "title": "Elpriser Nodpool",
-                    "show_states": true
+                    "show_states": false
                   },
                   "graph_span": "2d",
                   "span": {
@@ -582,6 +711,172 @@
                       "color": "orange",
                       "float_precision": 3,
                       "data_generator": "return entity.attributes.raw_tomorrow.map((entry) => {\n  return [new Date(entry.start), entry.value];\n});\n"
+                    },
+                    {
+                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "name": "Genomsnitt",
+                      "type": "line",
+                      "color": "black",
+                      "float_precision": 3,
+                      "show": {
+                        "legend_value": true,
+                        "extremas": false
+                      },
+                      "data_generator": "const todayValues = entity.attributes.raw_today.map(entry => entry.value);\nconst tomorrowValues = entity.attributes.raw_tomorrow.map(entry => entry.value);\n\n// Calculate the average for today and tomorrow\nconst averageValue = (todayValues.concat(tomorrowValues).reduce((acc, value) => acc + value, 0)) / (todayValues.length + tomorrowValues.length);\n\n// Create the data array with the average value for each time period\nconst averageData = entity.attributes.raw_today.map((entry, index) => {\n  const time = new Date(entry.start);\n  return [time, averageValue];  // Use the same time for all entries with the average value\n});\n\nreturn averageData;\n"
+                    }
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.water_usage_cost",
+                  "vertical": false,
+                  "hide_state": false,
+                  "show_entity_picture": false,
+                  "name": "Vattenkostnad",
+                  "state_content": [
+                    "state",
+                    "last-changed",
+                    "last_reset"
+                  ]
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.water_usage"
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "graph": "line",
+                  "type": "sensor",
+                  "entity": "sensor.total_el_price",
+                  "detail": 1,
+                  "name": "Kostnad importerad el",
+                  "icon": "mdi:transmission-tower-import",
+                  "theme": "Google Theme",
+                  "hours_to_show": 168
+                },
+                {
+                  "graph": "line",
+                  "type": "sensor",
+                  "entity": "sensor.total_el_sell_price",
+                  "detail": 1,
+                  "name": "Inkomst exporterad el",
+                  "icon": "mdi:transmission-tower-import",
+                  "theme": "Google Theme",
+                  "hours_to_show": 168
+                },
+                {
+                  "title": "Grid energy usage",
+                  "type": "custom:heatmap-card",
+                  "entity": "sensor.p1_meter_energy_import",
+                  "data": {
+                    "min": 0,
+                    "max": 10
+                  },
+                  "days": 20,
+                  "scale": "iron red"
+                },
+                {
+                  "type": "custom:apexcharts-card",
+                  "apex_config": {
+                    "chart": {
+                      "height": 400
+                    }
+                  },
+                  "graph_span": "24h",
+                  "header": {
+                    "title": "Spotpriser idag [kr/kWh]",
+                    "show": true,
+                    "show_states": true
+                  },
+                  "span": {
+                    "start": "day",
+                    "offset": "+0H"
+                  },
+                  "now": {
+                    "show": true,
+                    "color": "red",
+                    "label": "Nu"
+                  },
+                  "experimental": {
+                    "color_threshold": true
+                  },
+                  "series": [
+                    {
+                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "name": "Idag",
+                      "type": "column",
+                      "color": "orange",
+                      "float_precision": 2,
+                      "extend_to": "end",
+                      "data_generator": "return entity.attributes.raw_today.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today[index][\"value\"]];\n});\n",
+                      "show": {
+                        "in_header": "before_now",
+                        "extremas": true,
+                        "header_color_threshold": true
+                      },
+                      "color_threshold": [
+                        {
+                          "value": 0,
+                          "color": "#04822e"
+                        },
+                        {
+                          "value": 50,
+                          "color": "#12A141"
+                        },
+                        {
+                          "value": 80,
+                          "color": "#79B92C"
+                        },
+                        {
+                          "value": 120,
+                          "color": "#C4D81D"
+                        },
+                        {
+                          "value": 160,
+                          "color": "#F3DC0C"
+                        },
+                        {
+                          "value": 200,
+                          "color": "#F4C616"
+                        },
+                        {
+                          "value": 250,
+                          "color": "#EFA51E"
+                        },
+                        {
+                          "value": 300,
+                          "color": "#E76821"
+                        },
+                        {
+                          "value": 350,
+                          "color": "#E33F20"
+                        },
+                        {
+                          "value": 400,
+                          "color": "#DC182F"
+                        }
+                      ]
+                    },
+                    {
+                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
+                      "name": "AVG",
+                      "type": "line",
+                      "group_by": {
+                        "duration": "24 hour",
+                        "func": "avg"
+                      },
+                      "color": "darkblue",
+                      "float_precision": 2,
+                      "data_generator": "return entity.attributes.raw_today.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today[index][\"value\"]];\n});\n"
+                    }
+                  ],
+                  "yaxis": [
+                    {
+                      "min": 0
                     }
                   ]
                 },
@@ -626,186 +921,13 @@
                       }
                     }
                   ]
-                },
-                {
-                  "type": "tile",
-                  "entity": "sensor.water_usage_cost",
-                  "vertical": false,
-                  "hide_state": false,
-                  "show_entity_picture": false,
-                  "name": "Vattenkostnad",
-                  "state_content": [
-                    "state",
-                    "last-changed",
-                    "last_reset"
-                  ]
-                },
-                {
-                  "type": "tile",
-                  "entity": "sensor.water_usage"
                 }
-              ]
+              ],
+              "column_span": 1
             },
             {
               "type": "grid",
               "cards": [
-                {
-                  "type": "custom:apexcharts-card",
-                  "apex_config": {
-                    "chart": {
-                      "height": 400
-                    }
-                  },
-                  "graph_span": "24h",
-                  "header": {
-                    "title": "Elpriser idag [kr/kWh]",
-                    "show": true,
-                    "show_states": true
-                  },
-                  "span": {
-                    "start": "day",
-                    "offset": "+0H"
-                  },
-                  "now": {
-                    "show": true,
-                    "color": "red",
-                    "label": "Nu"
-                  },
-                  "series": [
-                    {
-                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
-                      "name": "Idag",
-                      "type": "column",
-                      "color": "orange",
-                      "float_precision": 2,
-                      "extend_to": "end",
-                      "data_generator": "return entity.attributes.raw_today.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today[index][\"value\"]];\n});\n",
-                      "show": {
-                        "in_header": "before_now",
-                        "extremas": true
-                      }
-                    },
-                    {
-                      "entity": "sensor.nordpool_kwh_se3_sek_3_095_0",
-                      "name": "AVG",
-                      "type": "line",
-                      "group_by": {
-                        "duration": "24 hour",
-                        "func": "avg"
-                      },
-                      "color": "darkblue",
-                      "float_precision": 2,
-                      "data_generator": "return entity.attributes.raw_today.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today[index][\"value\"]];\n});\n"
-                    }
-                  ],
-                  "yaxis": [
-                    {
-                      "min": 0
-                    }
-                  ]
-                },
-                {
-                  "type": "energy-usage-graph"
-                },
-                {
-                  "type": "custom:apexcharts-card",
-                  "graph_span": "24h",
-                  "stacked": true,
-                  "header": {
-                    "title": "Energy Price Breakdown",
-                    "show": true
-                  },
-                  "span": {
-                    "start": "day"
-                  },
-                  "now": {
-                    "show": true,
-                    "color": "red",
-                    "label": "Now"
-                  },
-                  "apex_config": {
-                    "legend": {
-                      "show": true
-                    }
-                  },
-                  "series": [
-                    {
-                      "entity": "sensor.nordpool_with_taxes_and_fees",
-                      "name": "Tax",
-                      "type": "column",
-                      "float_precision": 2,
-                      "extend_to": false,
-                      "color": "red",
-                      "unit": " ",
-                      "show": {
-                        "legend_value": false
-                      },
-                      "data_generator": "const data = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); return data.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), start[\"tax\"]];\n});\n"
-                    },
-                    {
-                      "entity": "sensor.nordpool_with_taxes_and_fees",
-                      "name": "Transfer",
-                      "type": "column",
-                      "float_precision": 2,
-                      "extend_to": false,
-                      "color": "orange",
-                      "unit": " ",
-                      "show": {
-                        "legend_value": false
-                      },
-                      "data_generator": "const data = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); return data.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), start[\"transfer\"]];\n});\n"
-                    },
-                    {
-                      "entity": "sensor.nordpool_with_taxes_and_fees",
-                      "name": "EON",
-                      "type": "column",
-                      "float_precision": 2,
-                      "extend_to": false,
-                      "color": "yellow",
-                      "unit": " ",
-                      "show": {
-                        "legend_value": false
-                      },
-                      "data_generator": "const data = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); return data.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), start[\"eon\"]];\n});\n"
-                    },
-                    {
-                      "entity": "sensor.nordpool_with_taxes_and_fees",
-                      "name": "Spot",
-                      "type": "column",
-                      "float_precision": 2,
-                      "extend_to": false,
-                      "color": "green",
-                      "unit": " ",
-                      "show": {
-                        "legend_value": false
-                      },
-                      "data_generator": "const data = entity.attributes.raw_today.concat(entity.attributes.raw_tomorrow); return data.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), start[\"spot\"]];\n});\n"
-                    },
-                    {
-                      "entity": "sensor.nordpool_with_taxes_and_fees",
-                      "name": "AVG",
-                      "type": "line",
-                      "group_by": {
-                        "duration": "24 hour",
-                        "func": "avg"
-                      },
-                      "color": "black",
-                      "float_precision": 2,
-                      "data_generator": "return entity.attributes.raw_today.map((start, index) => {\n  return [new Date(start[\"start\"]).getTime(), entity.attributes.raw_today[index][\"value\"]];\n});\n"
-                    }
-                  ]
-                },
-                {
-                  "title": "Grid energy usage",
-                  "type": "custom:heatmap-card",
-                  "entity": "sensor.p1_meter_energy_import",
-                  "data": {
-                    "min": 0,
-                    "max": 10
-                  },
-                  "days": 20,
-                  "scale": "iron red"
-                },
                 {
                   "title": "Water usage",
                   "type": "custom:heatmap-card",
@@ -816,31 +938,6 @@
                   },
                   "days": 20,
                   "scale": "iron red"
-                }
-              ]
-            },
-            {
-              "type": "grid",
-              "cards": [
-                {
-                  "graph": "line",
-                  "type": "sensor",
-                  "entity": "sensor.total_el_price",
-                  "detail": 1,
-                  "name": "Kostnad importerad el",
-                  "icon": "mdi:transmission-tower-import",
-                  "theme": "Google Theme",
-                  "hours_to_show": 168
-                },
-                {
-                  "graph": "line",
-                  "type": "sensor",
-                  "entity": "sensor.total_el_sell_price",
-                  "detail": 1,
-                  "name": "Inkomst exporterad el",
-                  "icon": "mdi:transmission-tower-import",
-                  "theme": "Google Theme",
-                  "hours_to_show": 168
                 },
                 {
                   "chart_type": "bar",
@@ -866,6 +963,9 @@
                 },
                 {
                   "type": "energy-date-selection"
+                },
+                {
+                  "type": "energy-usage-graph"
                 },
                 {
                   "type": "energy-distribution"
@@ -1084,7 +1184,8 @@
             }
           ],
           "cards": [],
-          "background": {}
+          "background": {},
+          "dense_section_placement": true
         },
         {
           "title": "Surveillance",
@@ -1130,220 +1231,6 @@
           "theme": "Google Theme",
           "cards": [
             {
-              "type": "entities",
-              "entities": [
-                {
-                  "entity": "sensor.mi_1_temperatur",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.mi_2_temperatur",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.mi_3_temperatur",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.mi_4_temperatur",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.mi_5_uterum_temperatur",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.mi_6_kallare_temperatur",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.mi_7_temperatur",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_temperature",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.lumi_lumi_sensor_ht_agl03_temperature_2",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.mi_1_luftfuktighet",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.mi_2_luftfuktighet",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.mi_3_luftfuktighet",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.mi_4_luftfuktighet",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.mi_5_uterum_luftfuktighet",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.mi_6_kallare_luftfuktighet",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.mi_7_luftfuktighet",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_humidity",
-                  "secondary_info": "last-updated"
-                },
-                {
-                  "entity": "sensor.lumi_lumi_sensor_ht_agl03_humidity_2",
-                  "secondary_info": "last-updated"
-                }
-              ],
-              "title": "Temperatur / luftfuktighet"
-            },
-            {
-              "type": "custom:apexcharts-card",
-              "header": {
-                "show": true,
-                "title": "ApexCharts-Card",
-                "show_states": false,
-                "colorize_states": true
-              },
-              "graph_span": "10d",
-              "apex_config": {
-                "chart": {
-                  "height": "500px"
-                }
-              },
-              "series": [
-                {
-                  "entity": "sensor.vardagsrum_temperatur"
-                },
-                {
-                  "entity": "sensor.ovre_hall_temperatur"
-                },
-                {
-                  "entity": "sensor.entre_hall_temperatur"
-                },
-                {
-                  "entity": "sensor.mi_1_temperatur"
-                },
-                {
-                  "entity": "sensor.mi_2_temperatur"
-                },
-                {
-                  "entity": "sensor.mi_3_temperatur"
-                },
-                {
-                  "entity": "sensor.mi_4_temperatur"
-                },
-                {
-                  "entity": "sensor.mi_5_uterum_temperatur"
-                },
-                {
-                  "entity": "sensor.mi_6_kallare_temperatur"
-                },
-                {
-                  "entity": "sensor.mi_7_temperatur"
-                },
-                {
-                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_temperature"
-                },
-                {
-                  "entity": "sensor.lumi_lumi_sensor_ht_agl03_temperature_2"
-                }
-              ]
-            },
-            {
-              "type": "custom:apexcharts-card",
-              "header": {
-                "show": true,
-                "title": "ApexCharts-Card",
-                "show_states": false,
-                "colorize_states": true
-              },
-              "graph_span": "10d",
-              "apex_config": {
-                "chart": {
-                  "height": "500px"
-                }
-              },
-              "series": [
-                {
-                  "entity": "sensor.vardagsrum_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.ovre_hall_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.entre_hall_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.mi_1_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.mi_2_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.mi_3_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.mi_4_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.mi_5_uterum_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.mi_6_kallare_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.mi_7_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_humidity"
-                },
-                {
-                  "entity": "sensor.lumi_lumi_sensor_ht_agl03_humidity_2"
-                }
-              ]
-            },
-            {
-              "type": "entities",
-              "entities": [
-                {
-                  "entity": "sensor.pax_levante_50_flow",
-                  "name": "Flow"
-                },
-                {
-                  "entity": "sensor.pax_levante_50_humidity",
-                  "name": "Humidity"
-                },
-                {
-                  "entity": "sensor.pax_levante_50_light",
-                  "name": "Light"
-                },
-                {
-                  "entity": "sensor.pax_levante_50_rpm",
-                  "name": "RPM"
-                },
-                {
-                  "entity": "sensor.pax_levante_50_state",
-                  "name": "State"
-                },
-                {
-                  "entity": "sensor.pax_levante_50_temperature",
-                  "name": "Temperature"
-                }
-              ],
-              "title": "Pax Levante 50"
-            },
-            {
               "type": "picture-elements",
               "elements": [
                 {
@@ -1352,6 +1239,16 @@
                   "style": {
                     "top": "48%",
                     "left": "12%",
+                    "color": "green",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_temperature_2",
+                  "style": {
+                    "top": "80%",
+                    "left": "50%",
                     "color": "green",
                     "font-weight": "bold"
                   }
@@ -1523,7 +1420,7 @@
                   "entity": "sensor.lumi_lumi_sensor_ht_agl03_temperature_2",
                   "style": {
                     "top": "28%",
-                    "left": "68%",
+                    "left": "60%",
                     "color": "green",
                     "font-weight": "bold"
                   }
@@ -1542,8 +1439,8 @@
                   "type": "state-label",
                   "entity": "sensor.mi_4_temperatur",
                   "style": {
-                    "top": "64%",
-                    "left": "72%",
+                    "top": "66%",
+                    "left": "76%",
                     "color": "green",
                     "font-weight": "bold"
                   }
@@ -1613,6 +1510,226 @@
               ],
               "image": "/local/assets/floor_plans/ovreplan_lightmode.png",
               "dark_mode_image": "/local/assets/floor_plans/ovreplan_darkmode.png"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.mi_1_temperatur",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_2_temperatur",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_3_temperatur",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_4_temperatur",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_5_uterum_temperatur",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_6_kallare_temperatur",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_7_temperatur",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_temperature",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl03_temperature_2",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_1_luftfuktighet",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_2_luftfuktighet",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_3_luftfuktighet",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_temperature_2"
+                },
+                {
+                  "entity": "sensor.mi_4_luftfuktighet",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_5_uterum_luftfuktighet",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_6_kallare_luftfuktighet",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.mi_7_luftfuktighet",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_humidity",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl03_humidity_2",
+                  "secondary_info": "last-updated"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_humidity_2"
+                }
+              ],
+              "title": "Temperatur / luftfuktighet"
+            },
+            {
+              "type": "custom:apexcharts-card",
+              "header": {
+                "show": true,
+                "title": "ApexCharts-Card",
+                "show_states": false,
+                "colorize_states": true
+              },
+              "graph_span": "10d",
+              "apex_config": {
+                "chart": {
+                  "height": "500px"
+                }
+              },
+              "series": [
+                {
+                  "entity": "sensor.vardagsrum_temperatur"
+                },
+                {
+                  "entity": "sensor.ovre_hall_temperatur"
+                },
+                {
+                  "entity": "sensor.entre_hall_temperatur"
+                },
+                {
+                  "entity": "sensor.mi_1_temperatur"
+                },
+                {
+                  "entity": "sensor.mi_2_temperatur"
+                },
+                {
+                  "entity": "sensor.mi_3_temperatur"
+                },
+                {
+                  "entity": "sensor.mi_4_temperatur"
+                },
+                {
+                  "entity": "sensor.mi_5_uterum_temperatur"
+                },
+                {
+                  "entity": "sensor.mi_6_kallare_temperatur"
+                },
+                {
+                  "entity": "sensor.mi_7_temperatur"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_temperature"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl03_temperature_2"
+                }
+              ]
+            },
+            {
+              "type": "custom:apexcharts-card",
+              "header": {
+                "show": true,
+                "title": "ApexCharts-Card",
+                "show_states": false,
+                "colorize_states": true
+              },
+              "graph_span": "10d",
+              "apex_config": {
+                "chart": {
+                  "height": "500px"
+                }
+              },
+              "series": [
+                {
+                  "entity": "sensor.vardagsrum_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.ovre_hall_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.entre_hall_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.mi_1_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.mi_2_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.mi_3_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.mi_4_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.mi_5_uterum_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.mi_6_kallare_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.mi_7_luftfuktighet"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_humidity"
+                },
+                {
+                  "entity": "sensor.lumi_lumi_sensor_ht_agl03_humidity_2"
+                }
+              ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.pax_levante_50_flow",
+                  "name": "Flow"
+                },
+                {
+                  "entity": "sensor.pax_levante_50_humidity",
+                  "name": "Humidity"
+                },
+                {
+                  "entity": "sensor.pax_levante_50_light",
+                  "name": "Light"
+                },
+                {
+                  "entity": "sensor.pax_levante_50_rpm",
+                  "name": "RPM"
+                },
+                {
+                  "entity": "sensor.pax_levante_50_state",
+                  "name": "State"
+                },
+                {
+                  "entity": "sensor.pax_levante_50_temperature",
+                  "name": "Temperature"
+                }
+              ],
+              "title": "Pax Levante 50"
             }
           ]
         }
