@@ -22,25 +22,28 @@
       zone_entity: zone.home
       notify_device: f326594e961a48756bccbda5b2185cd2
 - id: Frigate_rpi3_camera
-  alias: Cellar camera notifications
+  alias: Alarm - Tapo C310 notify
   description: Frigate Notifications (0.12.0.2)
   use_blueprint:
     path: SgtBatten/Stable.yaml
     input:
-      camera: camera.mousecam
+      camera: camera.tapo_c310
       notify_device: f326594e961a48756bccbda5b2185cd2
       alert_once: true
       attachment: snapshot
       debug: false
       message: '{{ label }} detected - {{ camera_name }}'
-      title: Mousecam - {{camera_name}}
+      title: '{{camera_name}}'
       color: steelblue
       channel: Frigate
       update_thumbnail: false
-      labels:
-      - mouse
-      - mice
-      - rat
+      labels: []
+      icon: mdi:cctv
+      state_entity: lock.ytterdorr
+      state_filter_states:
+      - locked
+      presence_filter: person.anders
+      state_filter: true
 - id: frigate_motion_detected
   alias: Notify of events
   triggers:
@@ -137,24 +140,28 @@
           device_id: 6f205474276711900175565cd22e16f5
       helper_last_controller_event: input_text.knapp_olles_rum_hjalpare
 - id: '1719410217121'
-  alias: Water usage exceeds 0.5 m3 for 60 minutes
+  alias: High water usage warning
   description: ''
   triggers:
-  - trigger: numeric_state
-    entity_id:
-    - sensor.water_usage
+  - entity_id: sensor.water_usage
     above: 0.25
     for:
       hours: 0
       minutes: 30
       seconds: 0
-  condition: []
+    trigger: numeric_state
+  conditions:
+  - condition: template
+    value_template: '{% set val = states(''sensor.water_usage'') %} {{ val not in
+      [''unknown'',''unavailable'',''none''] }}
+
+      '
   actions:
-  - action: notify.notify
-    data:
-      message: Huset har använt mer är 250 L vatten under 30 minuter!Water usage has
-        exceeded 0.5 for 60 minutes.
+  - data:
+      message: Huset har använt mer är 250 L vatten under 30 minuter!
+    action: notify.notify
   mode: single
+  initial_state: true
 - id: '1732616159104'
   alias: Musfälla källare rörelse
   description: ''
@@ -208,6 +215,7 @@
         - binary_sensor.tradfri_on_off_switch_battery_low
         - binary_sensor.tradfri_on_off_switch_2_battery_low
         - binary_sensor.frida_iphone1_battery_plus_low
+        - sensor.sm_g970f_battery_level
         device_id: 7d14e7d4bcd8ee6b80815bb2f9e58b05
       include_easy_notify: enable_easy_notify
       include_persistent_notification: enable_persistent_okay_notification
@@ -216,3 +224,46 @@
       - f326594e961a48756bccbda5b2185cd2
       button_entity: input_button.check_battery_levels
       global_conditions: []
+- id: '1734902601715'
+  alias: Energivarning
+  description: Huset konsumerar mer än 5000W
+  triggers:
+  - entity_id: sensor.p1_meter_effekt
+    above: 5000
+    trigger: numeric_state
+  conditions:
+  - condition: time
+    after: 06:00:00
+    before: '22:00:00'
+  - condition: template
+    value_template: '{% set last = state_attr(''automation.high_energy_consumption_warning'',''last_triggered'')
+      %} {{ (now() - (last if last else 0)).total_seconds() > 900 }}'
+  actions:
+  - data:
+      title: Hög energianvändning
+      message: Huset förbrukar mer än 5 kw
+    action: notify.mobile_app_anders_s21fe
+  mode: single
+- id: '1734903609516'
+  alias: Alarm - Rpi3 notify
+  description: Frigate Notifications (0.12.0.2)
+  use_blueprint:
+    path: SgtBatten/Stable.yaml
+    input:
+      camera: camera.rpi3_2
+      notify_device: f326594e961a48756bccbda5b2185cd2
+      alert_once: true
+      attachment: snapshot
+      debug: false
+      message: '{{ label }} detected - {{ camera_name }}'
+      title: '{{camera_name}}'
+      color: steelblue
+      channel: Frigate
+      update_thumbnail: false
+      labels: []
+      icon: mdi:cctv
+      state_entity: lock.ytterdorr
+      state_filter_states:
+      - locked
+      presence_filter: person.anders
+      state_filter: true
