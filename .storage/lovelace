@@ -511,14 +511,6 @@
                       "name": "Effekt"
                     },
                     {
-                      "entity": "sensor.p1_meter_energy_export",
-                      "name": "Energy export"
-                    },
-                    {
-                      "entity": "sensor.p1_meter_energy_import",
-                      "name": "Energy import"
-                    },
-                    {
                       "entity": "sensor.p1_meter_power_phase_1",
                       "name": "Power phase 1"
                     },
@@ -529,6 +521,9 @@
                     {
                       "entity": "sensor.p1_meter_power_phase_3",
                       "name": "Power phase 3"
+                    },
+                    {
+                      "entity": "sensor.haos_sbfspot_sma_ac_power"
                     }
                   ],
                   "title": "P1 meter"
@@ -548,7 +543,7 @@
                   "header": {
                     "title": "Energy Price Breakdown",
                     "show": true,
-                    "show_states": true,
+                    "show_states": false,
                     "colorize_states": true
                   },
                   "span": {
@@ -931,7 +926,7 @@
                 {
                   "title": "Water usage",
                   "type": "custom:heatmap-card",
-                  "entity": "sensor.water_usage",
+                  "entity": "sensor.water_usage_in_liters",
                   "data": {
                     "min": "auto",
                     "max": "auto"
