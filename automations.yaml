@@ -280,3 +280,23 @@
     data:
       message: 'Asus pc är offline '
   mode: single
+- id: '1735132152780'
+  alias: RPI3 server monitor
+  description: Bevaka server är online
+  triggers:
+  - type: not_connected
+    device_id: e61e9f40dff6dd6377e0a1dc3531c18b
+    entity_id: 021fe229ce1e080187be311623247f2c
+    domain: binary_sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  conditions: []
+  actions:
+  - action: notify.mobile_app_anders_s21fe
+    metadata: {}
+    data:
+      message: 'Rpi3 offline '
+  mode: single

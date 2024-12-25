@@ -4,7 +4,7 @@ sensor:
   - name: "RPI3 server status"
     icon: mdi:server
     state: >
-      {% if is_state('binary_sensor.' ~ !secret rpi3_ip, 'on') %}
+      {% if is_state('binary_sensor.rpi3_icmp', 'on') %}
         Online
       {% else %}
         Offline
