@@ -1,0 +1,11 @@
+##########################################
+### The new tamplate syntax
+sensor:
+  - name: "Asus PC server status"
+    icon: mdi:server
+    state: >
+      {% if is_state('binary_sensor.' ~ !secret asuspc_ip, 'on') %}
+        Online
+      {% else %}
+        Offline
+      {% endif %}

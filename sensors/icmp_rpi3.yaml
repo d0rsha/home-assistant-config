@@ -1,0 +1,11 @@
+##########################################
+### The new tamplate syntax
+sensor:
+  - name: "RPI3 server status"
+    icon: mdi:server
+    state: >
+      {% if is_state('binary_sensor.' ~ !secret rpi3_ip, 'on') %}
+        Online
+      {% else %}
+        Offline
+      {% endif %}
