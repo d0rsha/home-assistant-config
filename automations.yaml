@@ -235,9 +235,6 @@
   - condition: time
     after: 06:00:00
     before: '22:00:00'
-  - condition: template
-    value_template: '{% set last = state_attr(''automation.high_energy_consumption_warning'',''last_triggered'')
-      %} {{ (now() - (last if last else 0)).total_seconds() > 900 }}'
   actions:
   - data:
       title: Hög energianvändning
@@ -267,3 +264,19 @@
       - locked
       presence_filter: person.anders
       state_filter: true
+- id: '1734963178527'
+  alias: 'Asuspc server övervakning '
+  description: Bevaka server är online
+  triggers:
+  - type: not_connected
+    device_id: 41cc571454292446a326630a8437b280
+    entity_id: 0151c944ca7f8a98384c411b01eb93a1
+    domain: binary_sensor
+    trigger: device
+  conditions: []
+  actions:
+  - action: notify.mobile_app_anders_s21fe
+    metadata: {}
+    data:
+      message: 'Asus pc är offline '
+  mode: single
