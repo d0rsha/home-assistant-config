@@ -33,7 +33,7 @@
       attachment: snapshot
       debug: false
       message: '{{ label }} detected - {{ camera_name }}'
-      title: '{{camera_name}}'
+      title: '{{camera_name}} {{ label}} '
       color: steelblue
       channel: Frigate
       update_thumbnail: false
@@ -153,12 +153,17 @@
   conditions:
   - condition: template
     value_template: '{% set val = states(''sensor.water_usage'') %} {{ val not in
-      [''unknown'',''unavailable'',''none''] }}
+      [''unknown'', ''unavailable'', ''none''] }}
+
+      '
+  - condition: template
+    value_template: '{{ (as_timestamp(now()) - as_timestamp(states.sensor.water_usage.last_changed))
+      > 1800 }}
 
       '
   actions:
   - data:
-      message: Huset har använt mer är 250 L vatten under 30 minuter!
+      message: Huset har använt mer än 250 L vatten under 30 minuter!
     action: notify.notify
   mode: single
   initial_state: true
@@ -226,11 +231,16 @@
       global_conditions: []
 - id: '1734902601715'
   alias: Energivarning
-  description: Huset konsumerar mer än 5000W
+  description: Huset importerar mycket energi
   triggers:
-  - entity_id: sensor.p1_meter_effekt
-    above: 5000
+  - entity_id:
+    - sensor.p1_meter_effekt
+    above: 6000
     trigger: numeric_state
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
   conditions:
   - condition: time
     after: 06:00:00
@@ -238,7 +248,7 @@
   actions:
   - data:
       title: Hög energianvändning
-      message: Huset förbrukar mer än 5 kw
+      message: Huset förbrukar mer än 6 kw
     action: notify.mobile_app_anders_s21fe
   mode: single
 - id: '1734903609516'
@@ -250,13 +260,13 @@
       camera: camera.rpi3_2
       notify_device: f326594e961a48756bccbda5b2185cd2
       alert_once: true
-      attachment: snapshot
+      attachment: thumbnail
       debug: false
       message: '{{ label }} detected - {{ camera_name }}'
       title: '{{camera_name}}'
       color: steelblue
       channel: Frigate
-      update_thumbnail: false
+      update_thumbnail: true
       labels: []
       icon: mdi:cctv
       state_entity: lock.ytterdorr
