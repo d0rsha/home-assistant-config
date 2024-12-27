@@ -37,6 +37,7 @@ logger:
   logs:
     custom_components.hacs: debug
     aiogithubapi: debug
+    custom_components.pax_ble: debug
 
 ##########################################
 ### Cloudflare tunnel
