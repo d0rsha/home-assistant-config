@@ -768,8 +768,8 @@
                   "type": "custom:heatmap-card",
                   "entity": "sensor.p1_meter_energy_import",
                   "data": {
-                    "min": 0,
-                    "max": 10
+                    "min": "auto",
+                    "max": "auto"
                   },
                   "days": 20,
                   "scale": "iron red"
