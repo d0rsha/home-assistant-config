@@ -1,0 +1,23 @@
+override_sensor_data:
+  fields:
+    sensor_entity:
+      required: true
+      example: sensor.peaqnext_washer or peaqnext_washer or washer
+    duration_in_minutes:
+      example: 60
+    consumption_in_kwh:
+      example: 0.5
+    custom_consumption_pattern:
+      example: 1, 1.1, 2, 0
+    non_hours_start:
+      example: [22, 23]
+    non_hours_end:
+      example: [6, 7]
+    timeout:
+      example: 8 or 2023-01-01 03:00:00
+
+cancel_override:
+  fields:
+    sensor_entity:
+      required: true
+      example: sensor.peaqnext_washer or peaqnext_washer or washer
