@@ -310,3 +310,24 @@
     data:
       message: 'Rpi3 offline '
   mode: single
+- id: '1735378350081'
+  alias: Bajsknappen automation
+  description: Starta boost på badrumsfläkt
+  use_blueprint:
+    path: EPMatt/ikea_e1743.yaml
+    input:
+      integration: ZHA
+      controller_device: 4dd612cc4136d35a3619d60e7c7d2aaa
+      helper_last_controller_event: input_text.bajsknappen_hjalpare
+      action_button_up_short:
+      - action: switch.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: switch.pax_levante_50_boostmode
+      action_button_down_short:
+      - action: switch.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: switch.pax_levante_50_boostmode
