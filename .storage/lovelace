@@ -768,7 +768,7 @@
                   "type": "custom:heatmap-card",
                   "entity": "sensor.p1_meter_energy_import",
                   "data": {
-                    "min": "auto",
+                    "min": 0,
                     "max": "auto"
                   },
                   "days": 20,
@@ -928,7 +928,7 @@
                   "type": "custom:heatmap-card",
                   "entity": "sensor.water_usage_in_liters",
                   "data": {
-                    "min": "auto",
+                    "min": 0,
                     "max": "auto"
                   },
                   "days": 20,
