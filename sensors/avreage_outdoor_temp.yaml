@@ -1,0 +1,6 @@
+sensor:
+  - name: "Utomhustemperatur"
+    unique_id: "utomhustemperatur_loggad"
+    unit_of_measurement: "°C"
+    state: >
+      {{ state_attr('weather.forecast_hem', 'temperature') | float(0) }}
