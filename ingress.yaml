@@ -12,14 +12,14 @@ frigate:
 frigate_mousecam:
   ui_mode: toolbar
   title: "Frigate mousecam"
-  icon: mdi:cctv
+  icon: mdi:mouse
   url: !secret url_frigate_mousecam
-codeproject_ai:
-  work_mode: ingress
-  ui_mode: toolbar
-  title: "Codeproject AI"
-  icon: mdi:brain
-  url: !secret url_code_project_ai
+# codeproject_ai:
+#   work_mode: ingress
+#   ui_mode: toolbar
+#   title: "Codeproject AI"
+#   icon: mdi:brain
+#   url: !secret url_code_project_ai
 portainer:
   ui_mode: toolbar
   title: "Portainer"
