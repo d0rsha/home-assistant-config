@@ -1507,6 +1507,51 @@
               "dark_mode_image": "/local/assets/floor_plans/ovreplan_darkmode.png"
             },
             {
+              "type": "custom:apexcharts-card",
+              "graph_span": "5d",
+              "header": {
+                "show": true,
+                "title": "Temperaturdifferens (Inomhus vs Utomhus)"
+              },
+              "series": [
+                {
+                  "entity": "sensor.medeltemperatur_inomhus",
+                  "name": "Inomhus",
+                  "color": "#FF5733",
+                  "group_by": {
+                    "duration": "1h",
+                    "func": "avg"
+                  },
+                  "yaxis_id": "inomhus"
+                },
+                {
+                  "entity": "sensor.utomhustemperatur",
+                  "name": "Utomhus",
+                  "color": "#33C3FF",
+                  "group_by": {
+                    "duration": "1h",
+                    "func": "avg"
+                  },
+                  "yaxis_id": "utomhus"
+                }
+              ],
+              "yaxis": [
+                {
+                  "id": "inomhus",
+                  "opposite": true,
+                  "min": 19,
+                  "max": 21,
+                  "decimals": 2
+                },
+                {
+                  "id": "utomhus",
+                  "min": -20,
+                  "max": 30,
+                  "decimals": 0
+                }
+              ]
+            },
+            {
               "type": "entities",
               "entities": [
                 {
