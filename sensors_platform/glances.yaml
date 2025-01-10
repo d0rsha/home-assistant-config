@@ -1,0 +1,8 @@
+- platform: glances
+  host: 192.168.50.12
+  port: 61208
+  resources:
+    - cpu_used
+    - memory_used
+    - disk_used
+    - gpu_temperature
