@@ -1540,13 +1540,13 @@
                   "id": "inomhus",
                   "opposite": true,
                   "min": 19,
-                  "max": 21,
-                  "decimals": 2
+                  "max": 22,
+                  "decimals": 1
                 },
                 {
                   "id": "utomhus",
-                  "min": -20,
-                  "max": 30,
+                  "min": -15,
+                  "max": 25,
                   "decimals": 0
                 }
               ]
@@ -1647,6 +1647,16 @@
               "apex_config": {
                 "chart": {
                   "height": "500px"
+                },
+                "legend": {
+                  "show": true,
+                  "markers": {
+                    "width": 12,
+                    "height": 12
+                  },
+                  "onItemClick": {
+                    "toggleDataSeries": false
+                  }
                 }
               },
               "series": [
@@ -1660,12 +1670,6 @@
                   "entity": "sensor.entre_hall_temperatur"
                 },
                 {
-                  "entity": "sensor.mi_1_temperatur"
-                },
-                {
-                  "entity": "sensor.mi_2_temperatur"
-                },
-                {
                   "entity": "sensor.mi_3_temperatur"
                 },
                 {
@@ -1673,9 +1677,6 @@
                 },
                 {
                   "entity": "sensor.mi_5_uterum_temperatur"
-                },
-                {
-                  "entity": "sensor.mi_6_kallare_temperatur"
                 },
                 {
                   "entity": "sensor.mi_7_temperatur"
@@ -1770,6 +1771,116 @@
                 }
               ],
               "title": "Pax Levante 50"
+            }
+          ]
+        },
+        {
+          "type": "sections",
+          "visible": [
+            {
+              "user": "4eb6ec921e7f44d0ad8facdd232b21eb"
+            }
+          ],
+          "max_columns": 4,
+          "title": "Servers",
+          "path": "servers",
+          "icon": "mdi:server-network-outline",
+          "dense_section_placement": true,
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.asuspc_icmp",
+                  "vertical": false,
+                  "show_entity_picture": false,
+                  "hide_state": false
+                },
+                {
+                  "type": "tile",
+                  "entity": "binary_sensor.rpi3_icmp"
+                },
+                {
+                  "type": "custom:apexcharts-card",
+                  "header": {
+                    "show": true,
+                    "title": "Asus PC monitoring",
+                    "show_states": true,
+                    "colorize_states": true
+                  },
+                  "series": [
+                    {
+                      "entity": "sensor.glances_asuspc_etc_hosts_disk_usage"
+                    },
+                    {
+                      "entity": "sensor.glances_asuspc_cpu_usage"
+                    },
+                    {
+                      "entity": "sensor.glances_asuspc_memory_usage"
+                    },
+                    {
+                      "entity": "sensor.glances_asuspc_swap_usage"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "custom:apexcharts-card",
+                  "header": {
+                    "show": true,
+                    "title": "Rpi3 monitoring",
+                    "show_states": true,
+                    "colorize_states": true
+                  },
+                  "series": [
+                    {
+                      "entity": "sensor.glances_rpi3_disk_usage"
+                    },
+                    {
+                      "entity": "sensor.glances_rpi3_cpu_usage"
+                    },
+                    {
+                      "entity": "sensor.glances_rpi3_memory_usage"
+                    },
+                    {
+                      "entity": "sensor.glances_rpi3_swap_usage"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "custom:apexcharts-card",
+                  "header": {
+                    "show": true,
+                    "title": "Rpi3 monitoring",
+                    "show_states": true,
+                    "colorize_states": true
+                  },
+                  "series": [
+                    {
+                      "entity": "sensor.glances_haos_data_disk_usage"
+                    },
+                    {
+                      "entity": "sensor.glances_haos_cpu_usage"
+                    },
+                    {
+                      "entity": "sensor.glances_haos_memory_usage"
+                    },
+                    {
+                      "entity": "sensor.glances_haos_swap_usage"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
