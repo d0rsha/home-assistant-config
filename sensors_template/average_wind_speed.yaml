@@ -1,0 +1,6 @@
+sensor:
+  - name: "Vindstyrka"
+    unique_id: "wind_speed"
+    unit_of_measurement: "m/s"
+    state: >
+      {{ state_attr('weather.forecast_hem', 'wind_speed') | float(0) }}

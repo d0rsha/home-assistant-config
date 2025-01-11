@@ -1,0 +1,6 @@
+sensor:
+  - name: "Vindby styrka"
+    unique_id: "wind_gust_speed"
+    unit_of_measurement: "m/s"
+    state: >
+      {{ state_attr('weather.forecast_hem', 'wind_gust_speed') | float(0) }}
