@@ -1508,10 +1508,15 @@
             },
             {
               "type": "custom:apexcharts-card",
-              "graph_span": "5d",
+              "graph_span": "15d",
               "header": {
                 "show": true,
                 "title": "Temperaturdifferens (Inomhus vs Utomhus)"
+              },
+              "apex_config": {
+                "stroke": {
+                  "width": 2
+                }
               },
               "series": [
                 {
@@ -1528,6 +1533,20 @@
                   "entity": "sensor.utomhustemperatur",
                   "name": "Utomhus",
                   "color": "#33C3FF",
+                  "group_by": {
+                    "duration": "1h",
+                    "func": "avg"
+                  },
+                  "yaxis_id": "utomhus"
+                },
+                {
+                  "entity": "sensor.mi_1_temperatur",
+                  "stroke_dash": 8,
+                  "statistics": {
+                    "period": "hour"
+                  },
+                  "name": "Vinden",
+                  "color": "#CCCCCC",
                   "group_by": {
                     "duration": "1h",
                     "func": "avg"
@@ -1645,6 +1664,9 @@
               },
               "graph_span": "10d",
               "apex_config": {
+                "stroke": {
+                  "width": 2
+                },
                 "chart": {
                   "height": "500px"
                 },
@@ -1699,6 +1721,9 @@
               },
               "graph_span": "10d",
               "apex_config": {
+                "stroke": {
+                  "width": 2
+                },
                 "chart": {
                   "height": "500px"
                 }
