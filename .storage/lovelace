@@ -1546,27 +1546,45 @@
                     "period": "hour"
                   },
                   "name": "Vinden",
-                  "color": "#CCCCCC",
+                  "color": "#555555",
                   "group_by": {
                     "duration": "1h",
                     "func": "avg"
                   },
                   "yaxis_id": "utomhus"
+                },
+                {
+                  "entity": "sensor.vindby_styrka",
+                  "name": "Vindbyar",
+                  "color": "#bbbbbb",
+                  "stroke_dash": 8,
+                  "group_by": {
+                    "duration": "1h",
+                    "func": "avg"
+                  },
+                  "yaxis_id": "vind"
                 }
               ],
               "yaxis": [
                 {
                   "id": "inomhus",
-                  "opposite": true,
                   "min": 19,
                   "max": 22,
                   "decimals": 1
                 },
                 {
                   "id": "utomhus",
+                  "opposite": true,
                   "min": -15,
                   "max": 25,
                   "decimals": 0
+                },
+                {
+                  "id": "vind",
+                  "opposite": true,
+                  "decimals": 1,
+                  "min": 0,
+                  "max": 20
                 }
               ]
             },
