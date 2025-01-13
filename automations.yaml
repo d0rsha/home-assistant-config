@@ -239,7 +239,7 @@
     trigger: numeric_state
     for:
       hours: 0
-      minutes: 1
+      minutes: 2
       seconds: 0
   conditions:
   - condition: time
