@@ -1904,7 +1904,7 @@
                   "type": "custom:apexcharts-card",
                   "header": {
                     "show": true,
-                    "title": "Rpi3 monitoring",
+                    "title": "HAOS monitoring",
                     "show_states": true,
                     "colorize_states": true
                   },
