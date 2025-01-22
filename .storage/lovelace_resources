@@ -28,6 +28,11 @@
         "id": "505b0351f74c4895bfe954a9a21dfb70",
         "url": "/webrtc/webrtc-camera.js?v=v3.6.0",
         "type": "module"
+      },
+      {
+        "id": "7d6898de56654286bc733fd0dd964db1",
+        "url": "/hacsfiles/hass_ingress/ingress.zip?hacstag=766376848125",
+        "type": "module"
       }
     ]
   }
