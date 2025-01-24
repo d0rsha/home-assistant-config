@@ -3,9 +3,10 @@ sensor:
     unique_id: "medeltemperatur_inomhus"
     unit_of_measurement: "°C"
     state: >
-      {{ ([ states('sensor.mi_3_temperatur') | float(0),
-            states('sensor.lumi_lumi_sensor_ht_agl03_temperature_2') | float(0),
-            states('sensor.mi_4_temperatur') | float(0),
-            states('sensor.lumi_lumi_sensor_ht_agl02_temperature') | float(0),
-            states('sensor.vardagsrum_temperatur') | float(0),
-            states('sensor.entre_hall_temperatur') | float(0) ] | select('is_number') | average) }}
+                      {{ ([ states('sensor.mi_3_temperatur') | float(0) if states('sensor.mi_3_temperatur') not in ['unavailable', 'unknown'] else None,
+                                  states('sensor.lumi_lumi_sensor_ht_agl03_temperature_2') | float(0) if states('sensor.lumi_lumi_sensor_ht_agl03_temperature_2') not in ['unavailable', 'unknown'] else None,
+                                              states('sensor.mi_4_temperatur') | float(0) if states('sensor.mi_4_temperatur') not in ['unavailable', 'unknown'] else None,
+                                                          states('sensor.lumi_lumi_sensor_ht_agl02_temperature') | float(0) if states('sensor.lumi_lumi_sensor_ht_agl02_temperature') not in ['unavailable', 'unknown'] else None,
+                                                                      states('sensor.vardagsrum_temperatur') | float(0) if states('sensor.vardagsrum_temperatur') not in ['unavailable', 'unknown'] else None,
+                                                                                  states('sensor.entre_hall_temperatur') | float(0) if states('sensor.entre_hall_temperatur') not in ['unavailable', 'unknown'] else None ] 
+                                                                                            | select('is_number') | average) }}
