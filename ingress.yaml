@@ -1,27 +1,53 @@
+tabs:
+  work_mode: custom # MUST
+  url: /files/ingress/ha-tabs-ingress.js # MUST
+  title: Ingress
+  icon: mdi:cog-box
 link_automation:
-  work_mode: iframe
-  ui_mode: replace
+  parent: tabs
+  work_mode: custom
   title: Automations
   icon: mdi:link
   url: /config/automation/dashboard
-frigate:
-  ui_mode: toolbar
+link_zigbee:
+  parent: tabs
+  work_mode: iframe
+  title: Zigbee
+  icon: mdi:zodiac-gemini
+  url: /config/integrations/integration/zha
+lan_tabs:
+  work_mode: custom # MUST
+  url: /files/ingress/ha-tabs-ingress.js # MUST
   title: Frigate
+  icon: mdi:cctv
+frigate:
+  parent: lan_tabs
+  work_mode: ingress
+  title: Main
   icon: mdi:cctv
   url: !secret url_frigate
 frigate_mousecam:
-  ui_mode: toolbar
-  title: "Frigate mousecam"
+  parent: lan_tabs
+  work_mode: ingress
+  title: "Mousecam"
   icon: mdi:mouse
   url: !secret url_frigate_mousecam
-# codeproject_ai:
+# asus_router:
+#   title: ASUSRouter
+#   icon: mdi:router-wireless-settings
+#   parent: lan_tabs
+#   work_mode: ingress
+#   url: http://192.168.50.1/
+portainer:
+  parent: lan_tabs
+  work_mode: ingress
+  title: "Portainer"
+  icon: mdi:docker
+  url: !secret url_portainer
+
+  # codeproject_ai:
 #   work_mode: ingress
 #   ui_mode: toolbar
 #   title: "Codeproject AI"
 #   icon: mdi:brain
 #   url: !secret url_code_project_ai
-portainer:
-  ui_mode: toolbar
-  title: "Portainer"
-  icon: mdi:docker
-  url: !secret url_portainer
