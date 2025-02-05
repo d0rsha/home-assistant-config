@@ -1,0 +1,375 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "O aparelho já está configurado"
+        },
+        "error": {
+            "cannot_connect": "Falha ao conectar",
+            "invalid_auth": "Autenticação inválida",
+            "unknown": "Um erro inesperado ocorreu. Verifica os ficheiros de log do HomeAssistant."
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "email": "E-mail",
+                    "password": "Palavra passe"
+                }
+            }
+        }
+    },
+    "entity": {
+        "binary_sensor": {
+            "bonnet_open": {
+                "name": "Capota",
+                "state": {
+                    "off": "Fechado",
+                    "on": "Aberto"
+                }
+            },
+            "charger_connected": {
+                "name": "Carregador conectado",
+                "state": {
+                    "off": "Desconectado",
+                    "on": "Conectado"
+                }
+            },
+            "charger_locked": {
+                "name": "Bloqueio de carga",
+                "state": {
+                    "off": "Bloqueado",
+                    "on": "Desbloqueado"
+                }
+            },
+            "doors_locked": {
+                "name": "Portas trancadas",
+                "state": {
+                    "off": "Bloqueado",
+                    "on": "Desbloqueado"
+                }
+            },
+            "doors_open": {
+                "name": "Portas abertas",
+                "state": {
+                    "off": "Fechado",
+                    "on": "Aberto"
+                }
+            },
+            "locked": {
+                "name": "Veículo trancado",
+                "state": {
+                    "off": "Bloqueado",
+                    "on": "Desbloqueado"
+                }
+            },
+            "parkinglights_on": {
+                "name": "Luzes do estacionamento",
+                "state": {
+                    "off": "Desabilitado",
+                    "on": "Habilitado"
+                }
+            },
+            "sunroof_open": {
+                "name": "Teto solar",
+                "state": {
+                    "off": "Fechado",
+                    "on": "Aberto"
+                }
+            },
+            "trunk_open": {
+                "name": "Porta-malas",
+                "state": {
+                    "off": "Fechado",
+                    "on": "Aberto"
+                }
+            },
+            "windows_open": {
+                "name": "Janelas",
+                "state": {
+                    "off": "Fechado",
+                    "on": "Aberto"
+                }
+            },
+            "door_open_front_left": {
+                "name": "Porta frontal esquerda: ",
+                "state": {
+                    "off": "Fechada",
+                    "on": "Aberta"
+                }
+            },
+            "door_open_front_right": {
+                "name": "Porta frontal direita: ",
+                "state": {
+                    "off": "Fechada",
+                    "on": "Aberta"
+                }
+            },
+            "door_open_rear_left": {
+                "name": "Porta traseira esquerda: ",
+                "state": {
+                    "off": "Fechada",
+                    "on": "Aberta"
+                }
+            },
+            "door_open_rear_right": {
+                "name": "Porta traseira direita: ",
+                "state": {
+                    "off": "Fechada",
+                    "on": "Aberta"
+                }
+            },
+            "window_open_front_left": {
+                "name": "Janela frontal esquerda: ",
+                "state": {
+                    "off": "Fechada",
+                    "on": "Aberta"
+                }
+            },
+            "window_open_front_right": {
+                "name": "Janela frontal direita: ",
+                "state": {
+                    "off": "Fechada",
+                    "on": "Aberta"
+                }
+            },
+            "window_open_rear_left": {
+                "name": "Janela traseira esquerda:",
+                "state": {
+                    "off": "Fechada",
+                    "on": "Aberta"
+                }
+            },
+            "window_open_rear_right": {
+                "name": "Janela traseira direita: ",
+                "state": {
+                    "off": "Fechada",
+                    "on": "Aberta"
+                }
+            }
+        },
+        "climate": {
+            "climate": {
+                "name": "Ar condicionado"
+            },
+            "auxiliary_heater": {
+                "name": "Aquecedor auxiliar"
+            }
+        },
+        "device_tracker": {
+            "device_tracker": {
+                "name": "Posição",
+                "state": {
+                    "home": "Em casa",
+                    "not_home": "Fora",
+                    "vehicle_in_motion": "Moção detetada"
+                }
+            }
+        },
+        "image": {
+            "render_light_3x": {
+                "name": "Renderização do estado da luz do veículo"
+            },
+            "render_vehicle_main": {
+                "name": "Renderização principal do veículo"
+            }
+        },
+        "lock": {
+            "door_lock": {
+                "name": "Fechadura da porta"
+            }
+        },
+        "number": {
+            "charge_limit": {
+                "name": "Limite de carga"
+            },
+            "auxiliary_heater_duration": {
+                "name": "Duração do aquecedor"
+            }
+        },
+        "sensor": {
+            "battery_percentage": {
+                "name": "Percentagem da bateria"
+            },
+            "car_captured": {
+                "name": "Última atualização"
+            },
+            "charge_type": {
+                "name": "Tipo de carga",
+                "state": {
+                    "ac": "Corrente alternada",
+                    "dc": "Corrente contínua",
+                    "off": "DESLIGADO"
+                }
+            },
+            "charging_power": {
+                "name": "Potência de carga"
+            },
+            "charging_rate": {
+                "name": "Taxa de carregamento"
+            },
+            "charging_state": {
+                "name": "Estado de carga",
+                "state": {
+                    "charging": "A carregar",
+                    "connect_cable": "Sem energia",
+                    "conserving": "Conservando carga",
+                    "ready_for_charging": "Preparado para carregar"
+                }
+            },
+            "inspection": {
+                "name": "Próxima inspeção"
+            },
+            "inspection_in_km": {
+                "name": "Nova inspeção em KM"
+            },
+            "mileage": {
+                "name": "Quilometragem"
+            },
+            "oil_service_in_days": {
+                "name": "Serviço de petróleo"
+            },
+            "oil_service_in_km": {
+                "name": "Serviço de petróleo em KM"
+            },
+            "range": {
+                "name": "Alcance"
+            },
+            "remaining_charging_time": {
+                "name": "Tempo de carga restante"
+            },
+            "operation": {
+                "name": "Última operação",
+                "state": {
+                    "in_progress": "Em andamento",
+                    "completed_success": "Concluído com êxito",
+                    "completed_warning": "Concluído com aviso",
+                    "error": "Erro"
+                }
+            },
+            "service_event": {
+                "name": "Último evento de serviço"
+            },
+            "software_version": {
+                "name": "Versão do software"
+            },
+            "target_battery_percentage": {
+                "name": "Percentagem limite da bateria"
+            },
+            "fuel_level": {
+                "name": "Nível de combustível"
+            },
+            "adblue_range": {
+                "name": "Alcance AdBlue"
+            },
+            "gas_level": {
+                "name": "Nível do gás"
+            },
+            "gas_range": {
+                "name": "Alcance do gás"
+            },
+            "combustion_range": {
+                "name": "Alcance de combustão"
+            },
+            "electric_range": {
+                "name": "Alcance elétrico"
+            },
+            "outside_temperature": {
+                "name": "Temperatura de fora"
+            }
+        },
+        "switch": {
+            "battery_care_mode": {
+                "name": "Cuidado da bateria"
+            },
+            "charging": {
+                "name": "A carregar"
+            },
+            "charging_switch": {
+                "name": "A carregar"
+            },
+            "reduced_current": {
+                "name": "Corrente reduzida"
+            },
+            "auto_unlock_plug": {
+                "name": "Desbloquear plug quando carregado"
+            },
+            "window_heating": {
+                "name": "Aquecimento da janela"
+            },
+            "ac_at_unlock": {
+                "name": "Corrente alternada quando Desbloqueada"
+            },
+            "ac_without_external_power": {
+                "name": "Corrente alternada Sem Energia Externa"
+            },
+            "ac_seat_heating_front_left": {
+                "name": "Aquecimento de Assento Esquerdo com corrente alternada"
+            },
+            "ac_seat_heating_front_right": {
+                "name": "Aquecimento de Assento Direito com corrente alternada"
+            },
+            "ac_window_heating": {
+                "name": "Aquecimento da Janela com corrente alternada"
+            },
+            "departure_timer_1": {
+                "name": "Tempo de Partida 1"
+            },
+            "departure_timer_2": {
+                "name": "Tempo de Partida 2"
+            },
+            "departure_timer_3": {
+                "name": "Tempo de Partida 3"
+            },
+            "ac_timer_1": {
+                "name": "Temporizador 1 de ar condicionado"
+            },
+            "ac_timer_2": {
+                "name": "Temporizador 2 de ar condicionado"
+            },
+            "ac_timer_3": {
+                "name": "Temporizador 3 de ar condicionado"
+            }
+        },
+        "button": {
+            "honk_flash": {
+                "name": "Buzinar e piscar as luzes"
+            },
+            "flash": {
+                "name": "Piscar"
+            },
+            "generate_fixtures": {
+                "name": "Gerar instalações"
+            }
+        }
+    },
+    "issues": {
+        "new_tandc": {
+            "title": "Rever novos termos e condições do MySkoda",
+            "description": "Foi detetado um erro de início de sessão devido à falta de aceitação dos Termos e condições.\n\nSkoda talvez tenha emitido novos Termos e condições.\n\nPor favor, reinicie a sua sessão na aplicação MySkoda para revê-las.\nEsta integração não continuará sem aceitar os Termos e condições."
+        },
+        "spin_error": {
+            "title": "S-PIN incorreto detetado",
+            "description": "Nós recebemos um erro indicando que o seu S-PIN está incorreto.\n\nInsira o S-PIN correto nas definições de integração."
+        }
+    },
+    "options": {
+        "error": {
+            "invalid_polling_interval": "Intervalo de consulta específica inválida. Escolha entre 1 a 1440 minutos",
+            "invalid_spin_format": "Formato inválido para S-PIN"
+        },
+        "step": {
+            "init": {
+                "data": {
+                    "tracing": "Rastreamento de resposta da API. Requer registo de depuração habilitada em configuration.yaml.",
+                    "poll_interval_in_minutes": "Intervalo de consulta quando o carro está ocioso.",
+                    "s-pin": "PIN de segurança",
+                    "readonly": "Modo de somente leitura"
+                },
+                "data_description": {
+                    "poll_interval_in_minutes": "Especifique um intervalo de consulta entre 1 e 1440 minutos (padrão 30)",
+                    "s-pin": "Especifique o PIN de segurança. ATENÇÃO: Isto ativa o bloqueio/desbloqueio remoto",
+                    "readonly": "Não pode fazer alterações ao carro, apenas ler dados"
+                }
+            }
+        }
+    }
+}
