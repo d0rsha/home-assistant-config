@@ -524,9 +524,37 @@
                     },
                     {
                       "entity": "sensor.haos_sbfspot_sma_ac_power"
+                    },
+                    {
+                      "entity": "sensor.skoda_superb_combi_battery_percentage"
+                    },
+                    {
+                      "entity": "binary_sensor.skoda_superb_combi_charger_connected"
+                    },
+                    {
+                      "entity": "sensor.skoda_superb_combi_electric_range"
                     }
                   ],
                   "title": "P1 meter"
+                },
+                {
+                  "camera_view": "auto",
+                  "type": "picture-glance",
+                  "image": "https://demo.home-assistant.io/stub_config/kitchen.png",
+                  "entities": [
+                    {
+                      "entity": "sensor.skoda_superb_combi_battery_percentage"
+                    },
+                    {
+                      "entity": "sensor.skoda_superb_combi_charge_type"
+                    },
+                    {
+                      "entity": "binary_sensor.skoda_superb_combi_charger_connected"
+                    }
+                  ],
+                  "image_entity": "image.skoda_superb_combi_main_render_of_vehicle",
+                  "entity": "sensor.skoda_superb_combi_charging_state",
+                  "title": "Ludde"
                 },
                 {
                   "type": "custom:apexcharts-card",
@@ -769,7 +797,7 @@
                   "entity": "sensor.p1_meter_energy_import",
                   "data": {
                     "min": 0,
-                    "max": "auto"
+                    "max": 10
                   },
                   "days": 20,
                   "scale": "iron red"
@@ -929,7 +957,7 @@
                   "entity": "sensor.water_usage_in_liters",
                   "data": {
                     "min": 0,
-                    "max": "auto"
+                    "max": 250
                   },
                   "days": 20,
                   "scale": "iron red"
@@ -1533,20 +1561,6 @@
                   "entity": "sensor.utomhustemperatur",
                   "name": "Utomhus",
                   "color": "#33C3FF",
-                  "group_by": {
-                    "duration": "1h",
-                    "func": "avg"
-                  },
-                  "yaxis_id": "utomhus"
-                },
-                {
-                  "entity": "sensor.mi_1_temperatur",
-                  "stroke_dash": 8,
-                  "statistics": {
-                    "period": "hour"
-                  },
-                  "name": "Vinden",
-                  "color": "#555555",
                   "group_by": {
                     "duration": "1h",
                     "func": "avg"
