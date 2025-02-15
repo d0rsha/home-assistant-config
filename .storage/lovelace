@@ -45,10 +45,16 @@
                 },
                 {
                   "entity": "switch.tradfri_outlet_2_brytare"
+                },
+                {
+                  "entity": "switch.uttag_garnlampa_switch"
+                },
+                {
+                  "entity": "switch.inspelning_1_switch"
                 }
               ],
               "title": "Nedervåning (timerstyrd)",
-              "state_color": false
+              "state_color": true
             },
             {
               "type": "entities",
@@ -69,7 +75,24 @@
                   "entity": "switch.tradfri_uttag_1_brytare"
                 }
               ],
-              "title": "Övervåning"
+              "title": "Övervåning",
+              "state_color": true
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.zeke",
+              "features": [
+                {
+                  "style": "icons",
+                  "type": "climate-hvac-modes",
+                  "hvac_modes": [
+                    "off",
+                    "cool",
+                    "fan_only",
+                    "heat"
+                  ]
+                }
+              ]
             },
             {
               "type": "grid",
@@ -521,6 +544,9 @@
                     {
                       "entity": "sensor.p1_meter_power_phase_3",
                       "name": "Power phase 3"
+                    },
+                    {
+                      "entity": "sensor.zeke_current_power"
                     },
                     {
                       "entity": "sensor.haos_sbfspot_sma_ac_power"
@@ -1254,6 +1280,23 @@
           "theme": "Google Theme",
           "cards": [
             {
+              "type": "thermostat",
+              "entity": "climate.zeke",
+              "features": [
+                {
+                  "type": "climate-hvac-modes",
+                  "hvac_modes": [
+                    "off",
+                    "heat_cool",
+                    "cool",
+                    "dry",
+                    "fan_only",
+                    "heat"
+                  ]
+                }
+              ]
+            },
+            {
               "type": "picture-elements",
               "elements": [
                 {
@@ -1582,8 +1625,8 @@
               "yaxis": [
                 {
                   "id": "inomhus",
-                  "min": 19,
-                  "max": 22,
+                  "min": 20,
+                  "max": 24,
                   "decimals": 1
                 },
                 {
