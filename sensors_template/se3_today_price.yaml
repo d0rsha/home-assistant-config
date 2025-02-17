@@ -1,0 +1,37 @@
+trigger:
+  - trigger: time_pattern
+    minutes: /10
+  - trigger: homeassistant
+    event: start
+action:
+  - action: nordpool.get_prices_for_date
+    data:
+      config_entry: 01JM7G5FXSGG6XW02GY6WD27KR
+      date: "{{ now().date() }}"
+      areas: SE3
+      currency: SEK
+    response_variable: today_price
+sensor:
+  - name: SE3 Today lowest price
+    unique_id: anders_se3_today_low_price
+    state: >
+      {% if not today_price %}
+        unavailable
+      {% else %}
+        {% set data = namespace(prices=[]) %}
+        {% for state in today_price['SE3'] %}
+          {% set data.prices = data.prices + [(state.price / 1000)] %}
+        {% endfor %}
+        {{min(data.prices)}}
+      {% endif %}
+    attributes:
+      data: >
+        {% if not today_price %}
+          []
+        {% else %}
+          {% set data = namespace(prices=[]) %}
+          {% for state in today_price['SE3'] %}
+            {% set data.prices = data.prices + [{'start':state.start, 'end':state.end, 'price': state.price/1000}] %}
+          {% endfor %}
+          {{data.prices}}
+        {% endif %}

@@ -1,46 +1,27 @@
-#######################################################################
-### Nordpool integration
-- platform: nordpool
-  # https://github.com/custom-components/nordpool#example-configuration
-  VAT: false
-  currency: "SEK"
-  price_in_cents: true
-  region: "SE3"
-  precision: 3
-  price_type: kWh
-  low_price_cutoff: 0.95
-  # Template to specify additional cost to be added to the tariff.
-  # The template price is in EUR, DKK, NOK or SEK (not in cents).
-  # For example: "{{ current_price * 0.19 + 0.023 | float}}"
-  # Elöverföringsavgift tekniska verken = 0.132
-  # Energiskatt tekniska verken = 0.535
-  #additional_costs: "{{ (current_price + 0.132 + 0.535) |float}}"
-
-### Nordpool cheapest Hour
+### Nordpool cheapest sequential 3 hours
 - platform: template
   sensors:
     cheapest_hours_energy_tomorrow:
       device_class: timestamp
-      friendly_name: Cheapest sequential electricity hours
+      friendly_name: "Cheapest sequential electricity hours"
       value_template: >
         {%- set numberOfSequentialHours = 3 -%}
-        {%- set lastHour = 23 -%}
-        {%- set firstHour = 0 -%}
-        {%- if state_attr('sensor.nordpool_kwh_se3_sek_3_095_0', 'tomorrow_valid') == true -%}
-          {%- set ns = namespace(counter=0, list=[], cheapestHour=today_at("00:00") + timedelta( hours = (24)), cheapestPrice=999.00) -%}
-          {%- for i in range(firstHour + numberOfSequentialHours, lastHour+1) -%}
-            {%- set ns.counter = 0.0 -%}
-            {%- for j in range(i-numberOfSequentialHours, i) -%}
-              {%- set ns.counter = ns.counter + state_attr('sensor.nordpool_kwh_se3_sek_3_095_0', 'tomorrow')[j] -%}
+        {%- set data = state_attr('sensor.tomorrow_lowest_price_2', 'data') -%}
+        {%- if data and data|length >= numberOfSequentialHours -%}
+          {%- set ns = namespace(cheapestPrice=99999, cheapestHour=None) -%}
+          {%- for i in range(numberOfSequentialHours, data|length + 1) -%}
+            {%- set total = 0 -%}
+            {%- for j in range(i - numberOfSequentialHours, i) -%}
+              {%- set total = total + data[j].price -%}
             {%- endfor -%}
-            {%- set ns.list = ns.list + [ns.counter] -%}
-            {%- if ns.counter < ns.cheapestPrice -%}
-              {%- set ns.cheapestPrice = ns.counter -%}
-              {%- set ns.cheapestHour = today_at("00:00") + timedelta( hours = (24 + i - numberOfSequentialHours)) -%}
+            {%- if total < ns.cheapestPrice -%}
+              {%- set ns.cheapestPrice = total -%}
+              {%- set ns.cheapestHour = data[i - numberOfSequentialHours].start -%}
             {%- endif -%}
           {%- endfor -%}
           {{ ns.cheapestHour }}
-          {%- set ns.cheapestPrice = ns.cheapestPrice / numberOfSequentialHours -%}
+        {%- else -%}
+          unavailable
         {%- endif -%}
 
 ### Electricity prices in SEK instead of öre.
@@ -50,23 +31,22 @@
       friendly_name: "Total Electicity buying Price"
       unit_of_measurement: "kr/kWh"
       value_template: >
-        {% set Elpris = states('sensor.nordpool_kwh_se3_sek_3_095_0') | float %}
-        {% set Elöverföring = 13.20 %}
-        {% set Energiskatt = 53.50 %}
+        {% set Elpris = states('sensor.nord_pool_se3_current_price') | float %}
+        {% set Elöverföring = 0.132 %}
+        {% set Energiskatt = 0.535 %}
         {% set inkMoms = (Elpris * 1.25) + Elöverföring + Energiskatt %}
-        {% set iKr = inkMoms / 100 %}
-        {{ iKr | round(2) }}
+        {{ inkMoms | round(2) }}
     total_el_sell_price:
       friendly_name: "Total Electicity selling Price"
       unit_of_measurement: "kr/kWh"
       value_template: >
         {% set tekniska_verken_buy_price = 0.042 %}
         {% set tax_rate = 0.25 %}
-        {% set tax_above_value = 60 %}
-        {% set spot_price = (states('sensor.nordpool_kwh_se3_sek_3_095_0') | float) %}
+        {% set tax_above_value = 0.60 %}
+        {% set spot_price = (states('sensor.nord_pool_se3_current_price') | float) %}
         {% if spot_price > tax_above_value %}
           {% set taxable_value = spot_price - tax_above_value %}
           {% set tax = taxable_value * tax_rate %}
           {% set spot_price = spot_price - tax %}
         {% endif %}
-        {{ (spot_price / 100 | float) + tekniska_verken_buy_price | round(2) }}
+        {{ (spot_price + tekniska_verken_buy_price) | round(2) }}

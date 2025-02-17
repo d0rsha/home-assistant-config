@@ -4,29 +4,29 @@ sensor:
   - name: "Nordpool with taxes and fees"
     unit_of_measurement: "öre/kWh"
     state: >
-      {% set Elpris = states('sensor.nordpool_kwh_se3_sek_3_095_0') | float %}
+      {% set Elpris = states('sensor.nord_pool_se3_current_price') | float %}
       {% set Elöverföring = 13.20 %}
       {% set Energiskatt = 53.50 %}
       {% set inkMoms = (Elpris * 1.25) + Elöverföring + Energiskatt %}
       {{ inkMoms | round(2) }}
     attributes:
-      unit: "{{ state_attr('sensor.nordpool_kwh_se3_sek_3_095_0', 'unit') }}"
-      currency: "{{ state_attr('sensor.nordpool_kwh_se3_sek_3_095_0', 'currency') }}"
+      unit: "kr/kWh"
+      currency: "SEK"
       price_in_cents: "true"
       device_class: monetary
       icon: mdi:flash
       raw_today: >
-        {% set raw_today = state_attr('sensor.nordpool_kwh_se3_sek_3_095_0', 'raw_today') %}
+        {% set raw_today = state_attr('sensor.se3_today_lowest_price', 'data') %}
         {% if raw_today %}
           {% set ns = namespace(adjusted_entries=[]) %}
           {% for entry in raw_today %}
-            {% set Elpris = entry['value'] | float(0) %}
+            {% set Elpris = entry['price'] * 100 | float(0) %}
             {% set Elöverföring = 13.20 %}
             {% set Energiskatt = 53.50 %}
             {% set inkMoms = (Elpris * 1.25) + Elöverföring + Energiskatt %}
             {% set adjusted_entry = {
-              "start": entry['start'].isoformat(),
-              "end": entry['end'].isoformat(),
+              "start": entry['start'],
+              "end": entry['end'],
               "value": (inkMoms | round(2)),
               "spot": (Elpris | round(2)),
               "eon": 0.06,
@@ -40,19 +40,19 @@ sensor:
           []
         {% endif %}
       raw_tomorrow: >
-        {% set raw_tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_095_0', 'raw_tomorrow') %}
+        {% set raw_tomorrow = state_attr('sensor.tomorrow_lowest_price_2', 'data') %}
         {% if raw_tomorrow %}
           {% set ns = namespace(adjusted_entries=[]) %}
           {% for entry in raw_tomorrow %}
-            {% set Elpris = entry['value'] | float(0) %}
+            {% set Elpris = entry['price'] * 100| float(0) %}
             {% set Elöverföring = 13.20 %}
             {% set Energiskatt = 53.50 %}
             {% set inkMoms = (Elpris * 1.25) + Elöverföring + Energiskatt %}
             {% set adjusted_entry = {
-              "start": entry['start'].isoformat(),
-              "end": entry['end'].isoformat(),
+              "start": entry['start'],
+              "end": entry['end'],
               "value": (inkMoms | round(2)),
-              "spot": Elpris | round(2),
+              "spot": (Elpris | round(2)),
               "eon": 0.06,
               "tax": ((inkMoms - (Elpris + Elöverföring)) | round(2)),
               "transfer": (Elöverföring | round(2))

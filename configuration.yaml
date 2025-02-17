@@ -30,6 +30,7 @@ binary_sensor: !include includes/binary_sensors.yaml
 ### SENSORS
 sensor: !include_dir_merge_list sensors_platform/
 template: !include_dir_list sensors_template/
+#template: !include_dir_merge_list ./templates/
 
 ##########################################
 ### Log levels
@@ -71,7 +72,6 @@ rpi_camera:
 # lovelace:
 #   # mode: yaml
 
-nordpool:
 ###################################################
 ### WMbusmeters - Multical 21 -
 mqtt:
