@@ -1,40 +1,42 @@
 stada_koket:
   alias: Städa köket
   sequence:
-  - action: vacuum.send_command
-    target:
-      device_id: bd2ea45258aea5f70ca495b577de5cef
-    data:
-      command: app_segment_clean
-      params:
-      - segments:
-        - 17
-        repeat: 1
+    - action: vacuum.send_command
+      target:
+        device_id: bd2ea45258aea5f70ca495b577de5cef
+      data:
+        command: app_segment_clean
+        params:
+          - segments:
+              - 17
+            repeat: 1
   description: Clean kitchen
   icon: mdi:robot-vacuum
 stada_vardagsrum:
   alias: Städa vardagsrum
   sequence:
-  - action: vacuum.send_command
-    target:
-      device_id: bd2ea45258aea5f70ca495b577de5cef
-    data:
-      command: aapp_segment_clean
-      params:
-      - segments:
-        - 16
-        repeat: 1
+    - action: vacuum.send_command
+      target:
+        device_id: bd2ea45258aea5f70ca495b577de5cef
+      data:
+        command: aapp_segment_clean
+        params:
+          - segments:
+              - 16
+            repeat: 1
   description: Clean living room
   icon: mdi:robot-vacuum
 stada_hall:
   alias: Städa hall
   sequence:
-  - action: vacuum.send_command
-    data:
-      command: app_segment_clean
-      params:
-      - segments:
-        - 20
-        repeat: 1
+    - action: vacuum.send_command
+      target:
+        device_id: bd2ea45258aea5f70ca495b577de5cef
+      data:
+        command: app_segment_clean
+        params:
+          - segments:
+              - 20
+            repeat: 1
   description: Clean hallway
   icon: mdi:robot-vacuum

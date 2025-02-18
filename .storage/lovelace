@@ -441,7 +441,7 @@
             },
             {
               "type": "custom:vacuum-card",
-              "entity": "vacuum.roborock_s6_maxv",
+              "entity": "vacuum.robban",
               "actions": {
                 "start": {
                   "service": "vacuum.start",
@@ -510,8 +510,11 @@
               "show_toolbar": true
             },
             {
+              "show_state": true,
+              "show_name": true,
+              "camera_view": "auto",
               "type": "picture-entity",
-              "entity": "camera.robban_map"
+              "entity": "image.robban_bottenplan"
             }
           ]
         },
