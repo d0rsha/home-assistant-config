@@ -446,46 +446,13 @@
                 "start": {
                   "service": "vacuum.start",
                   "service_data": {
-                    "entity_id": "vacuum.roborock_s6_maxv"
+                    "entity_id": "vacuum.robban"
                   }
                 }
               },
               "stats": {
-                "default": [
-                  {
-                    "attribute": "filter_left",
-                    "unit": "hours",
-                    "subtitle": "Filter"
-                  },
-                  {
-                    "attribute": "side_brush_left",
-                    "unit": "hours",
-                    "subtitle": "Side brush"
-                  },
-                  {
-                    "attribute": "main_brush_left",
-                    "unit": "hours",
-                    "subtitle": "Main brush"
-                  },
-                  {
-                    "attribute": "sensor_dirty_left",
-                    "unit": "hours",
-                    "subtitle": "Sensors"
-                  }
-                ],
-                "cleaning": [
-                  {
-                    "entity_id": "sensor.vacuum_main_brush_left",
-                    "value_template": "{{ (value | float(0) / 3600) | round(1) }}",
-                    "subtitle": "Main brush",
-                    "unit": "hours"
-                  },
-                  {
-                    "attribute": "cleaning_time",
-                    "unit": "minutes",
-                    "subtitle": "Cleaning time"
-                  }
-                ]
+                "default": null,
+                "cleaning": null
               },
               "shortcuts": [
                 {
@@ -504,17 +471,9 @@
                   "icon": "mdi:silverware-fork-knife"
                 }
               ],
-              "map": "image.robban_bottenplan",
               "compact_view": false,
               "image": "default",
               "show_toolbar": true
-            },
-            {
-              "show_state": true,
-              "show_name": true,
-              "camera_view": "auto",
-              "type": "picture-entity",
-              "entity": "image.robban_bottenplan"
             }
           ]
         },
