@@ -426,7 +426,8 @@
               "entities": [
                 "calendar.veckonummer",
                 "calendar.familj",
-                "calendar.avrethem_gmail_com"
+                "calendar.avrethem_gmail_com",
+                "calendar.frida_johnsson_21_gmail_com"
               ]
             },
             {
@@ -452,7 +453,17 @@
               },
               "stats": {
                 "default": null,
-                "cleaning": null
+                "cleaning": [
+                  {
+                    "entity_id": "sensor.robban_status",
+                    "subtitle": "status"
+                  },
+                  {
+                    "entity_id": "sensor.robban_cleaning_area",
+                    "unit": "m³",
+                    "subtitle": "Area cleaned"
+                  }
+                ]
               },
               "shortcuts": [
                 {
@@ -993,35 +1004,51 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "sensor.power_production_now_2"
+                  "entity": "sensor.energy_production_today_2",
+                  "name": "Forecast totalt today ",
+                  "grid_options": {
+                    "columns": "full"
+                  }
                 },
                 {
                   "type": "tile",
-                  "entity": "sensor.energy_production_today_2"
+                  "entity": "sensor.energy_production_today_remaining_2",
+                  "name": "Forecast remaining today ",
+                  "grid_options": {
+                    "columns": "full"
+                  }
                 },
                 {
                   "type": "tile",
-                  "entity": "sensor.energy_production_tomorrow_2"
+                  "entity": "sensor.energy_production_tomorrow_2",
+                  "name": "Forecast total tomorrow",
+                  "grid_options": {
+                    "columns": "full"
+                  }
                 },
                 {
                   "type": "tile",
-                  "entity": "sensor.energy_production_today_remaining_2"
+                  "entity": "sensor.energy_next_hour_2",
+                  "name": "Forcast next hour ",
+                  "grid_options": {
+                    "columns": "full"
+                  }
                 },
                 {
                   "type": "tile",
-                  "entity": "sensor.energy_next_hour_2"
+                  "entity": "sensor.energy_current_hour_2",
+                  "name": "Forecast this hour ",
+                  "grid_options": {
+                    "columns": "full"
+                  }
                 },
                 {
                   "type": "tile",
-                  "entity": "sensor.energy_current_hour_2"
-                },
-                {
-                  "type": "tile",
-                  "entity": "sensor.power_highest_peak_time_today_2"
-                },
-                {
-                  "type": "tile",
-                  "entity": "sensor.power_highest_peak_time_tomorrow_2"
+                  "entity": "sensor.power_highest_peak_time_today_2",
+                  "name": "Forecast peak hour ",
+                  "grid_options": {
+                    "columns": "full"
+                  }
                 }
               ]
             },
