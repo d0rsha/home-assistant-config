@@ -37,6 +37,7 @@ template: !include_dir_list sensors_template/
 logger:
   default: info
   logs:
+    custom_components.extended_openai_conversation: info
     custom_components.hacs: debug
     aiogithubapi: debug
     custom_components.pax_ble: debug

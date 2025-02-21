@@ -452,7 +452,18 @@
                 }
               },
               "stats": {
-                "default": null,
+                "default": [
+                  {
+                    "entity_id": "sensor.robban_total_cleaning_count",
+                    "unit": "times",
+                    "subtitle": "Cleaning Count"
+                  },
+                  {
+                    "entity_id": "binary_sensor.robban_mop_attached",
+                    "unit": null,
+                    "subtitle": "Mop Attached"
+                  }
+                ],
                 "cleaning": [
                   {
                     "entity_id": "sensor.robban_status",
