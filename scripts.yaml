@@ -40,3 +40,9 @@ stada_hall:
             repeat: 1
   description: Clean hallway
   icon: mdi:robot-vacuum
+git_commit_and_push:
+  alias: "Git Commit & Push"
+  sequence:
+    - action: shell_command.git_commit_push
+  mode: single
+

@@ -25,6 +25,9 @@ scene: !include scenes.yaml
 # modbus: !include modbus.yaml
 google_assistant: !include google_assistant.yaml
 binary_sensor: !include includes/binary_sensors.yaml
+shell_command:
+  git_commit_push: "bash /config/scripts/git_commit_push.sh"
+#  !include includes/shell_commands.yaml
 
 ##########################################
 ### SENSORS
