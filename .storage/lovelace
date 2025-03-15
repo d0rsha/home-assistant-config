@@ -533,13 +533,16 @@
                       "entity": "sensor.zeke_current_power"
                     },
                     {
+                      "entity": "sensor.garage_power"
+                    },
+                    {
                       "entity": "sensor.haos_sbfspot_sma_ac_power"
                     },
                     {
                       "entity": "sensor.skoda_superb_combi_battery_percentage"
                     },
                     {
-                      "entity": "binary_sensor.skoda_superb_combi_charger_connected"
+                      "entity": "sensor.skoda_superb_combi_charging_state"
                     },
                     {
                       "entity": "sensor.skoda_superb_combi_electric_range"
@@ -1923,6 +1926,12 @@
                     {
                       "entity": "sensor.glances_asuspc_swap_usage"
                     }
+                  ],
+                  "yaxis": [
+                    {
+                      "min": 0,
+                      "max": 100
+                    }
                   ]
                 }
               ]
@@ -1951,6 +1960,12 @@
                     {
                       "entity": "sensor.glances_rpi3_swap_usage"
                     }
+                  ],
+                  "yaxis": [
+                    {
+                      "min": 0,
+                      "max": 100
+                    }
                   ]
                 }
               ]
@@ -1978,6 +1993,12 @@
                     },
                     {
                       "entity": "sensor.glances_haos_swap_usage"
+                    }
+                  ],
+                  "yaxis": [
+                    {
+                      "min": 0,
+                      "max": 100
                     }
                   ]
                 }
