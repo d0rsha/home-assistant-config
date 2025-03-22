@@ -1,9 +1,19 @@
 #!/bin/bash
+set -x  # Debugläge
 
-cd /config 
+LOGFILE="/config/git_push_log.txt"
+{
+  echo "--- Git push script run: $(date) ---"
 
-git add -u
+  eval $(ssh-agent -s)
+  ssh-add /config/.ssh_keys/id_rsa
 
-git commit -m "Automated commit $(date)"
+export GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/config/.ssh_keys/known_hosts -i /config/.ssh_keys/id_rsa"
 
-git push
+  cd /config
+
+  git status
+  git add -u
+  git commit -m "Automated commit $(date)"
+  git push origin main
+} >> "$LOGFILE" 2>&1
