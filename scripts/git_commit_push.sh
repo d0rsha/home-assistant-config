@@ -1,7 +1,6 @@
 #!/bin/bash
-set -x  # Debugläge
 
-LOGFILE="/config/git_push_log.txt"
+LOGFILE="/config/.log_github"
 {
   echo "--- Git push script run: $(date) ---"
 
