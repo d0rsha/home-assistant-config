@@ -10,13 +10,11 @@ import voluptuous as vol
 from aiohttp.client_exceptions import ClientResponseError
 
 from homeassistant.config_entries import (
-    ConfigEntry,
     ConfigFlow as BaseConfigFlow,
     ConfigFlowResult,
     OptionsFlow,
-    callback,
 )
-from homeassistant.core import HomeAssistant
+from homeassistant.core import callback, HomeAssistant
 from homeassistant.exceptions import HomeAssistantError, ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.schema_config_entry_flow import (
@@ -46,6 +44,7 @@ from .const import (
     CONF_USERNAME,
     CONF_READONLY,
 )
+from .coordinator import MySkodaConfigEntry
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -104,7 +103,7 @@ class ConfigFlow(BaseConfigFlow, domain=DOMAIN):
     """Handle a config flow for MySkoda."""
 
     VERSION = 2
-    MINOR_VERSION = 2
+    MINOR_VERSION = 3
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
@@ -196,7 +195,7 @@ class ConfigFlow(BaseConfigFlow, domain=DOMAIN):
     @staticmethod
     @callback
     def async_get_options_flow(
-        config_entry: ConfigEntry,
+        config_entry: MySkodaConfigEntry,
     ) -> OptionsFlow:
         """Create the options flow."""
         return SchemaOptionsFlowHandler(config_entry, OPTIONS_FLOW)

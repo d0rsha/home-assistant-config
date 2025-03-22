@@ -8,7 +8,6 @@ from homeassistant.components.sensor import (
     SensorEntityDescription,
     SensorStateClass,
 )
-from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     PERCENTAGE,
     EntityCategory,
@@ -31,13 +30,14 @@ from myskoda.models.info import CapabilityId
 from myskoda.models.operation_request import OperationStatus
 
 from .const import COORDINATORS, DOMAIN, OUTSIDE_TEMP_MIN_BOUND, OUTSIDE_TEMP_MAX_BOUND
+from .coordinator import MySkodaConfigEntry
 from .entity import MySkodaEntity
 from .utils import add_supported_entities
 
 
 async def async_setup_entry(
     hass: HomeAssistant,
-    config: ConfigEntry,
+    config: MySkodaConfigEntry,
     async_add_entities: AddEntitiesCallback,
     _discovery_info: DiscoveryInfoType | None = None,
 ) -> None:
@@ -532,14 +532,11 @@ class Mileage(MySkodaSensor):
 
     @property
     def native_value(self) -> int | None:  # noqa: D102
-        if health := self.vehicle.health:
-            return health.mileage_in_km
-        # If we have disabled the health endpoint, use this as fallback
-        elif maint_report := self.vehicle.maintenance.maintenance_report:
+        if maint_report := self.vehicle.maintenance.maintenance_report:
             return maint_report.mileage_in_km
-
-    def required_capabilities(self) -> list[CapabilityId]:
-        return [CapabilityId.VEHICLE_HEALTH_INSPECTION]
+        # If the maint report does not have mileage, use vehicle health as fallback
+        elif health := self.vehicle.health:
+            return health.mileage_in_km
 
 
 class InspectionInterval(MySkodaSensor):
@@ -558,9 +555,6 @@ class InspectionInterval(MySkodaSensor):
         if maintenance_report := self.vehicle.maintenance.maintenance_report:
             return maintenance_report.inspection_due_in_days
 
-    def required_capabilities(self) -> list[CapabilityId]:
-        return [CapabilityId.VEHICLE_HEALTH_INSPECTION]
-
 
 class InspectionIntervalKM(MySkodaSensor):
     """The number of kilometers before inspection is due."""
@@ -577,9 +571,6 @@ class InspectionIntervalKM(MySkodaSensor):
     def native_value(self) -> int | None:  # noqa: S102
         if maintenance_report := self.vehicle.maintenance.maintenance_report:
             return maintenance_report.inspection_due_in_km
-
-    def required_capabilities(self) -> list[CapabilityId]:
-        return [CapabilityId.VEHICLE_HEALTH_INSPECTION, CapabilityId.FUEL_STATUS]
 
 
 class OilServiceIntervalDays(MySkodaSensor):
@@ -599,7 +590,7 @@ class OilServiceIntervalDays(MySkodaSensor):
             return maintenance_report.oil_service_due_in_days
 
     def required_capabilities(self) -> list[CapabilityId]:
-        return [CapabilityId.VEHICLE_HEALTH_INSPECTION, CapabilityId.FUEL_STATUS]
+        return [CapabilityId.FUEL_STATUS]
 
 
 class OilServiceIntervalKM(MySkodaSensor):
@@ -619,7 +610,7 @@ class OilServiceIntervalKM(MySkodaSensor):
             return maintenance_report.oil_service_due_in_km
 
     def required_capabilities(self) -> list[CapabilityId]:
-        return [CapabilityId.VEHICLE_HEALTH_INSPECTION, CapabilityId.FUEL_STATUS]
+        return [CapabilityId.FUEL_STATUS]
 
 
 class ChargeType(ChargingSensor):
@@ -674,7 +665,8 @@ class RemainingChargingTime(ChargingSensor):
     @property
     def native_value(self) -> int | None:  # noqa: D102
         if status := self._status():
-            return status.remaining_time_to_fully_charged_in_minutes
+            if status.state != charging.ChargingState.CONNECT_CABLE:
+                return status.remaining_time_to_fully_charged_in_minutes
 
 
 class ChargingRate(ChargingSensor):

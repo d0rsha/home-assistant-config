@@ -25,6 +25,7 @@ from myskoda.event import (
     ServiceEvent,
     ServiceEventTopic,
 )
+from myskoda.models.driving_range import EngineType
 from myskoda.models.info import CapabilityId
 from myskoda.models.operation_request import OperationName, OperationStatus
 from myskoda.models.user import User
@@ -33,6 +34,7 @@ from myskoda.mqtt import EventCharging, EventType
 from .const import (
     API_COOLDOWN_IN_SECONDS,
     CACHE_USER_ENDPOINT_IN_HOURS,
+    CACHE_VEHICLE_HEALTH_IN_HOURS,
     CONF_POLL_INTERVAL,
     COORDINATORS,
     DEFAULT_FETCH_INTERVAL_IN_MINUTES,
@@ -45,6 +47,7 @@ from .error_handlers import handle_aiohttp_error
 _LOGGER = logging.getLogger(__name__)
 
 type RefreshFunction = Callable[[], Coroutine[None, None, None]]
+type MySkodaConfigEntry = ConfigEntry[MySkodaDataUpdateCoordinator]
 
 
 class MySkodaDebouncer(Debouncer):
@@ -97,7 +100,7 @@ class MySkodaDataUpdateCoordinator(DataUpdateCoordinator[State]):
     data: State
 
     def __init__(
-        self, hass: HomeAssistant, entry: ConfigEntry, myskoda: MySkoda, vin: str
+        self, hass: HomeAssistant, entry: MySkodaConfigEntry, myskoda: MySkoda, vin: str
     ) -> None:
         """Create a new coordinator."""
 
@@ -117,7 +120,7 @@ class MySkodaDataUpdateCoordinator(DataUpdateCoordinator[State]):
         self.myskoda: MySkoda = myskoda
         self.operations: OrderedDict = OrderedDict()
         self.service_events: deque = deque(maxlen=MAX_STORED_SERVICE_EVENTS)
-        self.entry: ConfigEntry = entry
+        self.entry: MySkodaConfigEntry = entry
         self.update_driving_range = self._debounce(self._update_driving_range)
         self.update_charging = self._debounce(self._update_charging)
         self.update_air_conditioning = self._debounce(self._update_air_conditioning)
@@ -133,30 +136,33 @@ class MySkodaDataUpdateCoordinator(DataUpdateCoordinator[State]):
         return await self.myskoda.get_partial_vehicle(self.vin, [])
 
     async def _async_get_vehicle_data(self) -> Vehicle:
-        """Internal method that fetches vehicle data."""
-        if self.data:
-            if (
-                self.data.vehicle.info.device_platform == "MBB"
-                and self.data.vehicle.info.specification.model == "CitigoE iV"
-            ):
+        """Internal method that fetches vehicle data.
+
+        Get health only when missing and every 24h.
+        This avoids triggering battery protection, such as in Citigoe and Karoq.
+        https://github.com/skodaconnect/homeassistant-myskoda/issues/468
+        """
+        excluded_capabilities = []
+        if (
+            self.data.vehicle
+            and self.data.vehicle.health
+            and self.data.vehicle.health.timestamp
+        ):
+            cache_expiry_time = self.data.vehicle.health.timestamp + timedelta(
+                hours=CACHE_VEHICLE_HEALTH_IN_HOURS
+            )
+
+            if datetime.now(UTC) > cache_expiry_time:
                 _LOGGER.debug(
-                    "Detected Citigo iV, requesting only partial update without health"
-                )
-                vehicle = await self.myskoda.get_partial_vehicle(
-                    self.vin,
-                    [
-                        CapabilityId.AIR_CONDITIONING,
-                        CapabilityId.CHARGING,
-                        CapabilityId.PARKING_POSITION,
-                        CapabilityId.STATE,
-                        CapabilityId.TRIP_STATISTICS,
-                    ],
+                    "Updating health - cache expired at %s", cache_expiry_time
                 )
             else:
-                vehicle = await self.myskoda.get_vehicle(self.vin)
-        else:
-            vehicle = await self.myskoda.get_vehicle(self.vin)
-        return vehicle
+                _LOGGER.debug("Skipping health update - cache is still valid.")
+                excluded_capabilities.append(CapabilityId.VEHICLE_HEALTH_INSPECTION)
+
+        return await self.myskoda.get_vehicle(
+            self.vin, excluded_capabilities=excluded_capabilities
+        )
 
     async def _async_update_data(self) -> State:
         vehicle = None
@@ -329,12 +335,16 @@ class MySkodaDataUpdateCoordinator(DataUpdateCoordinator[State]):
 
     async def _on_charging_event(self, event: EventCharging):
         vehicle = self.data.vehicle
-        update_charging_request_sent = False
+        _charging_updated = False
+        _range_updated = False
+
+        # See if we have relevant data
         if vehicle.charging is None or vehicle.charging.status is None:
             await self.update_charging()
-            update_charging_request_sent = True
+            _charging_updated = True
         if vehicle.driving_range is None:
             await self.update_driving_range()
+            _range_updated = True
 
         event_data = event.event.data
         if vehicle.charging and (status := vehicle.charging.status):
@@ -351,24 +361,35 @@ class MySkodaDataUpdateCoordinator(DataUpdateCoordinator[State]):
             if event_data.state:
                 status.state = event_data.state
         if vehicle.driving_range:
+            per = vehicle.driving_range.primary_engine_range
+            ser = False
+
+            if vehicle.driving_range.secondary_engine_range:
+                ser = vehicle.driving_range.secondary_engine_range
+
             if event_data.soc:
-                vehicle.driving_range.primary_engine_range.current_soc_in_percent = (
-                    event_data.soc
-                )
+                if per.engine_type == EngineType.ELECTRIC:
+                    per.current_soc_in_percent = event_data.soc
+                elif ser:
+                    if ser.engine_type == EngineType.ELECTRIC:
+                        ser.current_soc_in_percent = event_data.soc
+
             if event_data.charged_range:
-                vehicle.driving_range.primary_engine_range.remaining_range_in_km = (
-                    event_data.charged_range
-                )
-        some_charging_data_missing = (
-            event_data.charged_range is None
-            or event_data.soc is None
-            or event_data.state is None
-        )
-        if some_charging_data_missing and not update_charging_request_sent:
-            # After update is done, the set_updated_vehicle is called there
+                range_in_km = int(event_data.charged_range / 1000)
+                if per.engine_type == EngineType.ELECTRIC:
+                    per.remaining_range_in_km = range_in_km
+                elif ser:
+                    if ser.engine_type == EngineType.ELECTRIC:
+                        ser.remaining_range_in_km = range_in_km
+
+        # Make sure we update relevant data since the event has incomplete data
+        if not _charging_updated:
             await self.update_charging()
-        else:
-            self.set_updated_vehicle(vehicle)
+
+        if not _range_updated:
+            await self.update_driving_range()
+
+        self.set_updated_vehicle(vehicle)
 
     async def _on_access_event(self, event: EventAccess):
         await self.update_vehicle()
@@ -527,7 +548,7 @@ class MySkodaDataUpdateCoordinator(DataUpdateCoordinator[State]):
 
         _LOGGER.debug("Updating full vehicle for %s", self.vin)
         try:
-            vehicle = await self.myskoda.get_vehicle(self.vin)
+            vehicle = await self._async_get_vehicle_data()
         except ClientResponseError as err:
             handle_aiohttp_error("vehicle update", err, self.hass, self.entry)
         except ClientError as err:

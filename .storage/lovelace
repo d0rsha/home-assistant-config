@@ -484,8 +484,8 @@
                 },
                 {
                   "name": "Clean Hallway",
-                  "service": "script.st",
-                  "icon": "mdi:bed-empty"
+                  "service": "script.stada_hall",
+                  "icon": "mdi:door"
                 },
                 {
                   "name": "Clean kitchen",
@@ -546,6 +546,9 @@
                     },
                     {
                       "entity": "sensor.skoda_superb_combi_electric_range"
+                    },
+                    {
+                      "entity": "sensor.skoda_superb_combi_remaining_charging_time"
                     }
                   ],
                   "title": "P1 meter"
@@ -916,6 +919,9 @@
                       "min": 0
                     }
                   ]
+                },
+                {
+                  "type": "energy-solar-graph"
                 },
                 {
                   "type": "custom:apexcharts-card",
