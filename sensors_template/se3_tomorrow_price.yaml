@@ -1,9 +1,11 @@
 trigger:
   - trigger: time_pattern
-    minutes: /10
+    minutes: /60
   - trigger: homeassistant
     event: start
 action:
+  - condition: template
+    value_template: "{{ now().hour >= 13 }}"
   - action: nordpool.get_prices_for_date
     data:
       config_entry: 01JM7G5FXSGG6XW02GY6WD27KR
