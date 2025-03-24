@@ -221,7 +221,9 @@
         - binary_sensor.tradfri_on_off_switch_2_battery_low
         - binary_sensor.frida_iphone1_battery_plus_low
         - sensor.sm_g970f_battery_level
-        device_id: 7d14e7d4bcd8ee6b80815bb2f9e58b05
+        device_id:
+        - 7d14e7d4bcd8ee6b80815bb2f9e58b05
+        - e755edf4ef456fad1297aa1ecc1c0952
       include_easy_notify: enable_easy_notify
       include_persistent_notification: enable_persistent_notification
       sensor_selection: enable_all_and_custom_group_sensors

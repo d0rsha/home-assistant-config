@@ -1912,6 +1912,34 @@
                   "entity": "binary_sensor.rpi3_icmp"
                 },
                 {
+                  "type": "tile",
+                  "entity": "update.frigate_server",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "color": "accent",
+                  "show_entity_picture": true,
+                  "hide_state": false,
+                  "state_content": [
+                    "installed_version",
+                    "latest_version"
+                  ],
+                  "name": "Frigate"
+                },
+                {
+                  "type": "tile",
+                  "entity": "update.frigate_server_3",
+                  "features_position": "bottom",
+                  "vertical": false,
+                  "color": "accent",
+                  "show_entity_picture": true,
+                  "hide_state": false,
+                  "state_content": [
+                    "installed_version",
+                    "latest_version"
+                  ],
+                  "name": "Mousecam"
+                },
+                {
                   "type": "custom:apexcharts-card",
                   "header": {
                     "show": true,
@@ -2009,6 +2037,16 @@
                   ]
                 }
               ]
+            }
+          ],
+          "badges": [
+            {
+              "type": "entity",
+              "entity": "binary_sensor.asuspc_icmp"
+            },
+            {
+              "type": "entity",
+              "entity": "binary_sensor.rpi3_icmp"
             }
           ]
         }
