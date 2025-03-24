@@ -12,9 +12,10 @@ default_config:
 frontend:
   themes: !include_dir_merge_named themes
 
-#homeassistant:
-## external_url: !secret
-## internal_url: !secret
+homeassistant:
+  ## external_url: !secret
+  ## internal_url: !secret
+  packages: !include_dir_named packages
 
 ##########################################
 ### CONFIG FILES
