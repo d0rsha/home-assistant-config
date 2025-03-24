@@ -146,3 +146,7 @@ camera:
 ##########################################
 ### Custom sidepanel entries
 ingress: !include ingress.yaml
+
+##########################################
+### INCLUDES
+input_boolean: !include inputs/input_booleans.yaml

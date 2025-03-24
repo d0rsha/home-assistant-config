@@ -1,0 +1,3 @@
+ev_charger_request_sent:
+  name: EV Charger Request Sent Today
+  icon: mdi:car-electric
