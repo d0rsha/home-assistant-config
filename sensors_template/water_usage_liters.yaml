@@ -5,6 +5,7 @@ sensor:
     unit_of_measurement: "L"
     device_class: water
     state_class: total_increasing
+    availability: >
+      {{ states('sensor.water_usage') not in ['unknown', 'unavailable', 'none'] }}
     state: >
-      {% set water_usage_cubic_meters = states('sensor.water_usage') | float %}
-      {{ water_usage_cubic_meters * 1000 }}
+      {{ (states('sensor.water_usage') | float) * 1000 }}
