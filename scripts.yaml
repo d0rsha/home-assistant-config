@@ -1,48 +1,84 @@
 stada_koket:
   alias: Städa köket
   sequence:
-    - action: vacuum.send_command
-      target:
-        device_id: bd2ea45258aea5f70ca495b577de5cef
-      data:
-        command: app_segment_clean
-        params:
-          - segments:
-              - 17
-            repeat: 1
+  - action: vacuum.send_command
+    target:
+      device_id: bd2ea45258aea5f70ca495b577de5cef
+    data:
+      command: app_segment_clean
+      params:
+      - segments:
+        - 17
+        repeat: 1
   description: Clean kitchen
   icon: mdi:robot-vacuum
 stada_vardagsrum:
   alias: Städa vardagsrum
   sequence:
-    - action: vacuum.send_command
-      target:
-        device_id: bd2ea45258aea5f70ca495b577de5cef
-      data:
-        command: aapp_segment_clean
-        params:
-          - segments:
-              - 16
-            repeat: 1
+  - action: vacuum.send_command
+    target:
+      device_id: bd2ea45258aea5f70ca495b577de5cef
+    data:
+      command: aapp_segment_clean
+      params:
+      - segments:
+        - 16
+        repeat: 1
   description: Clean living room
   icon: mdi:robot-vacuum
 stada_hall:
   alias: Städa hall
   sequence:
-    - action: vacuum.send_command
-      target:
-        device_id: bd2ea45258aea5f70ca495b577de5cef
-      data:
-        command: app_segment_clean
-        params:
-          - segments:
-              - 20
-            repeat: 1
+  - action: vacuum.send_command
+    target:
+      device_id: bd2ea45258aea5f70ca495b577de5cef
+    data:
+      command: app_segment_clean
+      params:
+      - segments:
+        - 20
+        repeat: 1
   description: Clean hallway
   icon: mdi:robot-vacuum
 git_commit_and_push:
-  alias: "Git Commit & Push"
+  alias: Git Commit & Push
   sequence:
-    - action: shell_command.git_commit_push
+  - action: shell_command.git_commit_push
   mode: single
-
+stada_run_diskbank:
+  alias: Städa run diskbänk
+  sequence:
+  - action: vacuum.send_command
+    target:
+      entity_id: vacuum.robban
+    data:
+      command: app_zoned_clean
+      params:
+      - - 18422
+        - 28557
+        - 21242
+        - 28907
+        - 1
+      - - 18433
+        - 26765
+        - 18788
+        - 28907
+        - 1
+  description: Städa i köket run diskbänk och spis
+  icon: mdi:vector-square
+stada_under_matbord:
+  alias: Städa under matbord
+  sequence:
+  - action: vacuum.send_command
+    target:
+      device_id: bd2ea45258aea5f70ca495b577de5cef
+    data:
+      command: app_zoned_clean
+      params:
+      - - 19041
+        - 26992
+        - 20605
+        - 28057
+        - 1
+  description: Städa under olles stol. Städa under barnstolen.
+  icon: mdi:vector-square
