@@ -105,6 +105,11 @@ influxdb:
 ## HACS battery Notes Repo
 battery_notes:
 
+spotcast:
+  sp_dc: !secret spotcast_sp_dc
+  sp_key: !secret spotcast_sp_key
+  country: SE
+
 # Notification groups ALL_DEVICES
 notify:
   - name: ALL_DEVICES
