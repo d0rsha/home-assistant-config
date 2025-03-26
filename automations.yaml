@@ -457,8 +457,9 @@
     frontdörren har öppnats och någon är hemma.
   triggers:
   - trigger: state
-    entity_id: device_tracker.skoda_superb_combi_position
-    from: away
+    entity_id:
+    - device_tracker.skoda_superb_combi_position
+    from:
     to: home
   conditions:
   - condition: state
