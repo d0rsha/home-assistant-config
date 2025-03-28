@@ -76,7 +76,7 @@ stada_under_matbord:
       command: app_zoned_clean
       params:
       - - 19041
-        - 26992
+        - 25392
         - 20605
         - 28057
         - 1

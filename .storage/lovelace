@@ -1262,11 +1262,24 @@
                 {
                   "type": "entities",
                   "entities": [
-                    "person.anders",
-                    "person.frida",
-                    "person.fridasandroid",
-                    "person.iphone5s",
-                    "person.s10e"
+                    {
+                      "entity": "person.anders"
+                    },
+                    {
+                      "entity": "person.frida"
+                    },
+                    {
+                      "entity": "person.fridasandroid"
+                    },
+                    {
+                      "entity": "person.iphone5s"
+                    },
+                    {
+                      "entity": "person.s10e"
+                    },
+                    {
+                      "entity": "device_tracker.skoda_superb_combi_position"
+                    }
                   ]
                 }
               ]
@@ -2042,11 +2055,19 @@
           "badges": [
             {
               "type": "entity",
-              "entity": "binary_sensor.asuspc_icmp"
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "binary_sensor.asuspc_icmp",
+              "name": "AsusPC"
             },
             {
               "type": "entity",
-              "entity": "binary_sensor.rpi3_icmp"
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "binary_sensor.rpi3_icmp",
+              "name": "RPI3"
             }
           ]
         }
