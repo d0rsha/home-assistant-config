@@ -1652,6 +1652,12 @@
             "battery_quantity": 2
         },
         {
+            "manufacturer": "BOSCH",
+            "model": "RBSH-TRV0-ZB-EU",
+            "battery_type": "AA",
+            "battery_quantity": 2
+        },
+        {
             "manufacturer": "Bosch",
             "model": "Room thermostat II",
             "model_id": "RBSH-RTH0-BAT-ZB-EU",
@@ -4192,6 +4198,13 @@
         },
         {
             "manufacturer": "Iris",
+            "model": "Motion and temperature sensor",
+            "model_id": "3326-L",
+            "hw_version": "1",
+            "battery_type": "CR2"
+        },
+        {
+            "manufacturer": "Iris",
             "model": "Motion and temperature sensor (3326-L)",
             "battery_type": "CR2"
         },
@@ -6047,6 +6060,11 @@
         },
         {
             "manufacturer": "Shelly",
+            "model": "Blu Motion",
+            "battery_type": "CR2477"
+        },
+        {
+            "manufacturer": "Shelly",
             "model": "BTHome sensor",
             "battery_type": "MANUAL"
         },
@@ -7081,6 +7099,13 @@
         },
         {
             "manufacturer": "Third Reality",
+            "model": "Soil sensor",
+            "model_id": "3RSM0147Z",
+            "hw_version": "0",
+            "battery_type": "AA"
+        },
+        {
+            "manufacturer": "Third Reality",
             "model": "Temperature and humidity sensor (3RTHS24BZ)",
             "battery_type": "AAA",
             "battery_quantity": 2
@@ -7879,6 +7904,12 @@
         {
             "manufacturer": "TuYa",
             "model": "Temperature & humidity sensor (WSD500A)",
+            "battery_type": "AAA",
+            "battery_quantity": 2
+        },
+        {
+            "manufacturer": "Tuya",
+            "model": "Temperature & humidity sensor TS0601",
             "battery_type": "AAA",
             "battery_quantity": 2
         },
