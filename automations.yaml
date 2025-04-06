@@ -30,13 +30,13 @@
       camera: camera.tapo_c310
       notify_device: f326594e961a48756bccbda5b2185cd2
       alert_once: true
-      attachment: snapshot
+      attachment: thumbnail
       debug: false
       message: '{{ label }} detected - {{ camera_name }}'
       title: '{{camera_name}} {{ label}} '
       color: steelblue
       channel: Frigate
-      update_thumbnail: false
+      update_thumbnail: true
       labels: []
       icon: mdi:cctv
       state_entity: lock.ytterdorr
@@ -47,13 +47,17 @@
 - id: frigate_motion_detected
   alias: Notify of events
   triggers:
-    trigger: mqtt
+  - trigger: mqtt
     topic: frigate/events
+  conditions:
+  - condition: state
+    entity_id: person.anders
+    state: away
   actions:
   - action: notify.mobile_app_anders_s21fe
     data_template:
-      message: A {{trigger.payload_json["after"]["label"]}} was detected at {{ trigger.payload_json["after"]["camera"]
-        }} .
+      message: Notify - A {{trigger.payload_json["after"]["label"]}} was detected
+        at {{ trigger.payload_json["after"]["camera"] }} .
       data:
         image: http://ccab4aaf-frigate-fa:5000/events/{{trigger.payload_json["after"]["id"]}}/snapshot.jpg?format=android
         tag: '{{trigger.payload_json["after"]["id"]}}'

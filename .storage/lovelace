@@ -491,11 +491,26 @@
                   "name": "Clean kitchen",
                   "service": "script.stada_koket",
                   "icon": "mdi:silverware-fork-knife"
+                },
+                {
+                  "name": "Clean around sink",
+                  "service": "script.stada_run_diskbank",
+                  "icon": "mdi:countertop"
+                },
+                {
+                  "name": "Clean under high chair",
+                  "service": "script.stada_under_matbord",
+                  "icon": "mdi:chair-school"
                 }
               ],
               "compact_view": false,
               "image": "default",
               "show_toolbar": true
+            },
+            {
+              "type": "picture",
+              "image": "https://demo.home-assistant.io/stub_config/t-shirt-promo.png",
+              "image_entity": "image.robban_bottenplan"
             }
           ]
         },

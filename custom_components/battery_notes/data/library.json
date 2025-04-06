@@ -946,6 +946,12 @@
         },
         {
             "manufacturer": "Aqara",
+            "model": "Aqara Wireless Remote Switch H1 (Double Rocker)",
+            "model_id": "WXKG15LM",
+            "battery_type": "CR2450"
+        },
+        {
+            "manufacturer": "Aqara",
             "model": "aqara.lock.bzacn4 ZNMS16LM",
             "battery_type": "AA",
             "battery_quantity": 6
@@ -1211,6 +1217,14 @@
             "manufacturer": "Aqara",
             "model": "Temperature and humidity sensor T1 (WSDCGQ12LM)",
             "battery_type": "CR2032"
+        },
+        {
+            "manufacturer": "Aqara",
+            "model": "TVOC",
+            "model_id": "AS029",
+            "hw_version": "0029",
+            "battery_type": "CR2450",
+            "battery_quantity": 2
         },
         {
             "manufacturer": "Aqara",
@@ -2207,6 +2221,11 @@
         },
         {
             "manufacturer": "eQ-3",
+            "model": "ELV-SH-CTH",
+            "battery_type": "CR2032"
+        },
+        {
+            "manufacturer": "eQ-3",
             "model": "HM-CC-RT-DN",
             "battery_type": "AA",
             "battery_quantity": 2
@@ -2748,6 +2767,12 @@
         {
             "manufacturer": "eQ-3",
             "model": "HmIP-WTH-2",
+            "battery_type": "AAA",
+            "battery_quantity": 2
+        },
+        {
+            "manufacturer": "eQ-3",
+            "model": "HmIP-WTH-A",
             "battery_type": "AAA",
             "battery_quantity": 2
         },
@@ -5405,6 +5430,13 @@
             "model": "Hue motion sensor (9290030675)",
             "battery_type": "AAA",
             "battery_quantity": 2
+        },
+        {
+            "manufacturer": "Philips",
+            "model": "Hue smart button",
+            "model_id": "8718699693985",
+            "hw_version": "1",
+            "battery_type": "CR2032"
         },
         {
             "manufacturer": "Philips",
