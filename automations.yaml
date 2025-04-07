@@ -495,3 +495,37 @@
       cache: false
       language: sv
   mode: single
+- id: '1744038579159'
+  alias: Automatisk belysning
+  description: Tänder alla enheter märkta med 'Automatisk belysning' 2 timmar före
+    solnedgång och släcker dem efter 22:00 om TV:n är avstängd, annars väntar tills
+    TV:n stängs av.
+  triggers:
+  - event: sunset
+    offset: -02:00:00
+    trigger: sun
+  - at: '22:00:00'
+    trigger: time
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: sun
+        after: sunset
+        after_offset: -02:00:00
+        before: sunset
+      sequence:
+      - action: homeassistant.turn_on
+        target:
+          label_id: automatisk_belysning
+    default:
+    - wait_for_trigger:
+      - entity_id: remote.the_frame
+        to: 'off'
+        trigger: state
+      timeout: 02:20:00
+      continue_on_timeout: true
+    - action: homeassistant.turn_off
+      target:
+        label_id: automatisk_belysning
+  mode: single
