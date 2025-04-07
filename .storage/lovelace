@@ -449,6 +449,12 @@
                   "service_data": {
                     "entity_id": "vacuum.robban"
                   }
+                },
+                "return_to_dock": {
+                  "service": "vacuum.return_to_base",
+                  "service_data": {
+                    "entity_id": "vacuum.robban"
+                  }
                 }
               },
               "stats": {
