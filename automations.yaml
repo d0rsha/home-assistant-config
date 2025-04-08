@@ -503,29 +503,57 @@
   triggers:
   - event: sunset
     offset: -02:00:00
+    id: 'on'
     trigger: sun
   - at: '22:00:00'
+    id: 'off'
     trigger: time
   conditions: []
   actions:
   - choose:
     - conditions:
-      - condition: sun
-        after: sunset
-        after_offset: -02:00:00
-        before: sunset
+      - condition: trigger
+        id: 'on'
       sequence:
       - action: homeassistant.turn_on
         target:
           label_id: automatisk_belysning
-    default:
-    - wait_for_trigger:
-      - entity_id: remote.the_frame
-        to: 'off'
-        trigger: state
-      timeout: 02:20:00
-      continue_on_timeout: true
-    - action: homeassistant.turn_off
-      target:
-        label_id: automatisk_belysning
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      - condition: template
+        value_template: '{{ states(''remote.the_frame'') != ''off'' }}'
+      sequence:
+      - wait_for_trigger:
+        - entity_id: remote.the_frame
+          to: 'off'
+          trigger: state
+        timeout: 02:20:00
+        continue_on_timeout: true
+      - action: homeassistant.turn_off
+        target:
+          label_id: automatisk_belysning
+        data: {}
+      - device_id: 439ab72d0a12b6536ad5cc48d71d60c5
+        domain: climate
+        entity_id: f1260d8d12a0d5939b238360a06f42d4
+        type: set_hvac_mode
+        hvac_mode: 'off'
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      - condition: state
+        entity_id: remote.the_frame
+        state: 'off'
+      sequence:
+      - action: homeassistant.turn_off
+        target:
+          label_id: automatisk_belysning
+        data: {}
+      - device_id: 439ab72d0a12b6536ad5cc48d71d60c5
+        domain: climate
+        entity_id: f1260d8d12a0d5939b238360a06f42d4
+        type: set_hvac_mode
+        hvac_mode: 'off'
   mode: single
