@@ -1,20 +1,20 @@
-tabs:
-  work_mode: custom # MUST
-  url: /files/ingress/ha-tabs-ingress.js # MUST
-  title: Ingress
-  icon: mdi:cog-box
-link_automation:
-  parent: tabs
-  work_mode: custom
-  title: Automations
-  icon: mdi:link
-  url: /config/automation/dashboard
-link_zigbee:
-  parent: tabs
-  work_mode: iframe
-  title: Zigbee
-  icon: mdi:zodiac-gemini
-  url: /config/integrations/integration/zha
+# tabs:
+#   work_mode: custom # MUST
+#   url: /files/ingress/ha-tabs-ingress.js # MUST
+#   title: Ingress
+#   icon: mdi:cog-box
+# link_automation:
+#   parent: tabs
+#   work_mode: custom
+#   title: Automations
+#   icon: mdi:link
+#   url: /config/automation/dashboard
+# link_zigbee:
+#   parent: tabs
+#   work_mode: iframe
+#   title: Zigbee
+#   icon: mdi:zodiac-gemini
+#   url: /config/integrations/integration/zha
 lan_tabs:
   work_mode: custom # MUST
   url: /files/ingress/ha-tabs-ingress.js # MUST
@@ -37,15 +37,27 @@ frigate_mousecam:
 #   icon: mdi:router-wireless-settings
 #   parent: lan_tabs
 #   work_mode: ingress
-#   url: http://192.168.50.1/
+#   url: !secret url_router
+
 portainer:
   parent: lan_tabs
   work_mode: ingress
   title: "Portainer"
   icon: mdi:docker
   url: !secret url_portainer
-
-  # codeproject_ai:
+# focalboard2:
+#   parent: lan_tabs
+#   work_mode: auth
+#   title: "Focalboard"
+#   icon: mdi:checkbox-marked-circle-minus-outline
+#   url: !secret url_focalboard
+focalboard:
+  title: Focalboard
+  icon: mdi:checkbox-marked-circle-minus-outline
+  url: !secret url_focalboard
+  work_mode: auth
+  ui_mode: toolbar
+# codeproject_ai:
 #   work_mode: ingress
 #   ui_mode: toolbar
 #   title: "Codeproject AI"
