@@ -1,5 +1,5 @@
 {
-    "$schema": "../schema.json",
+    "$schema": "./schema.json",
     "version": 1,
     "devices": [
         {
@@ -761,6 +761,11 @@
             "battery_quantity": 2
         },
         {
+            "manufacturer": "Airzone",
+            "model": "thinkradio",
+            "battery_type": "CR2032"
+        },
+        {
             "manufacturer": "Alarm.com",
             "model": "n/a",
             "battery_type": "CR123A"
@@ -868,6 +873,11 @@
             "manufacturer": "APC",
             "model": "SRV 2K I -AR",
             "battery_type": "APCRBCV204"
+        },
+        {
+            "manufacturer": "ApolloAutomation",
+            "model": "PLT-1B",
+            "battery_type": "18650"
         },
         {
             "manufacturer": "Apple",
@@ -6244,6 +6254,11 @@
             "battery_type": "CR2"
         },
         {
+            "manufacturer": "Shenzhen Neo Electronics Co., Ltd.",
+            "model": "NAS_PD02Z-2",
+            "battery_type": "CR123A"
+        },
+        {
             "manufacturer": "SIEGENIA",
             "model": "Smart window handle",
             "battery_type": "AAA",
@@ -6648,6 +6663,13 @@
             "manufacturer": "Sonoff",
             "model": "Contact Sensor",
             "model_id": "SNZB-04P",
+            "battery_type": "CR2477"
+        },
+        {
+            "manufacturer": "SONOFF",
+            "model": "Contact sensor",
+            "model_id": "SNZB-04P",
+            "hw_version": "0",
             "battery_type": "CR2477"
         },
         {
@@ -7531,6 +7553,14 @@
             "model_id": "19DZT",
             "hw_version": "1",
             "battery_type": "AAA",
+            "battery_quantity": 2
+        },
+        {
+            "manufacturer": "Tuya",
+            "model": "Door sensor",
+            "model_id": "TS0203",
+            "hw_version": "0",
+            "battery_type": "CR1632",
             "battery_quantity": 2
         },
         {

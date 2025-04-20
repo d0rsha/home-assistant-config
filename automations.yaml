@@ -358,7 +358,7 @@
     - sensor.skoda_superb_combi_battery_percentage
     - sensor.haos_sbfspot_sma_ac_power
     - sensor.energy_production_today_remaining_2
-  condition:
+  conditions:
   - condition: state
     entity_id: device_tracker.skoda_superb_combi_position
     state: home
@@ -373,11 +373,15 @@
     above: 4000
   - condition: template
     value_template: '{% set battery_level = states(''sensor.skoda_superb_combi_battery_percentage'')
-      | float %} {% set remaining_energy_needed = 12000 if battery_level == 0 else
-      battery_level / 100 * 12000 %} {{ remaining_energy_needed <= states(''sensor.energy_production_today_remaining_2'')
-      | float }}
+      | float %}
 
-      '
+      {% set remaining_energy_needed = 12000 if battery_level == 0 else battery_level
+      / 100 * 12000 %}
+
+      {% set remaining_production = states(''sensor.energy_production_today_remaining_2'')
+      | float + states(''sensor.energy_production_today_remaining'') | float %}
+
+      {{ remaining_energy_needed <= remaining_production }}'
   - condition: state
     entity_id: input_boolean.ev_charger_request_sent
     state: 'off'
@@ -406,7 +410,7 @@
     event_type: mobile_app_notification_action
     event_data:
       action: NO_CHARGE
-  action:
+  actions:
   - choose:
     - conditions:
       - condition: template
@@ -414,6 +418,11 @@
       sequence:
       - action: switch.turn_on
         entity_id: switch.skoda_superb_combi_charging
+      - action: input_boolean.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: input_boolean.ev_charger_request_sent
     - conditions:
       - condition: template
         value_template: '{{ trigger.event.data.action == ''NO_CHARGE'' }}'
