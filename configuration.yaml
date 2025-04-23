@@ -62,6 +62,12 @@ nest:
   # "Project ID" in the Device Access Console (not Cloud Project ID!)
   project_id: !secret nest_project_id
 
+##########################################
+### Eufy
+eufy:
+  username: !secret eufy_mail
+  password: !secret eufy_pwd
+
 # IKEA Home
 # Home Assistant will automatically discover the gateway’s presence on your local network if discovery: is present
 #discovery:
