@@ -5480,6 +5480,13 @@
         },
         {
             "manufacturer": "Philips",
+            "model": "Hue wall switch module",
+            "model_id": "929003017102",
+            "hw_version": "1",
+            "battery_type": "CR2450"
+        },
+        {
+            "manufacturer": "Philips",
             "model": "Hue wall switch module (929003017102)",
             "battery_type": "CR2450"
         },
@@ -5661,6 +5668,12 @@
         {
             "manufacturer": "Ring",
             "model": "4SP1SZ",
+            "battery_type": "AA",
+            "battery_quantity": 2
+        },
+        {
+            "manufacturer": "Ring",
+            "model": "B0923BK77S",
             "battery_type": "AA",
             "battery_quantity": 2
         },
