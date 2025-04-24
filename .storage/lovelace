@@ -1033,6 +1033,9 @@
                 },
                 {
                   "type": "energy-distribution"
+                },
+                {
+                  "type": "energy-sankey"
                 }
               ]
             },
