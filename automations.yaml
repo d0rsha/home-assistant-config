@@ -543,3 +543,67 @@
         type: set_hvac_mode
         hvac_mode: 'off'
   mode: single
+- id: '1745404058254'
+  alias: Töm robban
+  description: ''
+  triggers:
+  - trigger: calendar
+    entity_id: calendar.robban_tommas
+    event: start
+    offset: 0:0:0
+  conditions:
+  - condition: state
+    entity_id: alarm_control_panel.verisure_alarm
+    state: disarmed
+  actions:
+  - action: script.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: script.tom_robban
+  mode: single
+- id: '1745404454475'
+  alias: Robban städschema
+  description: 'Robbans städschema '
+  triggers:
+  - trigger: calendar
+    entity_id: calendar.home_assistant
+    event: start
+    offset: -0:0:0
+  conditions:
+  - condition: state
+    entity_id: alarm_control_panel.verisure_alarm
+    state: disarmed
+  actions:
+  - action: vacuum.start
+    target:
+      entity_id: vacuum.robban
+    data: {}
+  mode: single
+- id: '1745407472401'
+  alias: Snabb städning i kök
+  description: Städar under diskbänk och under matbord
+  triggers:
+  - trigger: calendar
+    entity_id: calendar.robban_stada_under_matbord
+    event: start
+    offset: 0:0:0
+  conditions:
+  - condition: state
+    entity_id: alarm_control_panel.verisure_alarm
+    state: disarmed
+  actions:
+  - action: script.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: script.stada_run_diskbank
+  - wait_template: '{{ is_state(''vacuum.robban'', ''returning_home'') }}'
+    continue_on_timeout: false
+    timeout: 00:5:00
+  - action: script.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: script.stada_under_matbord
+  mode: single

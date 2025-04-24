@@ -82,3 +82,27 @@ stada_under_matbord:
         - 1
   description: Städa under olles stol. Städa under barnstolen.
   icon: mdi:vector-square
+tom_robban:
+  sequence:
+  - action: roborock.set_vacuum_goto_position
+    metadata: {}
+    data:
+      x: '21534'
+      y: '27845'
+    target:
+      entity_id: vacuum.robban
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - action: tts.cloud_say
+    metadata: {}
+    data:
+      cache: false
+      entity_id: media_player.kok
+      message: Hej famlijen. Robban vill bli tömd hälsar Nabu
+      language: sv
+  alias: Töm robban
+  description: 'Robban går till position för att tömma behållare. '
+  icon: mdi:robot-vacuum-alert
