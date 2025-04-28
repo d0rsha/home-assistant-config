@@ -8,19 +8,21 @@ from bleak.exc import BleakError
 import binascii
 from collections import namedtuple
 import logging
+import asyncio
 
 _LOGGER = logging.getLogger(__name__)
 
 Time = namedtuple("Time", "DayOfWeek Hour Minute Second")
 BoostMode = namedtuple("BoostMode", "OnOff Speed Seconds")
 
-class BaseDevice():
+
+class BaseDevice:
     def __init__(self, hass, mac, pin):
         self._hass = hass
         self._mac = mac
         self._pin = pin
-        self._dev = None
-
+        self._client: BleakClient | None = None
+        # Characteristic UUIDs (centralized in characteristics.py ideally)
         self.chars = {
             CHARACTERISTIC_APPEARANCE: "00002a01-0000-1000-8000-00805f9b34fb",  # Not used
             CHARACTERISTIC_BOOST: "118c949c-28c8-4139-b0b3-36657fd055a9",
@@ -46,90 +48,135 @@ class BaseDevice():
     async def authorize(self):
         await self.setAuth(self._pin)
 
-    async def connect(self, retries=3) -> bool:
-        if self.isConnected():
+    async def connect(self) -> bool:
+        """
+        Reuse BleakClient if already connected; otherwise try up to N times
+        with exponential backoff.
+        """
+        if self._client and self._client.is_connected:
             return True
 
-        tries = 0
-
-        _LOGGER.debug("Connecting to %s", self._mac)
-        while tries < retries:
-            tries += 1
-
+        retries = 3
+        backoff = 1.0
+        for attempt in range(1, retries + 1):
             try:
                 d = bluetooth.async_ble_device_from_address(
                     self._hass, self._mac.upper()
                 )
                 if not d:
-                    raise BleakError(
-                        f"A device with address {self._mac} could not be found."
-                    )
-                self._dev = BleakClient(d)
-                ret = await self._dev.connect()
-                if ret:
-                    _LOGGER.debug("Connected to %s", self._mac)
-                    break
+                    raise BleakError(f"Device {self._mac} not found")
+                if not self._client:
+                    self._client = BleakClient(d)
+                await self._client.connect()
+                _LOGGER.debug("Connected to %s on attempt %d", self._mac, attempt)
+                return True
             except Exception as e:
-                if tries == retries:
-                    _LOGGER.info("Not able to connect to %s! %s", self._mac, str(e))
-                else:
-                    _LOGGER.debug("Retrying %s", self._mac)
+                _LOGGER.debug("Connect attempt %d/%d failed: %s", attempt, retries, e)
 
-        return self.isConnected()
+                # **cleanup** the half‑dead client before retrying
+                try:
+                    await self._client.disconnect()
+                except Exception:
+                    # might already be partially torn down
+                    pass
+                self._client = None
+
+                if attempt < retries:
+                    await asyncio.sleep(backoff)
+                    backoff *= 2
+                else:
+                    _LOGGER.warning("Failed to connect %s after %d attempts", self._mac, retries)
+        return False
 
     async def disconnect(self) -> None:
-        if self._dev is not None:
+        if self._client:
             try:
-                await self._dev.disconnect()
+                await self._client.disconnect()
             except Exception as e:
-                _LOGGER.info("Error disconnecting from %s! %s", self._mac, str(e))
-            self._dev = None
+                _LOGGER.warning("Error disconnecting %s: %s", self._mac, e)
+            finally:
+                self._client = None
+
+    async def _with_disconnect_on_error(self, coro):
+        try:
+            return await coro
+        except Exception:
+            _LOGGER.debug("GATT operation failed; disconnecting", exc_info=True)
+            await self.disconnect()
+            raise
+
+    async def pair(self) -> str:
+        raise NotImplementedError("Pairing not availiable for this device type.")
 
     def isConnected(self) -> bool:
-        return self._dev is not None and self._dev.is_connected
+         return self._client is not None and self._client.is_connected
 
     def _bToStr(self, val) -> str:
         return binascii.b2a_hex(val).decode("utf-8")
 
     async def _readUUID(self, uuid) -> bytearray:
-        val = await self._dev.read_gatt_char(uuid)
-        return val
+        if not self._client:
+            raise BleakError("Client not initialized")
+        return await self._with_disconnect_on_error(
+            self._client.read_gatt_char(uuid)
+        )
 
     async def _readHandle(self, handle) -> bytearray:
-        val = await self._dev.read_gatt_char(char_specifier=handle)
-        return val
+        if not self._client:
+            raise BleakError("Client not initialized")
+        return await self._with_disconnect_on_error(
+            self._client.read_gatt_char(handle)
+        )
 
-    async def _writeUUID(self, uuid, val) -> None:
-        await self._dev.write_gatt_char(char_specifier=uuid, data=val, response=True)
+    async def _writeUUID(self, uuid, data) -> None:
+        if not self._client:
+            raise BleakError("Client not initialized")
+        return await self._with_disconnect_on_error(
+            self._client.write_gatt_char(uuid, data, response=True)
+        )
 
     # --- Generic GATT Characteristics
     async def getDeviceName(self) -> str:
-        #return (await self._readHandle(0x2)).decode("ascii")
-        return (await self._readUUID(self.chars[CHARACTERISTIC_DEVICE_NAME])).decode("ascii")
+        # return (await self._readHandle(0x2)).decode("ascii")
+        return (await self._readUUID(self.chars[CHARACTERISTIC_DEVICE_NAME])).decode(
+            "ascii"
+        )
 
     async def getModelNumber(self) -> str:
-        #return (await self._readHandle(0xD)).decode("ascii")
-        return (await self._readUUID(self.chars[CHARACTERISTIC_MODEL_NUMBER])).decode("ascii")
+        # return (await self._readHandle(0xD)).decode("ascii")
+        return (await self._readUUID(self.chars[CHARACTERISTIC_MODEL_NUMBER])).decode(
+            "ascii"
+        )
 
     async def getSerialNumber(self) -> str:
-        #return (await self._readHandle(0xB)).decode("ascii")
-        return (await self._readUUID(self.chars[CHARACTERISTIC_SERIAL_NUMBER])).decode("ascii")
+        # return (await self._readHandle(0xB)).decode("ascii")
+        return (await self._readUUID(self.chars[CHARACTERISTIC_SERIAL_NUMBER])).decode(
+            "ascii"
+        )
 
     async def getHardwareRevision(self) -> str:
-        #return (await self._readHandle(0xF)).decode("ascii")
-        return (await self._readUUID(self.chars[CHARACTERISTIC_HARDWARE_REVISION])).decode("ascii")
+        # return (await self._readHandle(0xF)).decode("ascii")
+        return (
+            await self._readUUID(self.chars[CHARACTERISTIC_HARDWARE_REVISION])
+        ).decode("ascii")
 
     async def getFirmwareRevision(self) -> str:
-        #return (await self._readHandle(0x11)).decode("ascii")
-        return (await self._readUUID(self.chars[CHARACTERISTIC_FIRMWARE_REVISION])).decode("ascii")
+        # return (await self._readHandle(0x11)).decode("ascii")
+        return (
+            await self._readUUID(self.chars[CHARACTERISTIC_FIRMWARE_REVISION])
+        ).decode("ascii")
 
     async def getSoftwareRevision(self) -> str:
-        #return (await self._readHandle(0x13)).decode("ascii")
-        return (await self._readUUID(self.chars[CHARACTERISTIC_SOFTWARE_REVISION])).decode("ascii")
+        # return (await self._readHandle(0x13)).decode("ascii")
+        return (
+            await self._readUUID(self.chars[CHARACTERISTIC_SOFTWARE_REVISION])
+        ).decode("ascii")
 
     async def getManufacturer(self) -> str:
-        #return (await self._readHandle(0x15)).decode("ascii")
-        return (await self._readUUID(self.chars[CHARACTERISTIC_MANUFACTURER_NAME])).decode("ascii")
+        # return (await self._readHandle(0x15)).decode("ascii")
+        return (
+            await self._readUUID(self.chars[CHARACTERISTIC_MANUFACTURER_NAME])
+        ).decode("ascii")
 
     # --- Onwards to PAX characteristics
     async def setAuth(self, pin) -> None:
@@ -139,23 +186,35 @@ class BaseDevice():
         result = await self.checkAuth()
         _LOGGER.debug(f"Authorized: {result}")
 
+    async def getAuth(self) -> int:
+        v = unpack("<I", await self._readUUID(self.chars[CHARACTERISTIC_PIN_CODE]))
+        return v[0]
+
     async def checkAuth(self) -> bool:
-        v = unpack("<b", await self._readUUID(self.chars[CHARACTERISTIC_PIN_CONFIRMATION]))
+        v = unpack(
+            "<b", await self._readUUID(self.chars[CHARACTERISTIC_PIN_CONFIRMATION])
+        )
         return bool(v[0])
 
     async def setAlias(self, name) -> None:
         await self._writeUUID(
-            self.chars[CHARACTERISTIC_FAN_DESCRIPTION], pack("20s", bytearray(name, "utf-8"))
+            self.chars[CHARACTERISTIC_FAN_DESCRIPTION],
+            pack("20s", bytearray(name, "utf-8")),
         )
 
-    async def getAlias(self)-> str:
-        return await self._readUUID(self.chars[CHARACTERISTIC_FAN_DESCRIPTION]).decode("utf-8")
+    async def getAlias(self) -> str:
+        return await self._readUUID(self.chars[CHARACTERISTIC_FAN_DESCRIPTION]).decode(
+            "utf-8"
+        )
 
     async def getIsClockSet(self) -> str:
         return self._bToStr(await self._readUUID(self.chars[CHARACTERISTIC_STATUS]))
 
     async def getFactorySettingsChanged(self) -> bool:
-        v = unpack("<?", await self._readUUID(self.chars[CHARACTERISTIC_FACTORY_SETTINGS_CHANGED]))
+        v = unpack(
+            "<?",
+            await self._readUUID(self.chars[CHARACTERISTIC_FACTORY_SETTINGS_CHANGED]),
+        )
         return v[0]
 
     async def getLed(self) -> str:
@@ -163,11 +222,14 @@ class BaseDevice():
 
     async def setTime(self, dayofweek, hour, minute, second) -> None:
         await self._writeUUID(
-            self.chars[CHARACTERISTIC_CLOCK], pack("<4B", dayofweek, hour, minute, second)
+            self.chars[CHARACTERISTIC_CLOCK],
+            pack("<4B", dayofweek, hour, minute, second),
         )
 
     async def getTime(self) -> Time:
-        return Time._make(unpack("<BBBB", await self._readUUID(self.chars[CHARACTERISTIC_CLOCK])))
+        return Time._make(
+            unpack("<BBBB", await self._readUUID(self.chars[CHARACTERISTIC_CLOCK]))
+        )
 
     async def setTimeToNow(self) -> None:
         now = datetime.datetime.now()
@@ -196,7 +258,9 @@ class BaseDevice():
             speed = 0
             seconds = 0
 
-        await self._writeUUID(self.chars[CHARACTERISTIC_BOOST], pack("<BHH", on, speed, seconds))
+        await self._writeUUID(
+            self.chars[CHARACTERISTIC_BOOST], pack("<BHH", on, speed, seconds)
+        )
 
     async def getMode(self) -> str:
         v = unpack("<B", await self._readUUID(self.chars[CHARACTERISTIC_MODE]))

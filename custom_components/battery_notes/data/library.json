@@ -2284,6 +2284,13 @@
         },
         {
             "manufacturer": "eQ-3",
+            "model": "HM-PB-4-WM",
+            "model_id": "HM-PB-4-WM",
+            "hw_version": "1.2",
+            "battery_type": "CR2032"
+        },
+        {
+            "manufacturer": "eQ-3",
             "model": "HM-PB-4Dis-WM-2",
             "battery_type": "AAA",
             "battery_quantity": 3
@@ -2298,6 +2305,14 @@
             "manufacturer": "eQ-3",
             "model": "HM-PBI-4-FM",
             "battery_type": "CR2032"
+        },
+        {
+            "manufacturer": "eQ-3",
+            "model": "HM-RC-12-B",
+            "model_id": "HM-RC-12-B",
+            "hw_version": "1.1",
+            "battery_type": "AAA",
+            "battery_quantity": 3
         },
         {
             "manufacturer": "eQ-3",
@@ -2392,6 +2407,14 @@
             "manufacturer": "eQ-3",
             "model": "HM-Sec-Win",
             "battery_type": "HM-Sec-Win-BaP"
+        },
+        {
+            "manufacturer": "eQ-3",
+            "model": "HM-Sen-MDIR-O",
+            "model_id": "HM-Sen-MDIR-O",
+            "hw_version": "1.6",
+            "battery_type": "AA",
+            "battery_quantity": 3
         },
         {
             "manufacturer": "eQ-3",
@@ -2555,6 +2578,14 @@
         {
             "manufacturer": "eQ-3",
             "model": "HMIP-eTRV-E",
+            "battery_type": "AA",
+            "battery_quantity": 2
+        },
+        {
+            "manufacturer": "eQ-3",
+            "model": "HmIP-eTRV-E-S",
+            "model_id": "HmIP-eTRV-E-S",
+            "hw_version": "1.4.8",
             "battery_type": "AA",
             "battery_quantity": 2
         },
@@ -2852,6 +2883,11 @@
         {
             "manufacturer": "Eufy Security",
             "model": "T8114-Z",
+            "battery_type": "Rechargeable"
+        },
+        {
+            "manufacturer": "Eufy Security",
+            "model": "T8142-R",
             "battery_type": "Rechargeable"
         },
         {
@@ -7825,6 +7861,13 @@
             "manufacturer": "TuYa",
             "model": "Security remote control (TS0215A_remote)",
             "battery_type": "CR2032"
+        },
+        {
+            "manufacturer": "Tuya",
+            "model": "SGS01",
+            "model_id": "gvygg3m8",
+            "battery_type": "AAA",
+            "battery_quantity": 2
         },
         {
             "manufacturer": "Tuya",

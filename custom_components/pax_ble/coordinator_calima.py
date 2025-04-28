@@ -8,12 +8,17 @@ from .devices.calima import Calima
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class CalimaCoordinator(BaseCoordinator):
     _fan: Optional[Calima] = None  # This is basically a type hint
 
-    def __init__(self, hass, device, model, mac, pin, scan_interval, scan_interval_fast):
+    def __init__(
+        self, hass, device, model, mac, pin, scan_interval, scan_interval_fast
+    ):
         """Initialize coordinator parent"""
-        super().__init__(hass, device, model, mac, pin, scan_interval, scan_interval_fast)
+        super().__init__(
+            hass, device, model, mac, pin, scan_interval, scan_interval_fast
+        )
 
         # Initialize correct fan
         _LOGGER.debug("Initializing Calima!")
@@ -23,7 +28,7 @@ class CalimaCoordinator(BaseCoordinator):
         _LOGGER.debug("Reading sensor data")
         try:
             # Make sure we are connected
-            if not await self._fan.connect():
+            if not await self._safe_connect():
                 raise Exception("Not connected!")
         except Exception as e:
             _LOGGER.warning("Error when fetching config data: %s", str(e))
@@ -58,7 +63,7 @@ class CalimaCoordinator(BaseCoordinator):
         _LOGGER.debug("Write_Data: %s", key)
         try:
             # Make sure we are connected
-            if not await self._fan.connect():
+            if not await self._safe_connect():
                 raise Exception("Not connected!")
         except Exception as e:
             _LOGGER.warning("Error when writing data: %s", str(e))
@@ -90,11 +95,14 @@ class CalimaCoordinator(BaseCoordinator):
                         int(self._state["fanspeed_light"]),
                         int(self._state["fanspeed_trickle"]),
                     )
-                case "lightsensorsettings_delayedstart" | "lightsensorsettings_runningtime":
+                case (
+                    "lightsensorsettings_delayedstart"
+                    | "lightsensorsettings_runningtime"
+                ):
                     await self._fan.setLightSensorSettings(
                         int(self._state["lightsensorsettings_delayedstart"]),
                         int(self._state["lightsensorsettings_runningtime"]),
-                    )               
+                    )
                 case "sensitivity_humidity" | "sensitivity_light":
                     await self._fan.setSensorsSensitivity(
                         int(self._state["sensitivity_humidity"]),
@@ -114,7 +122,7 @@ class CalimaCoordinator(BaseCoordinator):
 
                 case _:
                     return False
-                
+
         except Exception as e:
             _LOGGER.debug("Not able to write command: %s", str(e))
             return False
@@ -125,12 +133,12 @@ class CalimaCoordinator(BaseCoordinator):
     async def read_configdata(self, disconnect=False) -> bool:
         try:
             # Make sure we are connected
-            if not await self._fan.connect():
+            if not await self._safe_connect():
                 raise Exception("Not connected!")
         except Exception as e:
             _LOGGER.warning("Error when fetching config data: %s", str(e))
             return False
-        
+
         AutomaticCycles = await self._fan.getAutomaticCycles()  # Configuration
         self._state["automatic_cycles"] = AutomaticCycles
 
@@ -143,12 +151,20 @@ class CalimaCoordinator(BaseCoordinator):
         self._state["fanspeed_trickle"] = FanSpeeds.Trickle
 
         HeatDistributorSettings = await self._fan.getHeatDistributor()  # Configuration
-        self._state["heatdistributorsettings_temperaturelimit"] = HeatDistributorSettings.TemperatureLimit
-        self._state["heatdistributorsettings_fanspeedbelow"] = HeatDistributorSettings.FanSpeedBelow
-        self._state["heatdistributorsettings_fanspeedabove"] = HeatDistributorSettings.FanSpeedAbove
+        self._state["heatdistributorsettings_temperaturelimit"] = (
+            HeatDistributorSettings.TemperatureLimit
+        )
+        self._state["heatdistributorsettings_fanspeedbelow"] = (
+            HeatDistributorSettings.FanSpeedBelow
+        )
+        self._state["heatdistributorsettings_fanspeedabove"] = (
+            HeatDistributorSettings.FanSpeedAbove
+        )
 
         LightSensorSettings = await self._fan.getLightSensorSettings()  # Configuration
-        self._state["lightsensorsettings_delayedstart"] = LightSensorSettings.DelayedStart
+        self._state["lightsensorsettings_delayedstart"] = (
+            LightSensorSettings.DelayedStart
+        )
         self._state["lightsensorsettings_runningtime"] = LightSensorSettings.RunningTime
 
         Sensitivity = await self._fan.getSensorsSensitivity()  # Configuration
@@ -157,8 +173,12 @@ class CalimaCoordinator(BaseCoordinator):
 
         SilentHours = await self._fan.getSilentHours()  # Configuration
         self._state["silenthours_on"] = SilentHours.On
-        self._state["silenthours_starttime"] = dt.time(SilentHours.StartingHour, SilentHours.StartingMinute)
-        self._state["silenthours_endtime"] = dt.time(SilentHours.EndingHour, SilentHours.EndingMinute)
+        self._state["silenthours_starttime"] = dt.time(
+            SilentHours.StartingHour, SilentHours.StartingMinute
+        )
+        self._state["silenthours_endtime"] = dt.time(
+            SilentHours.EndingHour, SilentHours.EndingMinute
+        )
 
         TrickleDays = await self._fan.getTrickleDays()  # Configuration
         self._state["trickledays_weekdays"] = TrickleDays.Weekdays

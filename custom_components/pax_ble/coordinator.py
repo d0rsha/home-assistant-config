@@ -1,3 +1,4 @@
+import asyncio
 import async_timeout
 import datetime as dt
 import logging
@@ -12,6 +13,7 @@ from .devices.base_device import BaseDevice
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class BaseCoordinator(DataUpdateCoordinator, ABC):
     _fast_poll_enabled = False
     _fast_poll_count = 0
@@ -24,7 +26,16 @@ class BaseCoordinator(DataUpdateCoordinator, ABC):
     # Should be set by a child class
     _fan: Optional[BaseDevice] = None  # This is basically a type hint
 
-    def __init__(self, hass, device:DeviceEntry, model:str, mac:str, pin:int, scan_interval:int, scan_interval_fast:int):
+    def __init__(
+        self,
+        hass,
+        device: DeviceEntry,
+        model: str,
+        mac: str,
+        pin: int,
+        scan_interval: int,
+        scan_interval_fast: int,
+    ):
         """Initialize coordinator parent"""
         super().__init__(
             hass,
@@ -73,6 +84,21 @@ class BaseCoordinator(DataUpdateCoordinator, ABC):
     async def disconnect(self):
         await self._fan.disconnect()
 
+    async def _safe_connect(self) -> bool:
+        """
+        Try up to 5× with exponential backoff.
+        """
+        backoff = 1.0
+        for attempt in range(1, 6):
+            if await self._fan.connect():
+                return True
+            _LOGGER.debug("Coordinator connect attempt %d failed", attempt)
+            if attempt < 5:
+                await asyncio.sleep(backoff)
+                backoff *= 2
+        _LOGGER.warning("Coordinator failed to connect after 5 attempts")
+        return False
+
     async def _async_update_data(self):
         _LOGGER.debug("Coordinator updating data!!")
 
@@ -90,7 +116,7 @@ class BaseCoordinator(DataUpdateCoordinator, ABC):
                 _LOGGER.debug("Failed when loading device information: %s", str(err))
 
         """ Fetch config data if we have no/old values """
-        if  dt.datetime.now().date() != self._last_config_timestamp:
+        if dt.datetime.now().date() != self._last_config_timestamp:
             try:
                 async with async_timeout.timeout(20):
                     if await self.read_configdata(disconnect=False):
@@ -135,7 +161,7 @@ class BaseCoordinator(DataUpdateCoordinator, ABC):
         _LOGGER.debug("Reading device information")
         try:
             # Make sure we are connected
-            if not await self._fan.connect():
+            if not await self._safe_connect():
                 raise Exception("Not connected!")
         except Exception as e:
             _LOGGER.warning("Error when fetching device info: %s", str(e))
