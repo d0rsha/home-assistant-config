@@ -77,7 +77,7 @@ eufy:
 media_source:
 
 # Activate raspberry pi integrated camera port
-rpi_camera:
+#rpi_camera:
 
 # Lovelace UI vs yaml mode enabled/disabled
 # lovelace:
@@ -150,10 +150,10 @@ tts:
 
 ##########################################
 ### Web cams
-camera:
-  - platform: ffmpeg
-    name: "Rpi3 RTSP stream"
-    input: !secret rpi3_rtsp_connection_string
+#camera:
+#  - platform: ffmpeg
+#    name: "Rpi3 RTSP stream"
+#    input: !secret rpi3_rtsp_connection_string
 
 ##########################################
 ### Custom sidepanel entries

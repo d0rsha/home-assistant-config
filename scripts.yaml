@@ -96,10 +96,10 @@ tom_robban:
       minutes: 0
       seconds: 10
       milliseconds: 0
-  - action: tts.cloud_say
+  - action: tts.google_cloud_say
     metadata: {}
     data:
-      cache: false
+      cache: true
       entity_id: media_player.kok
       message: Hej famlijen. Robban vill bli tömd hälsar Nabu
       language: sv

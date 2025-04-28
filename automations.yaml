@@ -359,9 +359,6 @@
     - sensor.haos_sbfspot_sma_ac_power
     - sensor.energy_production_today_remaining_2
   conditions:
-  - condition: state
-    entity_id: device_tracker.skoda_superb_combi_position
-    state: home
   - condition: numeric_state
     entity_id: sensor.skoda_superb_combi_battery_percentage
     below: 90

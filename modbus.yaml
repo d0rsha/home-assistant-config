@@ -3,7 +3,7 @@
 
 # - name: "sma"
 #   type: tcp
-#   host: 192.168.50.33 # ip address of sma inverter
+#   host: # ip address of sma inverter
 #   port: 502
 #   sensors:
 #     - name: "SMA Energy Total"
@@ -46,7 +46,7 @@
 ## Webconnect enabled
 # - name: "sma"
 #   type: tcp
-#   host: 192.168.50.33 # ip address of sma inverter
+#   host: # ip address of sma inverter
 #   port: 502
 #   sensors:
 #     - name: "SMA Energy Total"
@@ -85,7 +85,7 @@
 # Not used
 # - name: sma
 #   type: tcp
-#   host: 192.168.50.33 # SMA TriPower
+#   host: # SMA TriPower
 #   port: 502
 #   close_comm_on_error: true
 #   delay: 5
