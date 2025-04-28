@@ -29,6 +29,7 @@ binary_sensor: !include includes/binary_sensors.yaml
 shell_command:
   git_commit_push: "bash /config/scripts/git_commit_push.sh"
 #  !include includes/shell_commands.yaml
+notify: !include notify.yaml
 
 ##########################################
 ### SENSORS
@@ -115,13 +116,6 @@ spotcast:
   sp_dc: !secret spotcast_sp_dc
   sp_key: !secret spotcast_sp_key
   country: SE
-
-# Notification groups ALL_DEVICES
-notify:
-  - name: ALL_DEVICES
-    platform: group
-    services:
-      - service: mobile_app_anders_s21fe
 
 #########################################
 ### Text To Speach

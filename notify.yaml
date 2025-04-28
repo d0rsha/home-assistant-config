@@ -1,0 +1,16 @@
+# Notification groups ALL_DEVICES
+- platform: group
+  name: ALL_DEVICES
+  services:
+    - service: mobile_app_pixel_9_pro
+    - service: mobile_app_frida_iphone1
+
+- platform: group
+  name: Anders
+  services:
+    - service: mobile_app_pixel_9_pro
+
+- platform: group
+  name: Frida
+  services:
+    - service: mobile_app_frida_iphone1

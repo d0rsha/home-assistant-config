@@ -31,7 +31,7 @@
     entity_id: person.anders
     state: away
   actions:
-  - action: notify.mobile_app_anders_s21fe
+  - action: notify.Anders
     data_template:
       message: Notify - A {{trigger.payload_json["after"]["label"]}} was detected
         at {{ trigger.payload_json["after"]["camera"] }} .
@@ -122,30 +122,23 @@
       helper_last_controller_event: input_text.knapp_olles_rum_hjalpare
 - id: '1719410217121'
   alias: High water usage warning
-  description: ''
+  description: Notifiera om förbrukningen överstiger en viss nivå per 15 minuter
   triggers:
-  - entity_id: sensor.water_usage
-    above: 0.25
-    for:
-      hours: 0
-      minutes: 30
-      seconds: 0
+  - entity_id: sensor.water_usage_quarter_hourly
+    above: 125
     trigger: numeric_state
-  conditions:
-  - condition: template
-    value_template: '{% set val = states(''sensor.water_usage'') %} {{ val not in
-      [''unknown'', ''unavailable'', ''none''] }}
-
-      '
-  - condition: template
-    value_template: '{{ (as_timestamp(now()) - as_timestamp(states.sensor.water_usage.last_changed))
-      > 1800 }}
-
-      '
   actions:
   - data:
-      message: Huset har använt mer än 250 L vatten under 30 minuter!
-    action: notify.notify
+      message: Huset har använt mer än 125 L vatten under de senaste 15 minuterna!
+    action: notify.all_devices
+  - action: tts.google_say
+    target:
+      entity_id: media_player.kok
+    data:
+      entity_id: media_player.kok
+      message: Hög vattenanvändning
+      cache: true
+      language: sv
   mode: single
   initial_state: true
 - id: '1732616159104'
@@ -159,7 +152,7 @@
     trigger: device
   conditions: []
   actions:
-  - action: notify.mobile_app_anders_s21fe
+  - action: notify.Anders
     metadata: {}
     data:
       message: Musfälla källare detekterade rörelse
@@ -175,7 +168,7 @@
     trigger: device
   conditions: []
   actions:
-  - action: notify.mobile_app_anders_s21fe
+  - action: notify.Anders
     metadata: {}
     data:
       message: Musfälla vinden rörelse detekterad
@@ -232,7 +225,15 @@
   - data:
       title: Hög energianvändning
       message: Huset förbrukar mer än 6 kw
-    action: notify.mobile_app_anders_s21fe
+    action: notify.Anders
+  - action: tts.google_say
+    target:
+      entity_id: media_player.kok
+    data:
+      entity_id: media_player.kok
+      message: Hög energianvändning
+      cache: true
+      language: sv
   mode: single
 - id: '1734903609516'
   alias: Alarm - Rpi3 notify
@@ -241,7 +242,7 @@
     path: SgtBatten/Stable.yaml
     input:
       camera: camera.rpi3_2
-      notify_device: f326594e961a48756bccbda5b2185cd2
+      notify_device: 6ae02c72bc76a69da2e234f790c1b89c
       alert_once: true
       attachment: thumbnail
       debug: false
@@ -268,7 +269,7 @@
     trigger: device
   conditions: []
   actions:
-  - action: notify.mobile_app_anders_s21fe
+  - action: notify.Anders
     metadata: {}
     data:
       message: 'Asus pc är offline '
@@ -288,7 +289,7 @@
       seconds: 0
   conditions: []
   actions:
-  - action: notify.mobile_app_anders_s21fe
+  - action: notify.Anders
     metadata: {}
     data:
       message: 'Rpi3 offline '
