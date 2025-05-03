@@ -373,8 +373,10 @@
     value_template: '{% set battery_level = states(''sensor.skoda_superb_combi_battery_percentage'')
       | float %}
 
-      {% set remaining_energy_needed = 12000 if battery_level == 0 else battery_level
-      / 100 * 12000 %}
+      {% set capacity = 6000 %}
+
+      {% set remaining_energy_needed = capacity if battery_level == 0 else battery_level
+      / 100 * capacity %}
 
       {% set remaining_production = states(''sensor.energy_production_today_remaining_2'')
       | float + states(''sensor.energy_production_today_remaining'') | float %}

@@ -87,8 +87,8 @@ tom_robban:
   - action: roborock.set_vacuum_goto_position
     metadata: {}
     data:
-      x: '21534'
-      y: '27845'
+      x: '27845'
+      y: '21534'
     target:
       entity_id: vacuum.robban
   - delay:
