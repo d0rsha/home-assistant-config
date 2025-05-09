@@ -87,8 +87,8 @@ tom_robban:
   - action: roborock.set_vacuum_goto_position
     metadata: {}
     data:
-      x: '27845'
-      y: '21534'
+      x: '21426'
+      y: '27781'
     target:
       entity_id: vacuum.robban
   - delay:
@@ -102,7 +102,7 @@ tom_robban:
       cache: true
       entity_id: media_player.kok
       message: Hej famlijen. Robban vill bli tömd hälsar Nabu
-      language: sv
+      language: sv-SE
   alias: Töm robban
   description: 'Robban går till position för att tömma behållare. '
   icon: mdi:robot-vacuum-alert
