@@ -368,7 +368,7 @@
     state: ready_for_charging
   - condition: numeric_state
     entity_id: sensor.haos_sbfspot_sma_ac_power
-    above: 4000
+    above: 3000
   - condition: template
     value_template: '{% set battery_level = states(''sensor.skoda_superb_combi_battery_percentage'')
       | float %}
