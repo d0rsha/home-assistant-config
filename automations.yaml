@@ -124,8 +124,9 @@
   alias: High water usage warning
   description: Notifiera om förbrukningen överstiger en viss nivå per 15 minuter
   triggers:
-  - entity_id: sensor.water_usage_quarter_hourly
-    above: 125
+  - entity_id:
+    - sensor.water_usage_quarter_hourly
+    above: 140
     trigger: numeric_state
   actions:
   - data:
@@ -362,26 +363,16 @@
   conditions:
   - condition: numeric_state
     entity_id: sensor.skoda_superb_combi_battery_percentage
-    below: 90
+    below: 80
   - condition: state
     entity_id: sensor.skoda_superb_combi_charging_state
     state: ready_for_charging
   - condition: numeric_state
     entity_id: sensor.haos_sbfspot_sma_ac_power
     above: 3000
-  - condition: template
-    value_template: '{% set battery_level = states(''sensor.skoda_superb_combi_battery_percentage'')
-      | float %}
-
-      {% set capacity = 6000 %}
-
-      {% set remaining_energy_needed = capacity if battery_level == 0 else battery_level
-      / 100 * capacity %}
-
-      {% set remaining_production = states(''sensor.energy_production_today_remaining_2'')
-      | float + states(''sensor.energy_production_today_remaining'') | float %}
-
-      {{ remaining_energy_needed <= remaining_production }}'
+  - condition: numeric_state
+    entity_id: sensor.energy_production_today_remaining_2
+    above: 6
   - condition: state
     entity_id: input_boolean.ev_charger_request_sent
     state: 'off'
