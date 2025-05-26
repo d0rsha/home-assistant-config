@@ -118,6 +118,10 @@
             },
             {
               "type": "media-control",
+              "entity": "media_player.nestmini8865"
+            },
+            {
+              "type": "media-control",
               "entity": "media_player.kok"
             },
             {
