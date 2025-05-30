@@ -377,7 +377,7 @@
     entity_id: input_boolean.ev_charger_request_sent
     state: 'off'
   actions:
-  - action: notify.mobile_app_anders_s21fe
+  - action: notify.anders
     data:
       title: Dags att ladda bilen?
       message: Solproduktionen är hög och bilen har mindre än 80% batteri. Vill du
