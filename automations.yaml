@@ -369,7 +369,7 @@
     state: ready_for_charging
   - condition: numeric_state
     entity_id: sensor.haos_sbfspot_sma_ac_power
-    above: 1500
+    above: 2500
   - condition: numeric_state
     entity_id: sensor.energy_production_today_remaining_2
     above: 6
@@ -597,4 +597,42 @@
     data: {}
     target:
       entity_id: script.stada_under_matbord
+  mode: single
+- id: '1745407472402'
+  alias: Change Hinnan Guard Mode to Schedule
+  description: Changes Hinnan guard mode from Geofencing to Schedule
+  triggers:
+  - trigger: time
+    at: '23:59:00'
+    id: evening_schedule
+  - trigger: time
+    at: 07:00:00
+    id: morning_geofencing
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: evening_schedule
+      - condition: state
+        entity_id: select.hinnan_guard_mode
+        state: Geofencing
+      sequence:
+      - action: select.select_option
+        target:
+          entity_id: select.hinnan_guard_mode
+        data:
+          option: Schedule
+    - conditions:
+      - condition: trigger
+        id: morning_geofencing
+      - condition: state
+        entity_id: select.hinnan_guard_mode
+        state: Schedule
+      sequence:
+      - action: select.select_option
+        target:
+          entity_id: select.hinnan_guard_mode
+        data:
+          option: Geofencing
   mode: single

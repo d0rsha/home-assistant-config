@@ -1,6 +1,6 @@
 """Sensors for the MySkoda integration."""
 
-from datetime import datetime, UTC
+from datetime import UTC, datetime
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,
@@ -26,10 +26,10 @@ from homeassistant.helpers.typing import (
 from myskoda.models import charging
 from myskoda.models.charging import Charging, ChargingStatus
 from myskoda.models.driving_range import EngineType
+from myskoda.models.event import OperationStatus
 from myskoda.models.info import CapabilityId
-from myskoda.models.operation_request import OperationStatus
 
-from .const import COORDINATORS, DOMAIN, OUTSIDE_TEMP_MIN_BOUND, OUTSIDE_TEMP_MAX_BOUND
+from .const import COORDINATORS, DOMAIN, OUTSIDE_TEMP_MAX_BOUND, OUTSIDE_TEMP_MIN_BOUND
 from .coordinator import MySkodaConfigEntry
 from .entity import MySkodaEntity
 from .utils import add_supported_entities
@@ -53,6 +53,7 @@ async def async_setup_entry(
             CombustionRange,
             ElectricRange,
             FuelLevel,
+            GasRange,
             InspectionInterval,
             InspectionIntervalKM,
             LastUpdated,
@@ -102,7 +103,7 @@ class Operation(MySkodaSensor):
         """Returns the status of the last seen operation."""
         if self.operations:
             last_operation = list(self.operations.values())[-1]
-            return last_operation.operation.status.lower()
+            return last_operation.status.lower()
 
     @property
     def extra_state_attributes(self) -> dict:
@@ -119,10 +120,10 @@ class Operation(MySkodaSensor):
         operations.reverse()
         filtered = [
             {
-                "request_id": event.operation.request_id,
-                "operation": event.operation.operation,
-                "status": event.operation.status.lower(),
-                "error_code": event.operation.error_code,
+                "request_id": event.request_id,
+                "operation": event.operation,
+                "status": event.status.lower(),
+                "error_code": event.error_code,
                 "timestamp": event.timestamp,
             }
             for event in operations
