@@ -474,9 +474,9 @@
   mode: single
 - id: '1744038579159'
   alias: Automatisk belysning
-  description: Tänder alla enheter märkta med 'Automatisk belysning' 2 timmar före
-    solnedgång och släcker dem efter 22:00 om TV:n är avstängd, annars väntar tills
-    TV:n stängs av.
+  description: Tänder belysning 2 timmar före solnedgång. Lampor i barnens rum tänds
+    endast före 19:30. Släcker all belysning efter 22:00 om TV:n är avstängd, annars
+    väntar tills TV:n stängs av.
   triggers:
   - event: sunset
     offset: -02:00:00
@@ -492,10 +492,16 @@
       - condition: trigger
         id: 'on'
       sequence:
-      - action: homeassistant.turn_on
-        target:
-          label_id: automatisk_belysning
+      - target:
+          label_id: automatiskt_belysning
         data: {}
+        action: homeassistant.turn_on
+      - condition: time
+        before: '19:30:00'
+      - target:
+          label_id: automatiskt_belysning_barnrum
+        data: {}
+        action: homeassistant.turn_on
     - conditions:
       - condition: trigger
         id: 'off'
@@ -508,10 +514,14 @@
           trigger: state
         timeout: 02:20:00
         continue_on_timeout: true
-      - action: homeassistant.turn_off
-        target:
-          label_id: automatisk_belysning
+      - target:
+          label_id: automatiskt_belysning
         data: {}
+        action: homeassistant.turn_off
+      - target:
+          label_id: automatiskt_belysning_barnrum
+        data: {}
+        action: homeassistant.turn_off
       - device_id: 439ab72d0a12b6536ad5cc48d71d60c5
         domain: climate
         entity_id: f1260d8d12a0d5939b238360a06f42d4
@@ -524,10 +534,14 @@
         entity_id: remote.the_frame
         state: 'off'
       sequence:
-      - action: homeassistant.turn_off
-        target:
-          label_id: automatisk_belysning
+      - target:
+          label_id: automatiskt_belysning
         data: {}
+        action: homeassistant.turn_off
+      - target:
+          label_id: automatiskt_belysning_barnrum
+        data: {}
+        action: homeassistant.turn_off
       - device_id: 439ab72d0a12b6536ad5cc48d71d60c5
         domain: climate
         entity_id: f1260d8d12a0d5939b238360a06f42d4
