@@ -479,7 +479,7 @@
     väntar tills TV:n stängs av.
   triggers:
   - event: sunset
-    offset: -02:00:00
+    offset: -02:30:00
     id: 'on'
     trigger: sun
   - at: '22:00:00'
@@ -567,6 +567,23 @@
     data: {}
     target:
       entity_id: script.tom_robban
+  - wait_template: '{{ not is_state(''sensor.robban_status'', ''going_to_target'')
+      }}'
+    timeout: 00:05:00
+  - wait_template: '{{ is_state(''sensor.robban_status'', ''idle'') }}'
+    timeout: 00:05:00
+  - delay: 01:00:00
+  - choose:
+    - conditions:
+      - condition: not
+        conditions:
+        - condition: state
+          entity_id: binary_sensor.robban_charging
+          state: 'on'
+      sequence:
+      - target:
+          entity_id: vacuum.robban
+        action: vacuum.return_to_base
   mode: single
 - id: '1745404454475'
   alias: Robban städschema
