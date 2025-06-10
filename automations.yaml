@@ -517,8 +517,7 @@
       - data: {}
         action: homeassistant.turn_off
         target:
-          label_id:
-          - auto_belysning_barnrum
+          label_id: automatisk_belysning
       - data: {}
         action: homeassistant.turn_off
         target:
@@ -667,4 +666,22 @@
           entity_id: select.hinnan_guard_mode
         data:
           option: Geofencing
+  mode: single
+- id: '1749501090496'
+  alias: Larma på
+  description: 'Stang av enheter som ej ska vara igang när huset lsrmad '
+  triggers:
+  - device_id: c9dccef4072dbf886ab56405179875f5
+    domain: alarm_control_panel
+    entity_id: 66d4dd5165a0c22f37f0ee87d6c1ff50
+    type: armed_away
+    trigger: device
+  conditions: []
+  actions:
+  - action: automation.turn_off
+    metadata: {}
+    data:
+      stop_actions: true
+    target:
+      label_id: robban
   mode: single
