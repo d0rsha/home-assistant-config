@@ -1697,8 +1697,8 @@
                 {
                   "id": "inomhus",
                   "min": 18,
-                  "max": 23,
-                  "decimals": 1
+                  "max": 25,
+                  "decimals": 0
                 },
                 {
                   "id": "utomhus",
@@ -1710,7 +1710,7 @@
                 {
                   "id": "vind",
                   "opposite": true,
-                  "decimals": 1,
+                  "decimals": 0,
                   "min": 0,
                   "max": 20
                 }
