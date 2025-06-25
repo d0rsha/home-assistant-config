@@ -136,7 +136,7 @@
     target:
       entity_id: media_player.kok
     data:
-      entity_id: media_player.kok
+      entity_id: media_player.home_assistant_voice_09517d_media_player
       message: Hög vattenanvändning
       cache: true
       language: sv
@@ -231,7 +231,7 @@
     target:
       entity_id: media_player.kok
     data:
-      entity_id: media_player.kok
+      entity_id: media_player.home_assistant_voice_09517d_media_player
       message: Hög energianvändning
       cache: true
       language: sv
@@ -467,7 +467,7 @@
     target:
       entity_id: media_player.kok
     data:
-      entity_id: media_player.kok
+      entity_id: media_player.home_assistant_voice_09517d_media_player
       message: Vänligen anslut laddaren till bilen.
       cache: false
       language: sv
@@ -682,6 +682,71 @@
     metadata: {}
     data:
       stop_actions: true
+    target:
+      label_id: robban
+  mode: single
+- id: '1750707338797'
+  alias: Torktumlaren klar
+  description: ''
+  triggers:
+  - entity_id: sensor.ikea_of_sweden_inspelning_smart_plug_power
+    above: 100
+    for: 00:01:00
+    trigger: numeric_state
+  conditions: []
+  actions:
+  - wait_for_trigger:
+    - entity_id: sensor.ikea_of_sweden_inspelning_smart_plug_power
+      below: 3
+      for: 00:05:00
+      trigger: numeric_state
+    timeout: 03:00:00
+    continue_on_timeout: false
+  - data:
+      message: Torktumlaren är klar!
+    action: notify.all_devices
+  mode: single
+- id: '1750707478313'
+  alias: Tvättmaskin klar
+  description: ''
+  triggers:
+  - entity_id: sensor.uttag_tvattmaskin_power
+    above: 100
+    for: 00:01:00
+    trigger: numeric_state
+  conditions: []
+  actions:
+  - wait_for_trigger:
+    - entity_id:
+      - sensor.uttag_tvattmaskin_power
+      below: 3
+      for:
+        hours: 0
+        minutes: 5
+        seconds: 0
+        milliseconds: 0
+      trigger: numeric_state
+    timeout: 03:00:00
+    continue_on_timeout: false
+  - data:
+      message: Tvättmaskinen är klar. Glöm inte att hänga tvätten!
+    action: notify.all_devices
+  mode: single
+- id: '1750752849264'
+  alias: Larma av
+  description: Starta automationer som ska vara på när huset inte är larmat
+  triggers:
+  - device_id: c9dccef4072dbf886ab56405179875f5
+    domain: alarm_control_panel
+    entity_id: 66d4dd5165a0c22f37f0ee87d6c1ff50
+    type: disarmed
+    trigger: device
+  conditions: []
+  actions:
+  - action: automation.turn_on
+    metadata: {}
+    data:
+      stop_actions: false
     target:
       label_id: robban
   mode: single
