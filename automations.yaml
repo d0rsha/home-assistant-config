@@ -696,9 +696,13 @@
   conditions: []
   actions:
   - wait_for_trigger:
-    - entity_id: sensor.ikea_of_sweden_inspelning_smart_plug_power
-      below: 3
-      for: 00:05:00
+    - entity_id:
+      - sensor.ikea_of_sweden_inspelning_smart_plug_power
+      below: 8
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 10
       trigger: numeric_state
     timeout: 03:00:00
     continue_on_timeout: false
@@ -722,9 +726,8 @@
       below: 3
       for:
         hours: 0
-        minutes: 5
-        seconds: 0
-        milliseconds: 0
+        minutes: 0
+        seconds: 10
       trigger: numeric_state
     timeout: 03:00:00
     continue_on_timeout: false
