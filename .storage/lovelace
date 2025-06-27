@@ -188,9 +188,19 @@
                 },
                 {
                   "type": "state-label",
+                  "entity": "sensor.zeke_inside_temperature",
+                  "style": {
+                    "top": "15%",
+                    "left": "79%",
+                    "color": "green",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
                   "entity": "sensor.vardagsrum_temperatur",
                   "style": {
-                    "top": "16%",
+                    "top": "25%",
                     "left": "75%",
                     "color": "green",
                     "font-weight": "bold"
@@ -320,6 +330,373 @@
                     "width": "7%",
                     "padding": "10px"
                   }
+                },
+                {
+                  "type": "image",
+                  "entity": "media_player.kok",
+                  "tap_action": {
+                    "action": "more-info"
+                  },
+                  "image": "/local/assets/icon/nest_off.png",
+                  "state_image": {
+                    "playing": "/local/assets/icon/nest_on.png"
+                  },
+                  "state_filter": {
+                    "playing": "brightness(130%) saturate(1.5)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "78%",
+                    "left": "84%",
+                    "width": "7%",
+                    "padding": "10px"
+                  }
+                },
+                {
+                  "type": "image",
+                  "entity": "media_player.the_frame",
+                  "tap_action": {
+                    "action": "more-info"
+                  },
+                  "image": "/local/assets/icon/tv_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/tv_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "39%",
+                    "left": "55%",
+                    "width": "7%",
+                    "padding": "10px",
+                    "transform": "rotate(90deg) scale(0.8)"
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.grov_entre_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "78%",
+                        "left": "38%",
+                        "color": "red",
+                        "transform": "rotate(45deg) scale(1.6)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.entre_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "69%",
+                        "left": "33%",
+                        "color": "red",
+                        "transform": "rotate(149deg) scale(1.6)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.vardagsrumsdorr_hoger_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "0%",
+                        "left": "76%",
+                        "color": "red",
+                        "transform": "rotate(29deg) scale(1.5)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.vardagsrumsdorr_vanster_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "0%",
+                        "left": "57%",
+                        "color": "red",
+                        "transform": "rotate(29deg) scale(1.5)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.sovrumsdorr_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "26%",
+                        "left": "16%",
+                        "color": "red",
+                        "transform": "rotate(29deg) scale(1.5)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.sovrums_fonster_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "26%",
+                        "left": "10%",
+                        "color": "red",
+                        "transform": "rotate(149deg) scale(1.5)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.sido_gavel_dorr_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "4%",
+                        "left": "86%",
+                        "color": "red",
+                        "transform": "rotate(149deg) scale(1.5)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.sido_gavel_fonster_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "4%",
+                        "left": "92%",
+                        "color": "red",
+                        "transform": "rotate(29deg) scale(1.5)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.fonster_badrum_hoger_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "26%",
+                        "left": "33%",
+                        "color": "red",
+                        "transform": "rotate(33deg) scale(1.2)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.fonster_badrum_vanster_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "26%",
+                        "left": "30%",
+                        "color": "red",
+                        "transform": "rotate(149deg) scale(1.2)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.vardagsrum_fonster_h_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "15%",
+                        "left": "38%",
+                        "color": "red",
+                        "transform": "rotate(314deg) scale(1.2)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.vardagsrum_fonster_v_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "23%",
+                        "left": "38%",
+                        "color": "red",
+                        "transform": "rotate(49deg) scale(1.2)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "state-label",
+                  "entity": "climate.zeke",
+                  "style": {
+                    "top": "10%",
+                    "left": "81%",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "climate.zeke",
+                      "state": "cool"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:snowflake",
+                      "style": {
+                        "top": "6%",
+                        "left": "72%",
+                        "color": "lightblue",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "climate.zeke",
+                      "state": "heat"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:fire",
+                      "style": {
+                        "top": "6%",
+                        "left": "72%",
+                        "color": "orange",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "climate.zeke",
+                      "state": "off"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:power",
+                      "style": {
+                        "top": "6%",
+                        "left": "72%",
+                        "color": "gray",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
                 }
               ],
               "image": "/local/assets/floor_plans/bottenplan_lightmode.png",
@@ -429,6 +806,48 @@
                     "width": "7%",
                     "padding": "8px"
                   }
+                },
+                {
+                  "type": "image",
+                  "entity": "switch.tradfri_uttag_1_brytare",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "79%",
+                    "left": "77%",
+                    "width": "7%",
+                    "padding": "8px"
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.balkongdorr_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "66%",
+                        "left": "22%",
+                        "color": "red",
+                        "transform": "rotate(29deg) scale(1.6)"
+                      }
+                    }
+                  ]
                 }
               ],
               "image": "/local/assets/floor_plans/ovreplan_lightmode.png",
@@ -1402,9 +1821,19 @@
                 },
                 {
                   "type": "state-label",
+                  "entity": "sensor.zeke_inside_temperature",
+                  "style": {
+                    "top": "15%",
+                    "left": "79%",
+                    "color": "green",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "state-label",
                   "entity": "sensor.vardagsrum_temperatur",
                   "style": {
-                    "top": "16%",
+                    "top": "25%",
                     "left": "75%",
                     "color": "green",
                     "font-weight": "bold"
@@ -1534,6 +1963,373 @@
                     "width": "7%",
                     "padding": "10px"
                   }
+                },
+                {
+                  "type": "image",
+                  "entity": "media_player.kok",
+                  "tap_action": {
+                    "action": "more-info"
+                  },
+                  "image": "/local/assets/icon/nest_off.png",
+                  "state_image": {
+                    "playing": "/local/assets/icon/nest_on.png"
+                  },
+                  "state_filter": {
+                    "playing": "brightness(130%) saturate(1.5)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "78%",
+                    "left": "84%",
+                    "width": "7%",
+                    "padding": "10px"
+                  }
+                },
+                {
+                  "type": "image",
+                  "entity": "media_player.the_frame",
+                  "tap_action": {
+                    "action": "more-info"
+                  },
+                  "image": "/local/assets/icon/tv_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/tv_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "39%",
+                    "left": "55%",
+                    "width": "7%",
+                    "padding": "10px",
+                    "transform": "rotate(90deg) scale(0.8)"
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.grov_entre_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "78%",
+                        "left": "38%",
+                        "color": "red",
+                        "transform": "rotate(45deg) scale(1.6)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.entre_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "69%",
+                        "left": "33%",
+                        "color": "red",
+                        "transform": "rotate(149deg) scale(1.6)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.vardagsrumsdorr_hoger_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "0%",
+                        "left": "76%",
+                        "color": "red",
+                        "transform": "rotate(29deg) scale(1.5)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.vardagsrumsdorr_vanster_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "0%",
+                        "left": "57%",
+                        "color": "red",
+                        "transform": "rotate(29deg) scale(1.5)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.sovrumsdorr_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "26%",
+                        "left": "16%",
+                        "color": "red",
+                        "transform": "rotate(29deg) scale(1.5)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.sovrums_fonster_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "26%",
+                        "left": "10%",
+                        "color": "red",
+                        "transform": "rotate(149deg) scale(1.5)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.sido_gavel_dorr_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "4%",
+                        "left": "86%",
+                        "color": "red",
+                        "transform": "rotate(149deg) scale(1.5)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.sido_gavel_fonster_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "4%",
+                        "left": "92%",
+                        "color": "red",
+                        "transform": "rotate(29deg) scale(1.5)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.fonster_badrum_hoger_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "26%",
+                        "left": "33%",
+                        "color": "red",
+                        "transform": "rotate(33deg) scale(1.2)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.fonster_badrum_vanster_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "26%",
+                        "left": "30%",
+                        "color": "red",
+                        "transform": "rotate(149deg) scale(1.2)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.vardagsrum_fonster_h_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "15%",
+                        "left": "38%",
+                        "color": "red",
+                        "transform": "rotate(314deg) scale(1.2)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.vardagsrum_fonster_v_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "23%",
+                        "left": "38%",
+                        "color": "red",
+                        "transform": "rotate(49deg) scale(1.2)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "state-label",
+                  "entity": "climate.zeke",
+                  "style": {
+                    "top": "10%",
+                    "left": "81%",
+                    "font-weight": "bold"
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "climate.zeke",
+                      "state": "cool"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:snowflake",
+                      "style": {
+                        "top": "6%",
+                        "left": "72%",
+                        "color": "lightblue",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "climate.zeke",
+                      "state": "heat"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:fire",
+                      "style": {
+                        "top": "6%",
+                        "left": "72%",
+                        "color": "orange",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "climate.zeke",
+                      "state": "off"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:power",
+                      "style": {
+                        "top": "6%",
+                        "left": "72%",
+                        "color": "gray",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
                 }
               ],
               "image": "/local/assets/floor_plans/bottenplan_lightmode.png",
@@ -1643,6 +2439,48 @@
                     "width": "7%",
                     "padding": "8px"
                   }
+                },
+                {
+                  "type": "image",
+                  "entity": "switch.tradfri_uttag_1_brytare",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "79%",
+                    "left": "77%",
+                    "width": "7%",
+                    "padding": "8px"
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "binary_sensor.balkongdorr_oppning",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:minus",
+                      "style": {
+                        "top": "66%",
+                        "left": "22%",
+                        "color": "red",
+                        "transform": "rotate(29deg) scale(1.6)"
+                      }
+                    }
+                  ]
                 }
               ],
               "image": "/local/assets/floor_plans/ovreplan_lightmode.png",
