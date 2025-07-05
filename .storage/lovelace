@@ -65,9 +65,6 @@
                   "entity": "switch.tradfri_outlet_2_brytare"
                 },
                 {
-                  "entity": "switch.uttag_garnlampa_switch"
-                },
-                {
                   "entity": "switch.inspelning_1_switch"
                 }
               ],
