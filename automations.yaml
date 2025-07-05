@@ -721,16 +721,23 @@
   conditions: []
   actions:
   - wait_for_trigger:
-    - entity_id:
-      - sensor.uttag_tvattmaskin_power
+    - entity_id: sensor.uttag_tvattmaskin_power
       below: 3
       for:
-        hours: 0
-        minutes: 0
         seconds: 10
       trigger: numeric_state
     timeout: 03:00:00
     continue_on_timeout: false
+  - wait_for_trigger:
+    - entity_id:
+      - binary_sensor.grov_entre_oppning
+      to: 'on'
+      trigger: state
+      from: 'off'
+    timeout: 00:30:00
+    continue_on_timeout: true
+  - condition: template
+    value_template: '{{ wait.trigger is none }}'
   - data:
       message: Tvättmaskinen är klar. Glöm inte att hänga tvätten!
     action: notify.all_devices
@@ -748,8 +755,6 @@
   actions:
   - action: automation.turn_on
     metadata: {}
-    data:
-      stop_actions: false
     target:
       label_id: robban
   mode: single
