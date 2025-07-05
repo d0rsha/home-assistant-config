@@ -729,18 +729,20 @@
     timeout: 03:00:00
     continue_on_timeout: false
   - wait_for_trigger:
-    - entity_id:
-      - binary_sensor.grov_entre_oppning
+    - entity_id: binary_sensor.grov_entre_oppning
+      from: 'off'
       to: 'on'
       trigger: state
-      from: 'off'
     timeout: 00:30:00
     continue_on_timeout: true
-  - condition: template
-    value_template: '{{ wait.trigger is none }}'
-  - data:
-      message: Tvättmaskinen är klar. Glöm inte att hänga tvätten!
-    action: notify.all_devices
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ wait.trigger is none }}'
+      sequence:
+      - data:
+          message: Tvättmaskinen är klar. Glöm inte att hänga tvätten!
+        action: notify.all_devices
   mode: single
 - id: '1750752849264'
   alias: Larma av
