@@ -706,9 +706,22 @@
       trigger: numeric_state
     timeout: 03:00:00
     continue_on_timeout: false
-  - data:
-      message: Torktumlaren är klar!
-    action: notify.all_devices
+  - wait_for_trigger:
+    - entity_id:
+      - binary_sensor.lumi_lumi_magnet_agl02
+      from: 'off'
+      to: 'on'
+      trigger: state
+    timeout: 00:30:00
+    continue_on_timeout: true
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ wait.trigger is none }}'
+      sequence:
+      - data:
+          message: Torktumlaren är klar!
+        action: notify.all_devices
   mode: single
 - id: '1750707478313'
   alias: Tvättmaskin klar
@@ -729,7 +742,8 @@
     timeout: 03:00:00
     continue_on_timeout: false
   - wait_for_trigger:
-    - entity_id: binary_sensor.grov_entre_oppning
+    - entity_id:
+      - binary_sensor.lumi_lumi_magnet_agl02_2
       from: 'off'
       to: 'on'
       trigger: state
