@@ -774,3 +774,13 @@
     target:
       label_id: robban
   mode: single
+- id: '1752671843831'
+  alias: Git daily push
+  description: Spara config till git enligt tidsintervall
+  triggers:
+  - at: 07:00:00
+    trigger: time
+  conditions: []
+  actions:
+  - action: script.git_commit_and_push
+  mode: single
