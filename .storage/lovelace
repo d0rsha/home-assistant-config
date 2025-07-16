@@ -65,6 +65,9 @@
                   "entity": "switch.tradfri_outlet_2_brytare"
                 },
                 {
+                  "entity": "switch.ikea_of_sweden_inspelning_smart_plug_2"
+                },
+                {
                   "entity": "switch.inspelning_1_switch"
                 }
               ],
@@ -2345,6 +2348,14 @@
                       }
                     }
                   ]
+                },
+                {
+                  "type": "state-label",
+                  "style": {
+                    "left": "94%",
+                    "top": "42%"
+                  },
+                  "entity": "sensor.zeke_outside_temperature"
                 }
               ],
               "image": "/local/assets/floor_plans/bottenplan_lightmode.png",
