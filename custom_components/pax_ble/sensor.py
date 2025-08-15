@@ -4,7 +4,7 @@ from collections import namedtuple
 from homeassistant.components.sensor import SensorDeviceClass, SensorEntity
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.const import CONF_DEVICES
-from homeassistant.const import UnitOfVolumeFlowRate, UnitOfTemperature
+from homeassistant.const import UnitOfVolumeFlowRate, UnitOfTemperature, UnitOfTime
 from homeassistant.const import (
     LIGHT_LUX,
     PERCENTAGE,
@@ -51,9 +51,17 @@ SVENSA_ENTITIES = [
         "airquality",
         "Air Quality",
         CONCENTRATION_PARTS_PER_MILLION,
-        SensorDeviceClass.GAS,
+        SensorDeviceClass.CO2,
         None,
         None,
+    ),
+    PaxEntity(
+        "pauseminread",
+        "Pause Remaining",
+        UnitOfTime.MINUTES,
+        SensorDeviceClass.DURATION,
+        None,
+        "mdi:pause",
     ),
 ]
 

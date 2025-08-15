@@ -96,9 +96,14 @@ class CostData:
             self.request_handler(), name="easee_hass cost update task"
         )
 
-    def __del__(self):
+    async def async_cleanup(self) -> None:
         """Cancel our consumer task."""
         self.task.cancel()
+        try:
+            await self.task
+        except asyncio.CancelledError:
+            _LOGGER.debug("Cost update task cancelled")
+        self.task = None
 
     def register_for_update(self, product_id, cost_callback):
         """Register callback for data update."""
@@ -123,8 +128,8 @@ class CostData:
                 self.request_queue.task_done()
 
             await self.update_cost()
-            """Wait to comply with rate limit (max 10 calls/hour)"""
-            await asyncio.sleep(1200-self.period)
+            # Wait to comply with rate limit (max 10 calls/hour)
+            await asyncio.sleep(1200 - self.period)
 
     async def update_cost(self):
         """Poll cost data and notify observers."""
@@ -398,7 +403,7 @@ class ProductData:
             try:
                 first, second = name.split("_")
             except Exception as ex:  # pylint: disable=broad-except
-                _LOGGER.print("Exception %s when splitting %s", ex, name)
+                _LOGGER.debug("Exception %s when splitting %s", ex, name)
                 return False
 
             if first == "state":
@@ -547,6 +552,8 @@ class Controller:
                 await self.easee.sr_unsubscribe(equalizer)
             for charger in self.chargers:
                 await self.easee.sr_unsubscribe(charger)
+            for cost_data in self.costs_data:
+                await cost_data.async_cleanup()
             await self.easee.close()
 
         self.hass.data[DOMAIN].pop("controller")
@@ -674,19 +681,37 @@ class Controller:
     async def async_add_schedulers(self):
         """Add schedules to update data."""
         # first update
-        await self.async_refresh_sites_state()
-        await self.async_refresh_equalizers_state()
-        await asyncio.gather(
-            *[charger.async_cost_refresh() for charger in self.chargers_data]
-        )
-        await asyncio.gather(
-            *[charger.async_firmware_refresh() for charger in self.chargers_data]
-        )
-        await asyncio.gather(
-            *[equalizer.async_firmware_refresh() for equalizer in self.equalizers_data]
-        )
-        for charger in self.chargers_data:
-            charger.site_notify()
+        try:
+            await self.async_refresh_sites_state()
+        except Exception as err:
+            _LOGGER.error("Failed during call to async_refresh_sites_state: %s", err)
+        try:
+            await self.async_refresh_equalizers_state()
+        except Exception as err:
+            _LOGGER.error("Failed during call to async_refresh_equalizers_state: %s", err)
+        try:
+            await asyncio.gather(
+                *[charger.async_cost_refresh() for charger in self.chargers_data]
+            )
+        except Exception as err:
+            _LOGGER.error("Failed during call to async_cost_refresh: %s", err)
+        try:
+            await asyncio.gather(
+                *[charger.async_firmware_refresh() for charger in self.chargers_data]
+            )
+        except Exception as err:
+            _LOGGER.error("Failed during call to charger async_firmware_refresh: %s", err)
+        try:
+            await asyncio.gather(
+                *[equalizer.async_firmware_refresh() for equalizer in self.equalizers_data]
+            )
+        except Exception as err:
+            _LOGGER.error("Failed during call to equalizer async_firmware_refresh: %s", err)
+        try:
+            for charger in self.chargers_data:
+                charger.site_notify()
+        except Exception as err:
+            _LOGGER.error("Failed during call to charger site_notify: %s", err)
 
         # Add interval refresh for site state interval
         self.async_on_remove(

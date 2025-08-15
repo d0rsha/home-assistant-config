@@ -1,6 +1,5 @@
 """Easee Charger constants."""
 
-# pylint: disable=too-many-lines
 from pyeasee import ChargerStreamData, EqualizerStreamData
 
 from homeassistant.components.binary_sensor import BinarySensorDeviceClass
@@ -17,8 +16,8 @@ from homeassistant.helpers.entity import EntityCategory
 
 DOMAIN = "easee"
 TIMEOUT = 30
-VERSION = "0.9.69"
-MIN_HA_VERSION = "2024.8.0"
+VERSION = "0.9.71"
+MIN_HA_VERSION = "2025.7.0"
 CONF_MONITORED_SITES = "monitored_sites"
 MANUFACTURER = "Easee"
 MODEL_EQUALIZER = "Equalizer"
@@ -380,6 +379,16 @@ OPTIONAL_EASEE_ENTITIES = {
         "convert_units_func": None,
         "translation_key": "online",
         "device_class": BinarySensorDeviceClass.CONNECTIVITY,
+        "entity_category": EntityCategory.DIAGNOSTIC,
+    },
+    "phase_mode": {
+        "key": "config.phaseMode",
+        "attrs": [],
+        "units": None,
+        "convert_units_func": "map_phase_mode",
+        "translation_key": "phase_mode",
+        "device_class": None,
+        "enabled_default": False,
         "entity_category": EntityCategory.DIAGNOSTIC,
     },
     "output_limit": {
@@ -989,14 +998,14 @@ NODE_TYPE_STATUS = {
     2: NT_EXTENDER,
 }
 
-PM_LOCKED_SINGLE = "locked_single"
+PM_SINGLE = "single"
 PM_AUTO = "auto"
-PM_LOCKED_THREE = "locked_three"
+PM_THREE = "three"
 
 PHASE_MODE_STATUS = {
-    1: PM_LOCKED_SINGLE,
+    1: PM_SINGLE,
     2: PM_AUTO,
-    3: PM_LOCKED_THREE,
+    3: PM_THREE,
 }
 
 RNC_NONE = "none"
