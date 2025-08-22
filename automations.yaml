@@ -373,9 +373,11 @@
   - condition: numeric_state
     entity_id: sensor.energy_production_today_remaining_2
     above: 6
-  - condition: state
-    entity_id: sensor.garage_status
-    state: 'Ready for charge '
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.garage_status
+      state: Car disconnected
   - condition: state
     entity_id: input_boolean.ev_charger_request_sent
     state: 'off'
@@ -458,14 +460,16 @@
       entity_id: person.anders
       state: home
   - condition: state
-    entity_id: sensor.skoda_superb_combi_charging_state
-    state: connect_cable
-  actions:
-  - delay:
+    entity_id: sensor.garage_status
+    state: Car disconnected
+  - condition: state
+    entity_id: binary_sensor.entre_oppning
+    state: 'on'
+    for:
       hours: 0
-      minutes: 5
-      seconds: 0
-      milliseconds: 0
+      minutes: 0
+      seconds: 1
+  actions:
   - action: tts.google_say
     target:
       entity_id: media_player.kok
