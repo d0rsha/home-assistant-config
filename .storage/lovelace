@@ -1014,6 +1014,9 @@
                       "entity": "sensor.skoda_superb_combi_battery_percentage"
                     },
                     {
+                      "entity": "sensor.garage_status"
+                    },
+                    {
                       "entity": "sensor.skoda_superb_combi_charging_state"
                     },
                     {
