@@ -132,13 +132,14 @@
   - data:
       message: Huset har använt mer än 125 L vatten under de senaste 15 minuterna!
     action: notify.all_devices
-  - action: tts.google_say
+  - action: chime_tts.say
     target:
       entity_id: media_player.kok
     data:
       entity_id: media_player.home_assistant_voice_09517d_media_player
       message: Hög vattenanvändning
       cache: true
+      announce: true
       language: sv
   mode: single
   initial_state: true
@@ -227,13 +228,14 @@
       title: Hög energianvändning
       message: Huset förbrukar mer än 6 kw
     action: notify.Anders
-  - action: tts.google_say
+  - action: chime_tts.say
     target:
       entity_id: media_player.kok
     data:
       entity_id: media_player.home_assistant_voice_09517d_media_player
       message: Hög energianvändning
       cache: true
+      announce: true
       language: sv
   mode: single
 - id: '1734903609516'
@@ -470,13 +472,14 @@
       minutes: 0
       seconds: 1
   actions:
-  - action: tts.google_say
+  - action: chime_tts.say
     target:
       entity_id: media_player.kok
     data:
       entity_id: media_player.home_assistant_voice_09517d_media_player
       message: Vänligen anslut laddaren till bilen.
       cache: false
+      announce: true
       language: sv
   mode: single
 - id: '1744038579159'
