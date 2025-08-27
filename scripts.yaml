@@ -106,3 +106,42 @@ tom_robban:
   alias: Töm robban
   description: 'Robban går till position för att tömma behållare. '
   icon: mdi:robot-vacuum-alert
+chime:
+  sequence:
+  - variables:
+      last_radio: '{{ state_attr(''media_player.kok'',''media_content_id'') }}'
+      last_volume: '{{ state_attr(''media_player.kok'',''volume_level'') }}'
+  - target:
+      entity_id: media_player.kok
+    data:
+      message: '{{ message }}'
+      chime_path: '{{ chime | default(''bright'') }}'
+      language: sv
+      volume_level: 0.5
+      cache: true
+      announce: true
+    action: chime_tts.say
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 50
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ last_radio is not none }}'
+      sequence:
+      - target:
+          entity_id: media_player.kok
+        data:
+          media_content_id: '{{ last_radio }}'
+          media_content_type: music
+        action: media_player.play_media
+      - target:
+          entity_id: media_player.kok
+        data:
+          volume_level: '{{ last_volume }}'
+        action: media_player.volume_set
+  alias: Chime Notification
+  description: Announces a message through the kitchen media player and restores the
+    last played radio afterward.
