@@ -354,9 +354,6 @@
   - condition: numeric_state
     entity_id: sensor.skoda_superb_combi_battery_percentage
     below: 80
-  - condition: state
-    entity_id: sensor.skoda_superb_combi_charging_state
-    state: ready_for_charging
   - condition: numeric_state
     entity_id: sensor.haos_sbfspot_sma_ac_power
     above: 2500
@@ -365,9 +362,16 @@
     above: 6
   - condition: not
     conditions:
-    - condition: state
-      entity_id: sensor.garage_status
-      state: Car disconnected
+    - condition: or
+      conditions:
+      - condition: device
+        device_id: 9497d4e0227e3207ec70f2e19d1c301c
+        domain: easee
+        entity_id: sensor.garage_status
+        type: charging
+      - condition: state
+        entity_id: sensor.garage_status
+        state: Car disconnected
   - condition: state
     entity_id: input_boolean.ev_charger_request_sent
     state: 'off'
