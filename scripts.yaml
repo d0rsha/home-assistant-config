@@ -109,7 +109,10 @@ tom_robban:
 chime:
   sequence:
   - variables:
-      last_radio: '{{ state_attr(''media_player.kok'',''media_content_id'') }}'
+      last_radio: "{% set id = state_attr('media_player.kok','media_content_id') %}
+        {% set tts_prefix = '/media/local/sounds/temp/chime_tts/' %} {% if id is not
+        none and (tts_prefix not in id) %}\n  {{ id }}\n{% else %}\n  {{ none }}\n{%
+        endif %}\n"
       last_volume: '{{ state_attr(''media_player.kok'',''volume_level'') }}'
   - target:
       entity_id: media_player.kok
@@ -122,10 +125,7 @@ chime:
       announce: true
     action: chime_tts.say
   - delay:
-      hours: 0
-      minutes: 0
-      seconds: 0
-      milliseconds: 50
+      milliseconds: 200
   - choose:
     - conditions:
       - condition: template
