@@ -7,7 +7,7 @@
     to: 'on'
   condition: []
   actions:
-  - action: notify.mobile_app_anders_s21fe
+  - action: notify.Anders
     data:
       title: Backups are Stale
       message: Please visit the 'Home Assistant Google Drive Backup ' add-on status
@@ -49,7 +49,7 @@
     input:
       sentence: Lägg till {item} till [min] shoppinglista
       postscript:
-      - service: notify.mobile_app_anders_s21fe
+      - service: notify.Anders
         metadata: {}
         data:
           title: Anylist
@@ -62,7 +62,7 @@
     input:
       sentence: add {item} to [my] shopping list
       postscript:
-      - service: notify.mobile_app_anders_s21fe
+      - service: notify.Anders
         metadata: {}
         data:
           message: Added {{ trigger.slots.item }}
