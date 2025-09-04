@@ -91,6 +91,9 @@
                 },
                 {
                   "entity": "switch.tradfri_uttag_1_brytare"
+                },
+                {
+                  "entity": "light.hallfatolj_ovanvaning"
                 }
               ],
               "title": "Övervåning",
