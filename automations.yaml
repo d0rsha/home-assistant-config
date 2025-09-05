@@ -707,6 +707,9 @@
       trigger: numeric_state
     timeout: 03:00:00
     continue_on_timeout: false
+  - action: script.chime
+    data:
+      message: Torktumlaren är klar.
   - wait_for_trigger:
     - entity_id:
       - binary_sensor.lumi_lumi_magnet_agl02
@@ -742,6 +745,9 @@
       trigger: numeric_state
     timeout: 03:00:00
     continue_on_timeout: false
+  - action: script.chime
+    data:
+      message: Tvättmaskin är klar.
   - wait_for_trigger:
     - entity_id:
       - binary_sensor.lumi_lumi_magnet_agl02_2
