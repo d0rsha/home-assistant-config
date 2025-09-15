@@ -369,9 +369,11 @@
         domain: easee
         entity_id: sensor.garage_status
         type: charging
-      - condition: state
+      - condition: device
+        device_id: 9497d4e0227e3207ec70f2e19d1c301c
+        domain: easee
         entity_id: sensor.garage_status
-        state: Car disconnected
+        type: disconnected
   - condition: state
     entity_id: input_boolean.ev_charger_request_sent
     state: 'off'
