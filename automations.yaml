@@ -378,19 +378,12 @@
     entity_id: input_boolean.ev_charger_request_sent
     state: 'off'
   actions:
+  - action: switch.turn_on
+    entity_id: switch.skoda_superb_combi_charging
   - action: notify.anders
     data:
-      title: Dags att ladda bilen?
-      message: Solproduktionen är hög och bilen har mindre än 80% batteri. Vill du
-        börja ladda?
-      data:
-        actions:
-        - action: START_CHARGE
-          title: Ja, börja ladda!
-        - action: NO_CHARGE
-          title: Nej, inte nu
-  - action: input_boolean.turn_on
-    entity_id: input_boolean.ev_charger_request_sent
+      title: Bilen laddas
+      message: Bilen laddas med energi från solproduktion
 - id: handle_ev_charge_response
   alias: Handle EV Charge Notification Response
   triggers:

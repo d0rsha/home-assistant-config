@@ -2,6 +2,8 @@ sensor:
   - name: "Medeltemperatur Inomhus"
     unique_id: "medeltemperatur_inomhus"
     unit_of_measurement: "°C"
+    state_class: measurement
+    device_class: temperature
     state: >
       {{ ([ states('sensor.mi_3_temperatur') | float(0) if states('sensor.mi_3_temperatur') not in ['unavailable', 'unknown'] else None,
                   states('sensor.lumi_lumi_sensor_ht_agl03_temperature_2') | float(0) if states('sensor.lumi_lumi_sensor_ht_agl03_temperature_2') not in ['unavailable', 'unknown'] else None,
