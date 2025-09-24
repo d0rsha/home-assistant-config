@@ -191,9 +191,18 @@
         - binary_sensor.tradfri_on_off_switch_2_battery_low
         - binary_sensor.frida_iphone1_battery_plus_low
         - sensor.sm_g970f_battery_level
+        - sensor.frida_iphone1_battery_level
+        - sensor.sm_g965f_battery_level
+        - sensor.robban_battery
+        - sensor.skoda_superb_combi_battery_percentage
+        - sensor.pixel_9_pro_battery_level
         device_id:
         - 7d14e7d4bcd8ee6b80815bb2f9e58b05
         - e755edf4ef456fad1297aa1ecc1c0952
+        - bd2ea45258aea5f70ca495b577de5cef
+        - d028a9b165592fe727b1e4a26656d862
+        - f326594e961a48756bccbda5b2185cd2
+        - 6ae02c72bc76a69da2e234f790c1b89c
       include_easy_notify: enable_easy_notify
       include_persistent_notification: enable_persistent_notification
       sensor_selection: enable_all_and_custom_group_sensors
