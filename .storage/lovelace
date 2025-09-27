@@ -46,125 +46,6 @@
               }
             },
             {
-              "type": "entities",
-              "entities": [
-                {
-                  "entity": "light.soffbordet_lampa",
-                  "name": "Soffbordet"
-                },
-                {
-                  "entity": "light.koksbord_1_lampa"
-                },
-                {
-                  "entity": "light.koksbord_2_lampa"
-                },
-                {
-                  "entity": "light.under_trapp_e27_lampa"
-                },
-                {
-                  "entity": "switch.tradfri_outlet_2_brytare"
-                },
-                {
-                  "entity": "switch.ikea_of_sweden_inspelning_smart_plug_2"
-                },
-                {
-                  "entity": "switch.inspelning_1_switch"
-                }
-              ],
-              "title": "Nedervåning (timerstyrd)",
-              "state_color": true
-            },
-            {
-              "type": "entities",
-              "entities": [
-                {
-                  "entity": "light.sovrum_1_lampa_2"
-                },
-                {
-                  "entity": "light.sovrum_2_lampa"
-                },
-                {
-                  "entity": "light.taklampa_olles_rum_lampa"
-                },
-                {
-                  "entity": "light.tradfri_e14_lampa"
-                },
-                {
-                  "entity": "switch.tradfri_uttag_1_brytare"
-                },
-                {
-                  "entity": "light.hallfatolj_ovanvaning"
-                }
-              ],
-              "title": "Övervåning",
-              "state_color": true
-            },
-            {
-              "type": "thermostat",
-              "entity": "climate.zeke",
-              "features": [
-                {
-                  "style": "icons",
-                  "type": "climate-hvac-modes",
-                  "hvac_modes": [
-                    "off",
-                    "cool",
-                    "fan_only",
-                    "heat"
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "grid",
-              "square": false,
-              "columns": 1,
-              "cards": [
-                {
-                  "type": "entities",
-                  "entities": [
-                    "remote.the_frame"
-                  ],
-                  "title": "Vardagsrum"
-                },
-                {
-                  "type": "media-control",
-                  "entity": "media_player.the_frame"
-                }
-              ]
-            },
-            {
-              "type": "media-control",
-              "entity": "media_player.vardagsrum"
-            },
-            {
-              "type": "media-control",
-              "entity": "media_player.nestmini8865"
-            },
-            {
-              "type": "media-control",
-              "entity": "media_player.kok"
-            },
-            {
-              "type": "weather-forecast",
-              "entity": "weather.forecast_hem",
-              "show_forecast": false
-            },
-            {
-              "type": "alarm-panel",
-              "entity": "alarm_control_panel.verisure_alarm"
-            },
-            {
-              "type": "entities",
-              "entities": [
-                {
-                  "entity": "binary_sensor.verisure_alarm_ethernet_tillstand",
-                  "name": "Ethernet tillstånd"
-                }
-              ],
-              "title": "Verisure Alarm"
-            },
-            {
               "type": "picture-elements",
               "elements": [
                 {
@@ -718,6 +599,38 @@
                       }
                     }
                   ]
+                },
+                {
+                  "type": "state-label",
+                  "style": {
+                    "left": "94%",
+                    "top": "42%"
+                  },
+                  "entity": "sensor.zeke_outside_temperature"
+                },
+                {
+                  "type": "state-icon",
+                  "entity": "lock.ytterdorr",
+                  "style": {
+                    "top": "69%",
+                    "left": "31%",
+                    "transform": "scale(0.8)"
+                  },
+                  "tap_action": {
+                    "action": "more-info"
+                  }
+                },
+                {
+                  "type": "state-icon",
+                  "entity": "alarm_control_panel.verisure_alarm",
+                  "style": {
+                    "top": "75%",
+                    "left": "19%",
+                    "transform": "scale(1.8)"
+                  },
+                  "tap_action": {
+                    "action": "more-info"
+                  }
                 }
               ],
               "image": "/local/assets/floor_plans/bottenplan_lightmode.png",
@@ -894,6 +807,125 @@
               ],
               "image": "/local/assets/floor_plans/ovreplan_lightmode.png",
               "dark_mode_image": "/local/assets/floor_plans/ovreplan_darkmode.png"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "light.soffbordet_lampa",
+                  "name": "Soffbordet"
+                },
+                {
+                  "entity": "light.koksbord_1_lampa"
+                },
+                {
+                  "entity": "light.koksbord_2_lampa"
+                },
+                {
+                  "entity": "light.under_trapp_e27_lampa"
+                },
+                {
+                  "entity": "switch.tradfri_outlet_2_brytare"
+                },
+                {
+                  "entity": "switch.ikea_of_sweden_inspelning_smart_plug_2"
+                },
+                {
+                  "entity": "switch.inspelning_1_switch"
+                }
+              ],
+              "title": "Nedervåning (timerstyrd)",
+              "state_color": true
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "light.sovrum_1_lampa_2"
+                },
+                {
+                  "entity": "light.sovrum_2_lampa"
+                },
+                {
+                  "entity": "light.taklampa_olles_rum_lampa"
+                },
+                {
+                  "entity": "light.tradfri_e14_lampa"
+                },
+                {
+                  "entity": "switch.tradfri_uttag_1_brytare"
+                },
+                {
+                  "entity": "light.hallfatolj_ovanvaning"
+                }
+              ],
+              "title": "Övervåning",
+              "state_color": true
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.zeke",
+              "features": [
+                {
+                  "style": "icons",
+                  "type": "climate-hvac-modes",
+                  "hvac_modes": [
+                    "off",
+                    "cool",
+                    "fan_only",
+                    "heat"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "square": false,
+              "columns": 1,
+              "cards": [
+                {
+                  "type": "entities",
+                  "entities": [
+                    "remote.the_frame"
+                  ],
+                  "title": "Vardagsrum"
+                },
+                {
+                  "type": "media-control",
+                  "entity": "media_player.the_frame"
+                }
+              ]
+            },
+            {
+              "type": "media-control",
+              "entity": "media_player.vardagsrum"
+            },
+            {
+              "type": "media-control",
+              "entity": "media_player.nestmini8865"
+            },
+            {
+              "type": "media-control",
+              "entity": "media_player.kok"
+            },
+            {
+              "type": "weather-forecast",
+              "entity": "weather.forecast_hem",
+              "show_forecast": false
+            },
+            {
+              "type": "alarm-panel",
+              "entity": "alarm_control_panel.verisure_alarm"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "binary_sensor.verisure_alarm_ethernet_tillstand",
+                  "name": "Ethernet tillstånd"
+                }
+              ],
+              "title": "Verisure Alarm"
             },
             {
               "initial_view": "dayGridDay",
@@ -2383,6 +2415,30 @@
                     "top": "42%"
                   },
                   "entity": "sensor.zeke_outside_temperature"
+                },
+                {
+                  "type": "state-icon",
+                  "entity": "lock.ytterdorr",
+                  "style": {
+                    "top": "69%",
+                    "left": "31%",
+                    "transform": "scale(0.8)"
+                  },
+                  "tap_action": {
+                    "action": "more-info"
+                  }
+                },
+                {
+                  "type": "state-icon",
+                  "entity": "alarm_control_panel.verisure_alarm",
+                  "style": {
+                    "top": "75%",
+                    "left": "19%",
+                    "transform": "scale(1.8)"
+                  },
+                  "tap_action": {
+                    "action": "more-info"
+                  }
                 }
               ],
               "image": "/local/assets/floor_plans/bottenplan_lightmode.png",
