@@ -27,6 +27,10 @@
               "entity": "sensor.utomhustemperatur",
               "show_entity_picture": false,
               "icon": "mdi:sun-thermometer"
+            },
+            {
+              "type": "entity",
+              "entity": "alarm_control_panel.verisure_alarm"
             }
           ],
           "cards": [
@@ -193,7 +197,7 @@
                 },
                 {
                   "type": "image",
-                  "entity": "light.koksbord_1_lampa",
+                  "entity": "light.sovrum_2_lampa",
                   "tap_action": {
                     "action": "toggle"
                   },
@@ -631,6 +635,27 @@
                   "tap_action": {
                     "action": "more-info"
                   }
+                },
+                {
+                  "type": "image",
+                  "entity": "light.nedervaning",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "37%",
+                    "left": "52%",
+                    "width": "7%",
+                    "padding": "10px"
+                  }
                 }
               ],
               "image": "/local/assets/floor_plans/bottenplan_lightmode.png",
@@ -816,7 +841,8 @@
                   "name": "Soffbordet"
                 },
                 {
-                  "entity": "light.koksbord_1_lampa"
+                  "entity": "light.sovrum_2_lampa",
+                  "name": "Kökslampa 1"
                 },
                 {
                   "entity": "light.koksbord_2_lampa"

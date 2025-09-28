@@ -1,3 +1,9 @@
 ev_charger_request_sent:
   name: EV Charger Request Sent Today
   icon: mdi:car-electric
+washer_ready:
+  name: Tvättmaskin klar-flagga
+  icon: mdi:washing-machine
+dryer_ready:
+  name: Torktumlare klar-flagga
+  icon: mdi:tumble-dryer

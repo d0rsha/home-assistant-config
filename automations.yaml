@@ -714,6 +714,12 @@
   - action: script.chime
     data:
       message: Torktumlaren är klar.
+  - action: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.dryer_ready
+  - action: automation.trigger
+    target:
+      entity_id: automation.koksbord_statuskontroll
   - wait_for_trigger:
     - entity_id:
       - binary_sensor.lumi_lumi_magnet_agl02
@@ -752,6 +758,12 @@
   - action: script.chime
     data:
       message: Tvättmaskin är klar.
+  - action: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.washer_ready
+  - action: automation.trigger
+    target:
+      entity_id: automation.koksbord_statuskontroll
   - wait_for_trigger:
     - entity_id:
       - binary_sensor.lumi_lumi_magnet_agl02_2
@@ -785,6 +797,39 @@
     target:
       label_id: robban
   mode: single
+- id: '1752671843832'
+  alias: Torktumlare magnetkontakt öppnad
+  description: Kvittera torktumlare och uppdatera lampstatus när magnetkontakten öppnas
+  triggers:
+  - entity_id: binary_sensor.lumi_lumi_magnet_agl02
+    from: 'off'
+    to: 'on'
+    trigger: state
+  actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.dryer_ready
+  - action: automation.trigger
+    target:
+      entity_id: automation.koksbord_statuskontroll
+  mode: single
+
+- id: '1752671843833'
+  alias: Tvättmaskin magnetkontakt öppnad
+  description: Kvittera tvättmaskin och uppdatera lampstatus när magnetkontakten öppnas
+  triggers:
+  - entity_id: binary_sensor.lumi_lumi_magnet_agl02_2
+    from: 'off'
+    to: 'on'
+    trigger: state
+  actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.washer_ready
+  - action: automation.trigger
+    target:
+      entity_id: automation.koksbord_statuskontroll
+  mode: single
 - id: '1752671843831'
   alias: Git daily push
   description: Spara config till git enligt tidsintervall
@@ -794,4 +839,63 @@
   conditions: []
   actions:
   - action: script.git_commit_and_push
+  mode: single
+
+- id: '1752671843834'
+  alias: Tvättstuga statuskontroll
+  description: Styr Lampor Tvättstuga beroende på tvätt/tork-statusflaggor
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_boolean.washer_ready
+    - input_boolean.dryer_ready
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: input_boolean.dryer_ready
+          state: 'on'
+        - condition: state
+          entity_id: input_boolean.washer_ready
+          state: 'on'
+      sequence:
+      - choose:
+        - conditions:
+          - condition: state
+            entity_id: input_boolean.dryer_ready
+            state: 'on'
+          sequence:
+          - action: light.turn_on
+            target:
+              entity_id: light.koksbord_1_lampa
+            data:
+              brightness_pct: 100
+              rgb_color: [255, 112, 86]
+        - conditions:
+          - condition: state
+            entity_id: input_boolean.washer_ready
+            state: 'on'
+          sequence:
+          - action: light.turn_on
+            target:
+              entity_id: light.koksbord_1_lampa
+            data:
+              brightness_pct: 100
+              rgb_color: [0, 0, 255]
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: input_boolean.dryer_ready
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.washer_ready
+          state: 'off'
+      sequence:
+      - action: light.turn_off
+        target:
+          entity_id: light.koksbord_1_lampa
   mode: single
