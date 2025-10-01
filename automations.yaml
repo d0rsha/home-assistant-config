@@ -813,7 +813,6 @@
     target:
       entity_id: automation.koksbord_statuskontroll
   mode: single
-
 - id: '1752671843833'
   alias: Tvättmaskin magnetkontakt öppnad
   description: Kvittera tvättmaskin och uppdatera lampstatus när magnetkontakten öppnas
@@ -840,7 +839,6 @@
   actions:
   - action: script.git_commit_and_push
   mode: single
-
 - id: '1752671843834'
   alias: Tvättstuga statuskontroll
   description: Styr Lampor Tvättstuga beroende på tvätt/tork-statusflaggor
@@ -873,7 +871,10 @@
               entity_id: light.koksbord_1_lampa
             data:
               brightness_pct: 100
-              rgb_color: [255, 112, 86]
+              rgb_color:
+              - 255
+              - 112
+              - 86
         - conditions:
           - condition: state
             entity_id: input_boolean.washer_ready
@@ -884,7 +885,10 @@
               entity_id: light.koksbord_1_lampa
             data:
               brightness_pct: 100
-              rgb_color: [0, 0, 255]
+              rgb_color:
+              - 0
+              - 0
+              - 255
     - conditions:
       - condition: and
         conditions:
@@ -898,4 +902,34 @@
       - action: light.turn_off
         target:
           entity_id: light.koksbord_1_lampa
+  mode: single
+- id: uterum_fan_timer
+  alias: Uterum – ventilation (tidsstyrd)
+  description: ''
+  triggers:
+  - event: sunset
+    offset: -00:30
+    trigger: sun
+  - event: sunrise
+    offset: +01:00
+    trigger: sun
+  actions:
+  - target:
+      entity_id: switch.shelly_1_gen4
+    action: switch.turn_on
+  mode: single
+- id: uterum_fan_timer
+  alias: Uterum – ventilation (tidsstyrd)
+  description: ''
+  triggers:
+  - event: sunset
+    offset: -00:30
+    trigger: sun
+  - event: sunrise
+    offset: +01:00
+    trigger: sun
+  actions:
+  - target:
+      entity_id: switch.shelly_1_gen4
+    action: switch.turn_on
   mode: single
