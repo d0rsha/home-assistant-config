@@ -365,10 +365,10 @@
     below: 80
   - condition: numeric_state
     entity_id: sensor.haos_sbfspot_sma_ac_power
-    above: 2500
+    above: 2000
   - condition: numeric_state
     entity_id: sensor.energy_production_today_remaining_2
-    above: 6
+    above: 4
   - condition: not
     conditions:
     - condition: or
