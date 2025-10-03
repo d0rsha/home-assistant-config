@@ -1,0 +1,217 @@
+#################################################################
+## State machines för tvättmaskin, torktumlare och diskmaskin
+#################################################################
+input_select:
+  washer_state:
+    name: Tvättmaskin State
+    options: [Off, Running, Finished, Emptied]
+
+  dryer_state:
+    name: Torktumlare State
+    options: [Off, Running, Finished, Emptied]
+
+  dishwasher_state:
+    name: Diskmaskin State
+    options: [Off, Running, Finished, Emptied]
+
+#################################################################
+## Tvättmaskin
+#################################################################
+
+automation:
+  - alias: Washer started
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.uttag_tvattmaskin_power
+        above: 100
+        for: "00:01:00"
+    condition:
+      - condition: state
+        entity_id: input_select.washer_state
+        state: "Off"
+    action:
+      - service: input_select.select_option
+        target: { entity_id: input_select.washer_state }
+        data: { option: "Running" }
+
+  - alias: Washer finished or emptied
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.uttag_tvattmaskin_power
+        below: 3
+        for: "00:00:10"
+    condition:
+      - condition: state
+        entity_id: input_select.washer_state
+        state: "Running"
+    action:
+      - choose:
+          # Lucka redan öppen → hoppa direkt till Emptied
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.lumi_lumi_magnet_agl02_2
+                state: "on"
+            sequence:
+              - service: input_select.select_option
+                target: { entity_id: input_select.washer_state }
+                data: { option: "Emptied" }
+          # Annars → Finished
+          - conditions: []
+            sequence:
+              - service: input_select.select_option
+                target: { entity_id: input_select.washer_state }
+                data: { option: "Finished" }
+              - service: script.chime
+                data: { message: "Tvättmaskinen är klar." }
+
+  - alias: Washer emptied
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.lumi_lumi_magnet_agl02_2
+        from: "off"
+        to: "on"
+    condition:
+      - condition: state
+        entity_id: input_select.washer_state
+        state: "Finished"
+    action:
+      - service: input_select.select_option
+        target: { entity_id: input_select.washer_state }
+        data: { option: "Emptied" }
+
+  - alias: Washer back to off
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.lumi_lumi_magnet_agl02_2
+        from: "on"
+        to: "off"
+    condition:
+      - condition: state
+        entity_id: input_select.washer_state
+        state: "Emptied"
+    action:
+      - service: input_select.select_option
+        target: { entity_id: input_select.washer_state }
+        data: { option: "Off" }
+
+#################################################################
+## Torktumlare
+#################################################################
+
+  - alias: Dryer started
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.ikea_of_sweden_inspelning_smart_plug_power
+        above: 100
+        for: "00:01:00"
+    condition:
+      - condition: state
+        entity_id: input_select.dryer_state
+        state: "Off"
+    action:
+      - service: input_select.select_option
+        target: { entity_id: input_select.dryer_state }
+        data: { option: "Running" }
+
+  - alias: Dryer finished or emptied
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.ikea_of_sweden_inspelning_smart_plug_power
+        below: 8
+        for: "00:00:10"
+    condition:
+      - condition: state
+        entity_id: input_select.dryer_state
+        state: "Running"
+    action:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.lumi_lumi_magnet_agl02
+                state: "on"
+            sequence:
+              - service: input_select.select_option
+                target: { entity_id: input_select.dryer_state }
+                data: { option: "Emptied" }
+          - conditions: []
+            sequence:
+              - service: input_select.select_option
+                target: { entity_id: input_select.dryer_state }
+                data: { option: "Finished" }
+              - service: script.chime
+                data: { message: "Torktumlaren är klar." }
+
+  - alias: Dryer emptied
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.lumi_lumi_magnet_agl02
+        from: "off"
+        to: "on"
+    condition:
+      - condition: state
+        entity_id: input_select.dryer_state
+        state: "Finished"
+    action:
+      - service: input_select.select_option
+        target: { entity_id: input_select.dryer_state }
+        data: { option: "Emptied" }
+
+  - alias: Dryer back to off
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.lumi_lumi_magnet_agl02
+        from: "on"
+        to: "off"
+    condition:
+      - condition: state
+        entity_id: input_select.dryer_state
+        state: "Emptied"
+    action:
+      - service: input_select.select_option
+        target: { entity_id: input_select.dryer_state }
+        data: { option: "Off" }
+
+#################################################################
+## Diskmaskin
+#################################################################
+
+  - alias: Dishwasher started
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.uttag_diskmaskinen_power
+        above: 100
+        for: "00:01:00"
+    condition:
+      - condition: state
+        entity_id: input_select.dishwasher_state
+        state: "Off"
+    action:
+      - service: input_select.select_option
+        target: { entity_id: input_select.dishwasher_state }
+        data: { option: "Running" }
+
+  - alias: Dishwasher finished or emptied
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.uttag_diskmaskinen_power
+        below: 3
+        for: "00:00:10"
+    condition:
+      - condition: state
+        entity_id: input_select.dishwasher_state
+        state: "Running"
+    action:
+      - service: input_select.select_option
+        target: { entity_id: input_select.dishwasher_state }
+        data: { option: "Finished" }
+
+  - alias: Dishwasher back to off
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.uttag_diskmaskinen_power
+        below: 3
+        for: "00:05:00"
+    action:
+      - service: input_select.select_option
+        target: { entity_id: input_select.dishwasher_state }
+        data: { option: "Off" }
