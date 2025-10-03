@@ -1370,7 +1370,7 @@
                   "entity": "sensor.p1_meter_energy_import",
                   "data": {
                     "min": 0,
-                    "max": 10
+                    "max": "auto"
                   },
                   "days": 20,
                   "scale": "iron red"
