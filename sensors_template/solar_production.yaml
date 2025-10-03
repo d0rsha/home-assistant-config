@@ -1,0 +1,15 @@
+sensor:
+  - name: "Solpaneler produktion"
+    unique_id: solar_production_total
+    state_class: total_increasing
+    device_class: energy
+    unit_of_measurement: "kWh"
+    state: >
+      {% set current = states('sensor.haos_sbfspot_sma_energy_lifetime') | float(0) %}
+      {% set previous = this.state | float(0) %}
+      {# Ignorera om värdet är 0 eller lägre än föregående #}
+      {% if current > 0 and current >= previous %}
+        {{ current }}
+      {% else %}
+        {{ previous }}
+      {% endif %}
