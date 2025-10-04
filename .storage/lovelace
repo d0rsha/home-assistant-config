@@ -66,7 +66,7 @@
                   "type": "state-label",
                   "entity": "sensor.lumi_lumi_sensor_ht_agl02_temperature_2",
                   "style": {
-                    "top": "80%",
+                    "top": "86%",
                     "left": "50%",
                     "color": "green",
                     "font-weight": "bold"
@@ -616,9 +616,9 @@
                   "type": "state-icon",
                   "entity": "lock.ytterdorr",
                   "style": {
-                    "top": "69%",
+                    "top": "75%",
                     "left": "31%",
-                    "transform": "scale(0.8)"
+                    "transform": "scale(1.8)"
                   },
                   "tap_action": {
                     "action": "more-info"
@@ -634,7 +634,8 @@
                   },
                   "tap_action": {
                     "action": "more-info"
-                  }
+                  },
+                  "state_color": false
                 },
                 {
                   "type": "image",
@@ -656,6 +657,258 @@
                     "width": "7%",
                     "padding": "10px"
                   }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.washer_state",
+                      "state": "Idle"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:washing-machine",
+                      "style": {
+                        "top": "75%",
+                        "left": "51%",
+                        "color": "gray",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.washer_state",
+                      "state": "Running"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:washing-machine",
+                      "style": {
+                        "top": "75%",
+                        "left": "51%",
+                        "color": "red",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.washer_state",
+                      "state": "Finished"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:washing-machine",
+                      "style": {
+                        "top": "75%",
+                        "left": "51%",
+                        "color": "green",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.washer_state",
+                      "state": "Emptied"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:washing-machine",
+                      "style": {
+                        "top": "75%",
+                        "left": "51%",
+                        "color": "white",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.dryer_state",
+                      "state": "Idle"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:tumble-dryer",
+                      "style": {
+                        "top": "68%",
+                        "left": "51%",
+                        "color": "gray",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.dryer_state",
+                      "state": "Running"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:tumble-dryer",
+                      "style": {
+                        "top": "68%",
+                        "left": "51%",
+                        "color": "red",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.dryer_state",
+                      "state": "Finished"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:tumble-dryer",
+                      "style": {
+                        "top": "68%",
+                        "left": "51%",
+                        "color": "green",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.dryer_state",
+                      "state": "Emptied"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:tumble-dryer",
+                      "style": {
+                        "top": "68%",
+                        "left": "51%",
+                        "color": "white",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.dishwasher_state",
+                      "state": "Idle"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:dishwasher",
+                      "style": {
+                        "top": "87%",
+                        "left": "65%",
+                        "color": "gray",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.dishwasher_state",
+                      "state": "Running"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:dishwasher",
+                      "style": {
+                        "top": "87%",
+                        "left": "65%",
+                        "color": "red",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.dishwasher_state",
+                      "state": "Finished"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:dishwasher",
+                      "style": {
+                        "top": "87%",
+                        "left": "65%",
+                        "color": "green",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.dishwasher_state",
+                      "state": "Emptied"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:dishwasher",
+                      "style": {
+                        "top": "87%",
+                        "left": "65%",
+                        "color": "white",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
                 }
               ],
               "image": "/local/assets/floor_plans/bottenplan_lightmode.png",
@@ -1896,7 +2149,7 @@
                   "type": "state-label",
                   "entity": "sensor.lumi_lumi_sensor_ht_agl02_temperature_2",
                   "style": {
-                    "top": "80%",
+                    "top": "86%",
                     "left": "50%",
                     "color": "green",
                     "font-weight": "bold"
@@ -2027,7 +2280,7 @@
                 },
                 {
                   "type": "image",
-                  "entity": "light.koksbord_1_lampa",
+                  "entity": "light.sovrum_2_lampa",
                   "tap_action": {
                     "action": "toggle"
                   },
@@ -2446,9 +2699,9 @@
                   "type": "state-icon",
                   "entity": "lock.ytterdorr",
                   "style": {
-                    "top": "69%",
+                    "top": "75%",
                     "left": "31%",
-                    "transform": "scale(0.8)"
+                    "transform": "scale(1.8)"
                   },
                   "tap_action": {
                     "action": "more-info"
@@ -2464,7 +2717,281 @@
                   },
                   "tap_action": {
                     "action": "more-info"
+                  },
+                  "state_color": false
+                },
+                {
+                  "type": "image",
+                  "entity": "light.nedervaning",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "state_image": {
+                    "on": "/local/assets/icon/light_bulb_on.png"
+                  },
+                  "state_filter": {
+                    "on": "brightness(130%) saturate(1.5) drop-shadow(0px 0px 10px gold)",
+                    "off": "brightness(80%) saturate(0.8)"
+                  },
+                  "style": {
+                    "top": "37%",
+                    "left": "52%",
+                    "width": "7%",
+                    "padding": "10px"
                   }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.washer_state",
+                      "state": "Idle"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:washing-machine",
+                      "style": {
+                        "top": "75%",
+                        "left": "51%",
+                        "color": "gray",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.washer_state",
+                      "state": "Running"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:washing-machine",
+                      "style": {
+                        "top": "75%",
+                        "left": "51%",
+                        "color": "red",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.washer_state",
+                      "state": "Finished"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:washing-machine",
+                      "style": {
+                        "top": "75%",
+                        "left": "51%",
+                        "color": "green",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.washer_state",
+                      "state": "Emptied"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:washing-machine",
+                      "style": {
+                        "top": "75%",
+                        "left": "51%",
+                        "color": "white",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.dryer_state",
+                      "state": "Idle"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:tumble-dryer",
+                      "style": {
+                        "top": "68%",
+                        "left": "51%",
+                        "color": "gray",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.dryer_state",
+                      "state": "Running"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:tumble-dryer",
+                      "style": {
+                        "top": "68%",
+                        "left": "51%",
+                        "color": "red",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.dryer_state",
+                      "state": "Finished"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:tumble-dryer",
+                      "style": {
+                        "top": "68%",
+                        "left": "51%",
+                        "color": "green",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.dryer_state",
+                      "state": "Emptied"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:tumble-dryer",
+                      "style": {
+                        "top": "68%",
+                        "left": "51%",
+                        "color": "white",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.dishwasher_state",
+                      "state": "Idle"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:dishwasher",
+                      "style": {
+                        "top": "87%",
+                        "left": "65%",
+                        "color": "gray",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.dishwasher_state",
+                      "state": "Running"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:dishwasher",
+                      "style": {
+                        "top": "87%",
+                        "left": "65%",
+                        "color": "red",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.dishwasher_state",
+                      "state": "Finished"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:dishwasher",
+                      "style": {
+                        "top": "87%",
+                        "left": "65%",
+                        "color": "green",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_select.dishwasher_state",
+                      "state": "Emptied"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "icon",
+                      "icon": "mdi:dishwasher",
+                      "style": {
+                        "top": "87%",
+                        "left": "65%",
+                        "color": "white",
+                        "transform": "scale(1)"
+                      }
+                    }
+                  ]
                 }
               ],
               "image": "/local/assets/floor_plans/bottenplan_lightmode.png",
@@ -3124,6 +3651,14 @@
               "show_icon": true,
               "entity": "binary_sensor.rpi3_icmp",
               "name": "RPI3"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "binary_sensor.nibepi",
+              "name": "NibePi"
             }
           ]
         }

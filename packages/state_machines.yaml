@@ -4,15 +4,15 @@
 input_select:
   washer_state:
     name: Tvättmaskin State
-    options: [Off, Running, Finished, Emptied]
+    options: [Idle, Running, Finished, Emptied]
 
   dryer_state:
     name: Torktumlare State
-    options: [Off, Running, Finished, Emptied]
+    options: [Idle, Running, Finished, Emptied]
 
   dishwasher_state:
     name: Diskmaskin State
-    options: [Off, Running, Finished, Emptied]
+    options: [Idle, Running, Finished, Emptied]
 
 #################################################################
 ## Tvättmaskin
@@ -28,7 +28,7 @@ automation:
     condition:
       - condition: state
         entity_id: input_select.washer_state
-        state: "Off"
+        state: "Idle"
     action:
       - service: input_select.select_option
         target: { entity_id: input_select.washer_state }
@@ -79,7 +79,7 @@ automation:
         target: { entity_id: input_select.washer_state }
         data: { option: "Emptied" }
 
-  - alias: Washer back to off
+  - alias: Washer back to Idle
     trigger:
       - platform: state
         entity_id: binary_sensor.lumi_lumi_magnet_agl02_2
@@ -92,7 +92,7 @@ automation:
     action:
       - service: input_select.select_option
         target: { entity_id: input_select.washer_state }
-        data: { option: "Off" }
+        data: { option: "Idle" }
 
 #################################################################
 ## Torktumlare
@@ -107,7 +107,7 @@ automation:
     condition:
       - condition: state
         entity_id: input_select.dryer_state
-        state: "Off"
+        state: "Idle"
     action:
       - service: input_select.select_option
         target: { entity_id: input_select.dryer_state }
@@ -156,7 +156,7 @@ automation:
         target: { entity_id: input_select.dryer_state }
         data: { option: "Emptied" }
 
-  - alias: Dryer back to off
+  - alias: Dryer back to Idle
     trigger:
       - platform: state
         entity_id: binary_sensor.lumi_lumi_magnet_agl02
@@ -169,7 +169,7 @@ automation:
     action:
       - service: input_select.select_option
         target: { entity_id: input_select.dryer_state }
-        data: { option: "Off" }
+        data: { option: "Idle" }
 
 #################################################################
 ## Diskmaskin
@@ -184,7 +184,7 @@ automation:
     condition:
       - condition: state
         entity_id: input_select.dishwasher_state
-        state: "Off"
+        state: "Idle"
     action:
       - service: input_select.select_option
         target: { entity_id: input_select.dishwasher_state }
@@ -205,7 +205,7 @@ automation:
         target: { entity_id: input_select.dishwasher_state }
         data: { option: "Finished" }
 
-  - alias: Dishwasher back to off
+  - alias: Dishwasher back to Idle
     trigger:
       - platform: numeric_state
         entity_id: sensor.uttag_diskmaskinen_power
@@ -214,4 +214,4 @@ automation:
     action:
       - service: input_select.select_option
         target: { entity_id: input_select.dishwasher_state }
-        data: { option: "Off" }
+        data: { option: "Idle" }
