@@ -36,6 +36,9 @@ notify: !include notify.yaml
 ### SENSORS
 sensor: !include_dir_merge_list sensors_platform/
 template: !include_dir_list sensors_template/
+mqtt:
+  sensor: !include_dir_merge_list mqtt/sensor/
+  binary_sensor: !include_dir_merge_list mqtt/binary_sensor/
 #template: !include_dir_merge_list ./templates/
 
 ##########################################
@@ -84,20 +87,6 @@ media_source:
 # Lovelace UI vs yaml mode enabled/disabled
 # lovelace:
 #   # mode: yaml
-
-###################################################
-### WMbusmeters - Multical 21 -
-mqtt:
-  sensor:
-    - state_topic: "wmbusmeters/76553017"
-      json_attributes_topic: "wmbusmeters/76553017"
-      unit_of_measurement: m³
-      value_template: "{{ value_json.total_m3 }}"
-      name: Water usage
-      unique_id: wmbus.76553017
-      icon: "mdi:gauge"
-      state_class: total_increasing
-      device_class: water
 
 ##########################
 ### InfluxDB

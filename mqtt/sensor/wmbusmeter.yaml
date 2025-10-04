@@ -1,0 +1,115 @@
+###################################################
+### WMbusmeters - Multical 21
+### Source topic: wmbusmeters/76553017
+### Device: Kamstrup Multical 21
+###################################################
+
+# Water usage
+- state_topic: "wmbusmeters/76553017"
+  json_attributes_topic: "wmbusmeters/76553017"
+  unit_of_measurement: "m³"
+  value_template: "{{ value_json.total_m3 }}"
+  name: "Water usage"
+  unique_id: wmbus.76553017
+  icon: "mdi:gauge"
+  state_class: total_increasing
+  device_class: water
+  device:
+    identifiers: ["wmbus_76553017"]
+    name: "Multical 21"
+    manufacturer: "Kamstrup"
+    model: "Multical 21"
+  json_attributes_template: >
+    {{
+      {
+        'media': value_json.media,
+        'meter': value_json.meter,
+        'device': value_json.device,
+        'rssi_dbm': value_json.rssi_dbm,
+        'address': value_json.address,
+        'city': value_json.city
+      }
+    }}
+
+# Target volume
+- state_topic: "wmbusmeters/76553017"
+  name: "Water target volume"
+  unit_of_measurement: "m³"
+  value_template: "{{ value_json.target_m3 }}"
+  unique_id: "wmbus_76553017_target_m3"
+  device:
+    identifiers: ["wmbus_76553017"]
+
+# External temperature
+- state_topic: "wmbusmeters/76553017"
+  name: "Water meter external temperature"
+  unit_of_measurement: "°C"
+  device_class: temperature
+  value_template: "{{ value_json.external_temperature_c }}"
+  unique_id: "wmbus_76553017_external_temp"
+  device:
+    identifiers: ["wmbus_76553017"]
+
+# Flow temperature
+- state_topic: "wmbusmeters/76553017"
+  name: "Water meter flow temperature"
+  unit_of_measurement: "°C"
+  device_class: temperature
+  value_template: "{{ value_json.flow_temperature_c }}"
+  unique_id: "wmbus_76553017_flow_temp"
+  device:
+    identifiers: ["wmbus_76553017"]
+
+# Status text
+- state_topic: "wmbusmeters/76553017"
+  name: "Water meter status"
+  value_template: "{{ value_json.status }}"
+  unique_id: "wmbus_76553017_status"
+  icon: mdi:information-outline
+  device:
+    identifiers: ["wmbus_76553017"]
+
+# Time bursting
+- state_topic: "wmbusmeters/76553017"
+  name: "Water meter bursting time"
+  unit_of_measurement: "h"
+  value_template: "{{ value_json.time_bursting }}"
+  unique_id: "wmbus_76553017_time_bursting"
+  device:
+    identifiers: ["wmbus_76553017"]
+
+# Time dry
+- state_topic: "wmbusmeters/76553017"
+  name: "Water meter dry time"
+  unit_of_measurement: "h"
+  value_template: "{{ value_json.time_dry }}"
+  unique_id: "wmbus_76553017_time_dry"
+  device:
+    identifiers: ["wmbus_76553017"]
+
+# Time leaking
+- state_topic: "wmbusmeters/76553017"
+  name: "Water meter leaking time"
+  unit_of_measurement: "h"
+  value_template: "{{ value_json.time_leaking }}"
+  unique_id: "wmbus_76553017_time_leaking"
+  device:
+    identifiers: ["wmbus_76553017"]
+
+# Time reversed
+- state_topic: "wmbusmeters/76553017"
+  name: "Water meter reversed time"
+  unit_of_measurement: "h"
+  value_template: "{{ value_json.time_reversed }}"
+  unique_id: "wmbus_76553017_time_reversed"
+  device:
+    identifiers: ["wmbus_76553017"]
+
+# Timestamp
+- state_topic: "wmbusmeters/76553017"
+  name: "Water meter last update"
+  device_class: timestamp
+  value_template: "{{ value_json.timestamp }}"
+  unique_id: "wmbus_76553017_timestamp"
+  device:
+    identifiers: ["wmbus_76553017"]

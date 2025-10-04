@@ -1,0 +1,8 @@
+- state_topic: "wmbusmeters/76553017"
+  name: "Water leak detected"
+  unique_id: "wmbus_76553017_leak_detected"
+  device_class: problem
+  value_template: >
+    {{ value_json.status not in ["OK", "", "Normal", None] }}
+  device:
+    identifiers: ["wmbus_76553017"]
