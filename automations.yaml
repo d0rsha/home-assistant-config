@@ -903,7 +903,8 @@
         target:
           entity_id: light.koksbord_1_lampa
   mode: single
-- id: uterum_fan_timer
+- &id001
+  id: uterum_fan_timer
   alias: Uterum – ventilation (tidsstyrd)
   description: ''
   triggers:
@@ -913,23 +914,13 @@
   - event: sunrise
     offset: +01:00
     trigger: sun
+  - trigger: time
+    at: '11:00:00'
+  - trigger: time
+    at: '15:00:00'
   actions:
   - target:
       entity_id: switch.shelly_1_gen4
     action: switch.turn_on
   mode: single
-- id: uterum_fan_timer
-  alias: Uterum – ventilation (tidsstyrd)
-  description: ''
-  triggers:
-  - event: sunset
-    offset: -00:30
-    trigger: sun
-  - event: sunrise
-    offset: +01:00
-    trigger: sun
-  actions:
-  - target:
-      entity_id: switch.shelly_1_gen4
-    action: switch.turn_on
-  mode: single
+- *id001

@@ -3461,6 +3461,20 @@
                 }
               ],
               "title": "Pax Levante 50"
+            },
+            {
+              "type": "custom:apexcharts-card",
+              "header": {
+                "show": true,
+                "title": "ApexCharts-Card",
+                "show_states": true,
+                "colorize_states": true
+              },
+              "series": [
+                {
+                  "entity": "sensor.ikea_of_sweden_vindstyrka_humidity"
+                }
+              ]
             }
           ],
           "badges": [
