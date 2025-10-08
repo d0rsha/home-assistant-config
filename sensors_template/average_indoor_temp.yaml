@@ -12,3 +12,133 @@ sensor:
                                                       states('sensor.zeke_inside_temperature') | float(0) if states('sensor.zeke_inside_temperature') not in ['unavailable', 'unknown'] else None,
                                                                   states('sensor.entre_hall_temperatur') | float(0) if states('sensor.entre_hall_temperatur') not in ['unavailable', 'unknown'] else None ] 
                                                                             | select('is_number') | average) }}
+
+  # ============================================================
+  # 🏠 Zonindelad medeltemperatur - Golvvärme / Övervåning / Totalt
+  # ============================================================
+  # 1. Golvvärmezon (snabb + smoothed)
+  # 2. Övervåning (snabb + smoothed)
+  # 3. Total inomhustemperatur (snabb + smoothed) = medel av alla sensorer
+  # ============================================================
+
+  # ---------------------------------------------------------
+  # 🌡️ Medeltemperatur Golvvärme (snabb)
+  # ---------------------------------------------------------
+  - name: "Medeltemperatur golvvärme"
+    unique_id: medeltemperatur_golvvarme
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    icon: mdi:home-floor-0
+    state: >
+      {% set sensors = [
+        'sensor.mi_7_temperatur',
+        'sensor.lumi_lumi_sensor_ht_agl02_temperature',
+        'sensor.lumi_lumi_sensor_ht_agl02_temperature_2',
+        'sensor.entre_hall_temperatur'
+      ] %}
+      {% set valid = sensors
+          | map('states')
+          | reject('in', ['unknown', 'unavailable', 'none'])
+          | map('float')
+          | list %}
+      {% if valid | count > 0 %}
+        {{ (valid | sum / valid | count) | round(1) }}
+      {% else %}
+        unknown
+      {% endif %}
+    attributes:
+      sensors_used: "{{ sensors | join(', ') }}"
+
+
+  # ---------------------------------------------------------
+  # 🌡️ Medeltemperatur Golvvärme (smoothed)
+  # ---------------------------------------------------------
+  - name: "Medeltemperatur golvvärme smoothed"
+    unique_id: medeltemperatur_golvvarme_smoothed
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    icon: mdi:home-floor-0
+    state: >
+      {% set sensors = [
+        'sensor.bathroom_temperature_smoothed',
+        'sensor.laundry_temperature_smoothed',
+        'sensor.lumi_lumi_sensor_ht_agl02_temperature',
+        'sensor.entre_hall_temperatur'
+      ] %}
+      {% set valid = sensors
+          | map('states')
+          | reject('in', ['unknown', 'unavailable', 'none'])
+          | map('float')
+          | list %}
+      {% if valid | count > 0 %}
+        {{ (valid | sum / valid | count) | round(1) }}
+      {% else %}
+        unknown
+      {% endif %}
+    attributes:
+      sensors_used: "{{ sensors | join(', ') }}"
+
+
+  # ---------------------------------------------------------
+  # 🏠 Medeltemperatur Övervåning (snabb)
+  # ---------------------------------------------------------
+  - name: "Medeltemperatur övervåning"
+    unique_id: medeltemperatur_overvaning
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    icon: mdi:home-floor-1
+    state: >
+      {% set sensors = [
+        'sensor.mi_3_temperatur',
+        'sensor.mi_5_uterum_temperatur',
+        'sensor.mi_4_temperatur',
+        'sensor.ovre_hall_temperatur',
+        'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'
+      ] %}
+      {% set valid = sensors
+          | map('states')
+          | reject('in', ['unknown', 'unavailable', 'none'])
+          | map('float')
+          | list %}
+      {% if valid | count > 0 %}
+        {{ (valid | sum / valid | count) | round(1) }}
+      {% else %}
+        unknown
+      {% endif %}
+    attributes:
+      sensors_used: "{{ sensors | join(', ') }}"
+
+
+  # ---------------------------------------------------------
+  # 🏠 Medeltemperatur Övervåning (smoothed)
+  # ---------------------------------------------------------
+  - name: "Medeltemperatur övervåning smoothed"
+    unique_id: medeltemperatur_overvaning_smoothed
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    icon: mdi:home-floor-1
+    state: >
+      {% set sensors = [
+        'sensor.mi_3_temperatur',
+        'sensor.bathroom_upstairs_temperature_smoothed',
+        'sensor.mi_4_temperatur',
+        'sensor.ovre_hall_temperatur',
+        'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'
+      ] %}
+      {% set valid = sensors
+          | map('states')
+          | reject('in', ['unknown', 'unavailable', 'none'])
+          | map('float')
+          | list %}
+      {% if valid | count > 0 %}
+        {{ (valid | sum / valid | count) | round(1) }}
+      {% else %}
+        unknown
+      {% endif %}
+    attributes:
+      sensors_used: "{{ sensors | join(', ') }}"
+
