@@ -7,3 +7,6 @@ washer_ready:
 dryer_ready:
   name: Torktumlare klar-flagga
   icon: mdi:tumble-dryer
+hvac_auto_control:
+  name: HVAC styrs automatiskt
+  icon: mdi:home-automation
