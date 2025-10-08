@@ -1,0 +1,13 @@
+sensor:
+    - name: "emhass_power_load_no_var_loads"
+      unique_id: "emhass_power_load_no_var_loads"
+      unit_of_measurement: "W"
+      state: >
+        {% set total = states('sensor.p1_meter_effekt') | float(0) %}
+        {% set ev = states('sensor.garage_power') | float(0) %}
+        {% set zeke = states('sensor.zeke_current_power') | float(0) %}
+        {% set dishwasher = states('sensor.uttag_diskmaskinen_power') | float(0) %}
+        {% set dryer = states('sensor.ikea_of_sweden_inspelning_smart_plug_power') | float(0) %}
+        {% set washer = states('sensor.uttag_tvattmaskin_power') | float(0) %}
+        {% set fixed_load = total - ev - zeke - dishwasher - dryer - washer %}
+        {{ 0 if fixed_load < 0 else fixed_load }}
