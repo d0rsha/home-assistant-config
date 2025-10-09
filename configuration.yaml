@@ -115,9 +115,8 @@ tts:
     cache_dir: tts_cache
     time_memory: 300
     service_name: google_say
-    # base_url: http://192.168.50.85
 
-  # Example configuration.yaml entry
+    # Example configuration.yaml entry
   - platform: google_cloud
     key_file: SERVICE_ACCOUNT.JSON
     language: en-US

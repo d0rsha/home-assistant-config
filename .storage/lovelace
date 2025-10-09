@@ -3464,15 +3464,26 @@
             },
             {
               "type": "custom:apexcharts-card",
-              "header": {
-                "show": true,
-                "title": "ApexCharts-Card",
-                "show_states": true,
-                "colorize_states": true
-              },
+              "yaxis": [
+                {
+                  "id": "hum",
+                  "min": 0,
+                  "max": 100,
+                  "decimals": 0
+                }
+              ],
               "series": [
                 {
-                  "entity": "sensor.ikea_of_sweden_vindstyrka_humidity"
+                  "entity": "sensor.ikea_of_sweden_vindstyrka_humidity",
+                  "name": "uterum",
+                  "yaxis_id": "hum",
+                  "type": "line"
+                },
+                {
+                  "entity": "sensor.utomhus_luftfuktighet",
+                  "name": "utomhus",
+                  "yaxis_id": "hum",
+                  "type": "line"
                 }
               ]
             }
