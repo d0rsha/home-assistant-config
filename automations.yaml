@@ -564,9 +564,6 @@
       - action: homeassistant.turn_on
         target:
           label_id: automatisk_belysning
-      - action: homeassistant.turn_on
-        target:
-          label_id: auto_belysning_barnrum
       - choose:
         - conditions:
           - condition: or
@@ -578,9 +575,9 @@
               entity_id: sensor.season
               state: winter
           sequence:
-          - service: input_boolean.turn_on
-            target:
+          - target:
               entity_id: input_boolean.hvac_auto_control
+            action: input_boolean.turn_on
           - device_id: 439ab72d0a12b6536ad5cc48d71d60c5
             domain: climate
             entity_id: f1260d8d12a0d5939b238360a06f42d4
@@ -607,9 +604,9 @@
             entity_id: f1260d8d12a0d5939b238360a06f42d4
             type: set_hvac_mode
             hvac_mode: 'off'
-          - service: input_boolean.turn_off
-            target:
+          - target:
               entity_id: input_boolean.hvac_auto_control
+            action: input_boolean.turn_off
   mode: single
 - id: '1745404058254'
   alias: Töm robban
