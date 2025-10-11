@@ -1,9 +1,0 @@
-sensor:
-  - name: "Import Stats 1h"
-    unique_id: "import_stats_1h"
-    unit_of_measurement: "kW" # Justera efter rätt enhet
-    state: >
-      {{ states.sensor.p1_meter_effekt.attributes.mean | float(0) }}
-    attributes:
-      max_age: "1h"
-      precision: "2"
