@@ -95,7 +95,6 @@ sensor:
         'sensor.mi_3_temperatur',
         'sensor.mi_5_uterum_temperatur',
         'sensor.mi_4_temperatur',
-        'sensor.ovre_hall_temperatur',
         'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'
       ] %}
       {% set valid = sensors
@@ -126,7 +125,6 @@ sensor:
         'sensor.mi_3_temperatur',
         'sensor.bathroom_upstairs_temperature_smoothed',
         'sensor.mi_4_temperatur',
-        'sensor.ovre_hall_temperatur',
         'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'
       ] %}
       {% set valid = sensors
@@ -142,3 +140,70 @@ sensor:
     attributes:
       sensors_used: "{{ sensors | join(', ') }}"
 
+
+# ---------------------------------------------------------
+# 🏠 Hela huset
+# ---------------------------------------------------------
+  - name: "Medeltemperatur hela huset"
+    unique_id: medeltemperatur_all
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    icon: mdi:home-floor-0
+    state: >
+      {% set sensors = [
+        'sensor.mi_3_temperatur',
+        'sensor.mi_5_uterum_temperatur',
+        'sensor.mi_4_temperatur',
+        'sensor.lumi_lumi_sensor_ht_agl03_temperature_2',
+        'sensor.mi_3_temperatur',
+        'sensor.mi_5_uterum_temperatur',
+        'sensor.mi_4_temperatur',
+        'sensor.ovre_hall_temperatur',
+        'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'        
+      ] %}
+      {% set valid = sensors
+          | map('states')
+          | reject('in', ['unknown', 'unavailable', 'none'])
+          | map('float')
+          | list %}
+      {% if valid | count > 0 %}
+        {{ (valid | sum / valid | count) | round(1) }}
+      {% else %}
+        unknown
+      {% endif %}
+    attributes:
+      sensors_used: "{{ sensors | join(', ') }}"
+
+# ---------------------------------------------------------
+# 🏠 Hela huset (Smoothed)
+# ---------------------------------------------------------
+  - name: "Medeltemperatur hela huset smoothed"
+    unique_id: medeltemperatur_all_smoothed
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    icon: mdi:home-floor-0
+    state: >
+      {% set sensors = [
+        'sensor.bathroom_temperature_smoothed',
+        'sensor.laundry_temperature_smoothed',
+        'sensor.lumi_lumi_sensor_ht_agl02_temperature',
+        'sensor.entre_hall_temperatur',      
+        'sensor.mi_3_temperatur',
+        'sensor.bathroom_upstairs_temperature_smoothed',
+        'sensor.mi_4_temperatur',
+        'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'     
+      ] %}
+      {% set valid = sensors
+          | map('states')
+          | reject('in', ['unknown', 'unavailable', 'none'])
+          | map('float')
+          | list %}
+      {% if valid | count > 0 %}
+        {{ (valid | sum / valid | count) | round(1) }}
+      {% else %}
+        unknown
+      {% endif %}
+    attributes:
+      sensors_used: "{{ sensors | join(', ') }}"

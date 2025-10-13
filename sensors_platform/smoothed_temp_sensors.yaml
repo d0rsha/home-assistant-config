@@ -1,0 +1,26 @@
+  - platform: filter
+    name: "Bathroom Temperature Smoothed"
+    unique_id: bathroom_temperature_smoothed
+    entity_id: sensor.mi_7_temperatur
+    filters:
+      - filter: time_simple_moving_average
+        window_size: "02:00"
+        precision: 1
+
+  - platform: filter
+    name: "Bathroom upstairs Temperature Smoothed"
+    unique_id: bathroom_upstairs_temperature_smoothed
+    entity_id: sensor.mi_5_uterum_temperatur
+    filters:
+      - filter: time_simple_moving_average
+        window_size: "02:00"
+        precision: 1
+
+  - platform: filter
+    name: "Laundry Temperature Smoothed"
+    unique_id: laundry_temperature_smoothed
+    entity_id: sensor.lumi_lumi_sensor_ht_agl02_temperature_2
+    filters:
+      - filter: time_simple_moving_average
+        window_size: "04:00"
+        precision: 1
