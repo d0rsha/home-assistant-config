@@ -1120,12 +1120,6 @@
               "type": "entities",
               "entities": [
                 {
-                  "entity": "light.sovrum_1_lampa_2"
-                },
-                {
-                  "entity": "light.sovrum_2_lampa"
-                },
-                {
                   "entity": "light.taklampa_olles_rum_lampa"
                 },
                 {
