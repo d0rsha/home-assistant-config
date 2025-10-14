@@ -963,8 +963,7 @@
         target:
           entity_id: light.koksbord_1_lampa
   mode: single
-- &id001
-  id: uterum_fan_timer
+- id: uterum_fan_timer
   alias: Uterum – ventilation (tidsstyrd)
   description: ''
   triggers:
@@ -983,7 +982,6 @@
       entity_id: switch.shelly_1_gen4
     action: switch.turn_on
   mode: single
-- *id001
 - id: '1759925253597'
   alias: HVAC auto kontroll
   description: Om HVAC ändras manuellt, stäng av auto-flaggan
