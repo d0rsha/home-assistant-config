@@ -47,8 +47,6 @@ sensor:
       {% else %}
         unknown
       {% endif %}
-    attributes:
-      sensors_used: "{{ sensors | join(', ') }}"
 
 
   # ---------------------------------------------------------
@@ -77,8 +75,6 @@ sensor:
       {% else %}
         unknown
       {% endif %}
-    attributes:
-      sensors_used: "{{ sensors | join(', ') }}"
 
 
   # ---------------------------------------------------------
@@ -107,8 +103,6 @@ sensor:
       {% else %}
         unknown
       {% endif %}
-    attributes:
-      sensors_used: "{{ sensors | join(', ') }}"
 
 
   # ---------------------------------------------------------
@@ -137,8 +131,6 @@ sensor:
       {% else %}
         unknown
       {% endif %}
-    attributes:
-      sensors_used: "{{ sensors | join(', ') }}"
 
 
 # ---------------------------------------------------------
@@ -152,15 +144,14 @@ sensor:
     icon: mdi:home-floor-0
     state: >
       {% set sensors = [
+        'sensor.mi_7_temperatur',
+        'sensor.lumi_lumi_sensor_ht_agl02_temperature',
+        'sensor.lumi_lumi_sensor_ht_agl02_temperature_2',
+        'sensor.entre_hall_temperatur',
         'sensor.mi_3_temperatur',
         'sensor.mi_5_uterum_temperatur',
         'sensor.mi_4_temperatur',
-        'sensor.lumi_lumi_sensor_ht_agl03_temperature_2',
-        'sensor.mi_3_temperatur',
-        'sensor.mi_5_uterum_temperatur',
-        'sensor.mi_4_temperatur',
-        'sensor.ovre_hall_temperatur',
-        'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'        
+        'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'
       ] %}
       {% set valid = sensors
           | map('states')
@@ -172,8 +163,6 @@ sensor:
       {% else %}
         unknown
       {% endif %}
-    attributes:
-      sensors_used: "{{ sensors | join(', ') }}"
 
 # ---------------------------------------------------------
 # 🏠 Hela huset (Smoothed)
@@ -187,8 +176,8 @@ sensor:
     state: >
       {% set sensors = [
         'sensor.bathroom_temperature_smoothed',
-        'sensor.laundry_temperature_smoothed',
         'sensor.lumi_lumi_sensor_ht_agl02_temperature',
+        'sensor.laundry_temperature_smoothed',
         'sensor.entre_hall_temperatur',      
         'sensor.mi_3_temperatur',
         'sensor.bathroom_upstairs_temperature_smoothed',
@@ -205,5 +194,3 @@ sensor:
       {% else %}
         unknown
       {% endif %}
-    attributes:
-      sensors_used: "{{ sensors | join(', ') }}"
