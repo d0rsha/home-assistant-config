@@ -19,17 +19,6 @@
     name: "Multical 21"
     manufacturer: "Kamstrup"
     model: "Multical 21"
-  json_attributes_template: >
-    {{
-      {
-        'media': value_json.media,
-        'meter': value_json.meter,
-        'device': value_json.device,
-        'rssi_dbm': value_json.rssi_dbm,
-        'address': value_json.address,
-        'city': value_json.city
-      }
-    }}
 
 # Target volume
 - state_topic: "wmbusmeters/76553017"

@@ -162,3 +162,11 @@ ingress: !include ingress.yaml
 ##########################################
 ### INCLUDES
 input_boolean: !include inputs/input_booleans.yaml
+
+##########################################
+### Database recorder
+recorder:
+  exclude:
+    entities:
+      - sensor.nordpool_with_taxes_and_fees
+
