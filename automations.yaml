@@ -777,9 +777,6 @@
   - action: input_boolean.turn_on
     target:
       entity_id: input_boolean.dryer_ready
-  - action: automation.trigger
-    target:
-      entity_id: automation.koksbord_statuskontroll
   - wait_for_trigger:
     - entity_id:
       - binary_sensor.lumi_lumi_magnet_agl02
@@ -821,9 +818,6 @@
   - action: input_boolean.turn_on
     target:
       entity_id: input_boolean.washer_ready
-  - action: automation.trigger
-    target:
-      entity_id: automation.koksbord_statuskontroll
   - wait_for_trigger:
     - entity_id:
       - binary_sensor.lumi_lumi_magnet_agl02_2
@@ -869,9 +863,6 @@
   - action: input_boolean.turn_off
     target:
       entity_id: input_boolean.dryer_ready
-  - action: automation.trigger
-    target:
-      entity_id: automation.koksbord_statuskontroll
   mode: single
 - id: '1752671843833'
   alias: Tvättmaskin magnetkontakt öppnad
@@ -885,9 +876,6 @@
   - action: input_boolean.turn_off
     target:
       entity_id: input_boolean.washer_ready
-  - action: automation.trigger
-    target:
-      entity_id: automation.koksbord_statuskontroll
   mode: single
 - id: '1752671843831'
   alias: Git daily push
