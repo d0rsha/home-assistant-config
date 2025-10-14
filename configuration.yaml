@@ -33,6 +33,23 @@ shell_command:
 notify: !include notify.yaml
 
 ##########################################
+### EXPORT TO MQTT
+mqtt_statestream:
+  base_topic: homeassistant
+  publish_attributes: true
+  publish_timestamps: true
+  include:
+    entities:
+      - sensor.medeltemperatur_inomhus
+      - sensor.medeltemperatur_golvvarme
+      - sensor.medeltemperatur_golvvarme_smoothed
+      - sensor.medeltemperatur_overvaning
+      - sensor.medeltemperatur_overvaning_smoothed
+      - sensor.medeltemperatur_hela_huset
+      - sensor.medeltemperatur_hela_huset_smoothed
+
+
+##########################################
 ### SENSORS
 sensor: !include_dir_merge_list sensors_platform/
 template: !include_dir_list sensors_template/
