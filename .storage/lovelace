@@ -669,6 +669,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.washer_state",
                       "icon": "mdi:washing-machine",
                       "style": {
                         "top": "75%",
@@ -690,6 +691,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.washer_state",
                       "icon": "mdi:washing-machine",
                       "style": {
                         "top": "75%",
@@ -711,6 +713,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.washer_state",
                       "icon": "mdi:washing-machine",
                       "style": {
                         "top": "75%",
@@ -732,6 +735,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.washer_state",
                       "icon": "mdi:washing-machine",
                       "style": {
                         "top": "75%",
@@ -753,6 +757,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.dryer_state",
                       "icon": "mdi:tumble-dryer",
                       "style": {
                         "top": "68%",
@@ -774,6 +779,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.dryer_state",
                       "icon": "mdi:tumble-dryer",
                       "style": {
                         "top": "68%",
@@ -795,6 +801,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.dryer_state",
                       "icon": "mdi:tumble-dryer",
                       "style": {
                         "top": "68%",
@@ -816,6 +823,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.dryer_state",
                       "icon": "mdi:tumble-dryer",
                       "style": {
                         "top": "68%",
@@ -837,6 +845,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.dishwasher_state",
                       "icon": "mdi:dishwasher",
                       "style": {
                         "top": "87%",
@@ -858,6 +867,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.dishwasher_state",
                       "icon": "mdi:dishwasher",
                       "style": {
                         "top": "87%",
@@ -879,6 +889,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.dishwasher_state",
                       "icon": "mdi:dishwasher",
                       "style": {
                         "top": "87%",
@@ -900,6 +911,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.dishwasher_state",
                       "icon": "mdi:dishwasher",
                       "style": {
                         "top": "87%",
@@ -2746,6 +2758,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.washer_state",
                       "icon": "mdi:washing-machine",
                       "style": {
                         "top": "75%",
@@ -2767,6 +2780,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.washer_state",
                       "icon": "mdi:washing-machine",
                       "style": {
                         "top": "75%",
@@ -2788,6 +2802,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.washer_state",
                       "icon": "mdi:washing-machine",
                       "style": {
                         "top": "75%",
@@ -2809,6 +2824,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.washer_state",
                       "icon": "mdi:washing-machine",
                       "style": {
                         "top": "75%",
@@ -2830,6 +2846,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.dryer_state",
                       "icon": "mdi:tumble-dryer",
                       "style": {
                         "top": "68%",
@@ -2851,6 +2868,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.dryer_state",
                       "icon": "mdi:tumble-dryer",
                       "style": {
                         "top": "68%",
@@ -2872,6 +2890,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.dryer_state",
                       "icon": "mdi:tumble-dryer",
                       "style": {
                         "top": "68%",
@@ -2893,6 +2912,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.dryer_state",
                       "icon": "mdi:tumble-dryer",
                       "style": {
                         "top": "68%",
@@ -2914,6 +2934,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.dishwasher_state",
                       "icon": "mdi:dishwasher",
                       "style": {
                         "top": "87%",
@@ -2935,6 +2956,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.dishwasher_state",
                       "icon": "mdi:dishwasher",
                       "style": {
                         "top": "87%",
@@ -2956,6 +2978,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.dishwasher_state",
                       "icon": "mdi:dishwasher",
                       "style": {
                         "top": "87%",
@@ -2977,6 +3000,7 @@
                   "elements": [
                     {
                       "type": "icon",
+                      "entity": "input_select.dishwasher_state",
                       "icon": "mdi:dishwasher",
                       "style": {
                         "top": "87%",
