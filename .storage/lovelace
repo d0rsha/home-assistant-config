@@ -1299,6 +1299,11 @@
                   "name": "Clean under high chair",
                   "service": "script.stada_under_matbord",
                   "icon": "mdi:chair-school"
+                },
+                {
+                  "name": "Empty",
+                  "service": "script.tom_robban",
+                  "icon": "mdi:trash-can"
                 }
               ],
               "compact_view": false,
@@ -3201,7 +3206,7 @@
               },
               "series": [
                 {
-                  "entity": "sensor.medeltemperatur_inomhus",
+                  "entity": "sensor.medeltemperatur_hela_huset_smoothed",
                   "name": "Inomhus",
                   "color": "#FF5733",
                   "group_by": {
