@@ -485,7 +485,7 @@
   - at: '22:00:00'
     id: 'off'
     trigger: time
-  - at: 07:00:00
+  - at: 06:50:00
     id: morning_on
     trigger: time
   - event: sunrise
@@ -974,11 +974,13 @@
   alias: HVAC auto kontroll
   description: Om HVAC ändras manuellt, stäng av auto-flaggan
   triggers:
-  - entity_id: climate.vardagsrum
+  - entity_id:
+    - climate.zeke
     trigger: state
   conditions: []
   actions:
   - target:
       entity_id: input_boolean.hvac_auto_control
     action: input_boolean.turn_off
+    data: {}
   mode: single
