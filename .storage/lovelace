@@ -740,7 +740,7 @@
                       "style": {
                         "top": "75%",
                         "left": "51%",
-                        "color": "white",
+                        "color": "gray",
                         "transform": "scale(1)"
                       }
                     }
@@ -828,7 +828,7 @@
                       "style": {
                         "top": "68%",
                         "left": "51%",
-                        "color": "white",
+                        "color": "gray",
                         "transform": "scale(1)"
                       }
                     }
@@ -916,7 +916,7 @@
                       "style": {
                         "top": "87%",
                         "left": "65%",
-                        "color": "white",
+                        "color": "gray",
                         "transform": "scale(1)"
                       }
                     }
@@ -2834,7 +2834,7 @@
                       "style": {
                         "top": "75%",
                         "left": "51%",
-                        "color": "white",
+                        "color": "gray",
                         "transform": "scale(1)"
                       }
                     }
@@ -2922,7 +2922,7 @@
                       "style": {
                         "top": "68%",
                         "left": "51%",
-                        "color": "white",
+                        "color": "gray",
                         "transform": "scale(1)"
                       }
                     }
@@ -3010,7 +3010,7 @@
                       "style": {
                         "top": "87%",
                         "left": "65%",
-                        "color": "white",
+                        "color": "gray",
                         "transform": "scale(1)"
                       }
                     }
@@ -3357,87 +3357,9 @@
                 },
                 "chart": {
                   "height": "500px"
-                },
-                "legend": {
-                  "show": true,
-                  "markers": {
-                    "width": 12,
-                    "height": 12
-                  },
-                  "onItemClick": {
-                    "toggleDataSeries": false
-                  }
                 }
               },
               "series": [
-                {
-                  "entity": "sensor.vardagsrum_temperatur"
-                },
-                {
-                  "entity": "sensor.ovre_hall_temperatur"
-                },
-                {
-                  "entity": "sensor.entre_hall_temperatur"
-                },
-                {
-                  "entity": "sensor.mi_3_temperatur"
-                },
-                {
-                  "entity": "sensor.mi_4_temperatur"
-                },
-                {
-                  "entity": "sensor.mi_5_uterum_temperatur"
-                },
-                {
-                  "entity": "sensor.mi_7_temperatur"
-                },
-                {
-                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_temperature"
-                },
-                {
-                  "entity": "sensor.lumi_lumi_sensor_ht_agl03_temperature_2"
-                }
-              ]
-            },
-            {
-              "type": "custom:apexcharts-card",
-              "header": {
-                "show": true,
-                "title": "ApexCharts-Card",
-                "show_states": false,
-                "colorize_states": true
-              },
-              "graph_span": "10d",
-              "apex_config": {
-                "stroke": {
-                  "width": 2
-                },
-                "chart": {
-                  "height": "500px"
-                }
-              },
-              "series": [
-                {
-                  "entity": "sensor.vardagsrum_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.ovre_hall_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.entre_hall_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.mi_1_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.mi_2_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.mi_3_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.mi_4_luftfuktighet"
-                },
                 {
                   "entity": "sensor.mi_5_uterum_luftfuktighet"
                 },
@@ -3446,12 +3368,6 @@
                 },
                 {
                   "entity": "sensor.mi_7_luftfuktighet"
-                },
-                {
-                  "entity": "sensor.lumi_lumi_sensor_ht_agl02_humidity"
-                },
-                {
-                  "entity": "sensor.lumi_lumi_sensor_ht_agl03_humidity_2"
                 }
               ]
             },
