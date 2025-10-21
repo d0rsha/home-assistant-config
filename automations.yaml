@@ -955,16 +955,14 @@
   alias: Uterum – ventilation (tidsstyrd)
   description: ''
   triggers:
-  - event: sunset
+  - trigger: sun
+    event: sunset
     offset: -00:30
-    trigger: sun
-  - event: sunrise
+  - trigger: sun
+    event: sunrise
     offset: +01:00
-    trigger: sun
-  - trigger: time
-    at: '11:00:00'
-  - trigger: time
-    at: '15:00:00'
+  - trigger: time_pattern
+    hours: /4
   actions:
   - target:
       entity_id: switch.shelly_1_gen4
