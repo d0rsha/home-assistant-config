@@ -16,7 +16,7 @@
               "show_name": true,
               "show_state": true,
               "show_icon": true,
-              "entity": "sensor.medeltemperatur_inomhus",
+              "entity": "sensor.medeltemperatur_hela_huset_smoothed",
               "icon": "mdi:home-thermometer-outline"
             },
             {
