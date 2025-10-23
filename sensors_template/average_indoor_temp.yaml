@@ -30,24 +30,29 @@ sensor:
     device_class: temperature
     state_class: measurement
     icon: mdi:home-floor-0
+    availability: >
+      {{ expand(
+          'sensor.mi_7_temperatur',
+          'sensor.lumi_lumi_sensor_ht_agl02_temperature',
+          'sensor.lumi_lumi_sensor_ht_agl02_temperature_2',
+          'sensor.entre_hall_temperatur'
+        )
+        | map(attribute='state')
+        | select('is_number')
+        | list
+        | count > 0 }}
     state: >
-      {% set sensors = [
-        'sensor.mi_7_temperatur',
-        'sensor.lumi_lumi_sensor_ht_agl02_temperature',
-        'sensor.lumi_lumi_sensor_ht_agl02_temperature_2',
-        'sensor.entre_hall_temperatur'
-      ] %}
-      {% set valid = sensors
-          | map('states')
-          | reject('in', ['unknown', 'unavailable', 'none'])
-          | map('float')
-          | list %}
-      {% if valid | count > 0 %}
-        {{ (valid | sum / valid | count) | round(1) }}
-      {% else %}
-        unknown
-      {% endif %}
-
+      {% set values = expand(
+          'sensor.mi_7_temperatur',
+          'sensor.lumi_lumi_sensor_ht_agl02_temperature',
+          'sensor.lumi_lumi_sensor_ht_agl02_temperature_2',
+          'sensor.entre_hall_temperatur'
+        )
+        | map(attribute='state')
+        | select('is_number')
+        | map('float')
+        | list %}
+      {{ ((values | sum) / (values | count)) | round(1) }}
 
   # ---------------------------------------------------------
   # 🌡️ Medeltemperatur Golvvärme (smoothed)
@@ -58,24 +63,29 @@ sensor:
     device_class: temperature
     state_class: measurement
     icon: mdi:home-floor-0
+    availability: >
+      {{ expand(
+          'sensor.bathroom_temperature_smoothed',
+          'sensor.laundry_temperature_smoothed',
+          'sensor.lumi_lumi_sensor_ht_agl02_temperature',
+          'sensor.entre_hall_temperatur'
+        )
+        | map(attribute='state')
+        | select('is_number')
+        | list
+        | count > 0 }}
     state: >
-      {% set sensors = [
-        'sensor.bathroom_temperature_smoothed',
-        'sensor.laundry_temperature_smoothed',
-        'sensor.lumi_lumi_sensor_ht_agl02_temperature',
-        'sensor.entre_hall_temperatur'
-      ] %}
-      {% set valid = sensors
-          | map('states')
-          | reject('in', ['unknown', 'unavailable', 'none'])
-          | map('float')
-          | list %}
-      {% if valid | count > 0 %}
-        {{ (valid | sum / valid | count) | round(1) }}
-      {% else %}
-        unknown
-      {% endif %}
-
+      {% set values = expand(
+          'sensor.bathroom_temperature_smoothed',
+          'sensor.laundry_temperature_smoothed',
+          'sensor.lumi_lumi_sensor_ht_agl02_temperature',
+          'sensor.entre_hall_temperatur'
+        )
+        | map(attribute='state')
+        | select('is_number')
+        | map('float')
+        | list %}
+      {{ ((values | sum) / (values | count)) | round(1) }}
 
   # ---------------------------------------------------------
   # 🏠 Medeltemperatur Övervåning (snabb)
@@ -86,24 +96,29 @@ sensor:
     device_class: temperature
     state_class: measurement
     icon: mdi:home-floor-1
+    availability: >
+      {{ expand(
+          'sensor.mi_3_temperatur',
+          'sensor.mi_5_uterum_temperatur',
+          'sensor.mi_4_temperatur',
+          'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'
+        )
+        | map(attribute='state')
+        | select('is_number')
+        | list
+        | count > 0 }}
     state: >
-      {% set sensors = [
-        'sensor.mi_3_temperatur',
-        'sensor.mi_5_uterum_temperatur',
-        'sensor.mi_4_temperatur',
-        'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'
-      ] %}
-      {% set valid = sensors
-          | map('states')
-          | reject('in', ['unknown', 'unavailable', 'none'])
-          | map('float')
-          | list %}
-      {% if valid | count > 0 %}
-        {{ (valid | sum / valid | count) | round(1) }}
-      {% else %}
-        unknown
-      {% endif %}
-
+      {% set values = expand(
+          'sensor.mi_3_temperatur',
+          'sensor.mi_5_uterum_temperatur',
+          'sensor.mi_4_temperatur',
+          'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'
+        )
+        | map(attribute='state')
+        | select('is_number')
+        | map('float')
+        | list %}
+      {{ ((values | sum) / (values | count)) | round(1) }}
 
   # ---------------------------------------------------------
   # 🏠 Medeltemperatur Övervåning (smoothed)
@@ -114,83 +129,108 @@ sensor:
     device_class: temperature
     state_class: measurement
     icon: mdi:home-floor-1
+    availability: >
+      {{ expand(
+          'sensor.mi_3_temperatur',
+          'sensor.bathroom_upstairs_temperature_smoothed',
+          'sensor.mi_4_temperatur',
+          'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'
+        )
+        | map(attribute='state')
+        | select('is_number')
+        | list
+        | count > 0 }}
     state: >
-      {% set sensors = [
-        'sensor.mi_3_temperatur',
-        'sensor.bathroom_upstairs_temperature_smoothed',
-        'sensor.mi_4_temperatur',
-        'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'
-      ] %}
-      {% set valid = sensors
-          | map('states')
-          | reject('in', ['unknown', 'unavailable', 'none'])
-          | map('float')
-          | list %}
-      {% if valid | count > 0 %}
-        {{ (valid | sum / valid | count) | round(1) }}
-      {% else %}
-        unknown
-      {% endif %}
+      {% set values = expand(
+          'sensor.mi_3_temperatur',
+          'sensor.bathroom_upstairs_temperature_smoothed',
+          'sensor.mi_4_temperatur',
+          'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'
+        )
+        | map(attribute='state')
+        | select('is_number')
+        | map('float')
+        | list %}
+      {{ ((values | sum) / (values | count)) | round(1) }}
 
-
-# ---------------------------------------------------------
-# 🏠 Hela huset
-# ---------------------------------------------------------
+  # ---------------------------------------------------------
+  # 🏠 Hela huset
+  # ---------------------------------------------------------
   - name: "Medeltemperatur hela huset"
     unique_id: medeltemperatur_all
     unit_of_measurement: "°C"
     device_class: temperature
     state_class: measurement
     icon: mdi:home-floor-0
+    availability: >
+      {{ expand(
+          'sensor.mi_7_temperatur',
+          'sensor.lumi_lumi_sensor_ht_agl02_temperature',
+          'sensor.lumi_lumi_sensor_ht_agl02_temperature_2',
+          'sensor.entre_hall_temperatur',
+          'sensor.mi_3_temperatur',
+          'sensor.mi_5_uterum_temperatur',
+          'sensor.mi_4_temperatur',
+          'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'
+        )
+        | map(attribute='state')
+        | select('is_number')
+        | list
+        | count > 0 }}
     state: >
-      {% set sensors = [
-        'sensor.mi_7_temperatur',
-        'sensor.lumi_lumi_sensor_ht_agl02_temperature',
-        'sensor.lumi_lumi_sensor_ht_agl02_temperature_2',
-        'sensor.entre_hall_temperatur',
-        'sensor.mi_3_temperatur',
-        'sensor.mi_5_uterum_temperatur',
-        'sensor.mi_4_temperatur',
-        'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'
-      ] %}
-      {% set valid = sensors
-          | map('states')
-          | reject('in', ['unknown', 'unavailable', 'none'])
-          | map('float')
-          | list %}
-      {% if valid | count > 0 %}
-        {{ (valid | sum / valid | count) | round(1) }}
-      {% else %}
-        unknown
-      {% endif %}
+      {% set values = expand(
+          'sensor.mi_7_temperatur',
+          'sensor.lumi_lumi_sensor_ht_agl02_temperature',
+          'sensor.lumi_lumi_sensor_ht_agl02_temperature_2',
+          'sensor.entre_hall_temperatur',
+          'sensor.mi_3_temperatur',
+          'sensor.mi_5_uterum_temperatur',
+          'sensor.mi_4_temperatur',
+          'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'
+        )
+        | map(attribute='state')
+        | select('is_number')
+        | map('float')
+        | list %}
+      {{ ((values | sum) / (values | count)) | round(1) }}
 
-# ---------------------------------------------------------
-# 🏠 Hela huset (Smoothed)
-# ---------------------------------------------------------
+  # ---------------------------------------------------------
+  # 🏠 Hela huset (Smoothed)
+  # ---------------------------------------------------------
   - name: "Medeltemperatur hela huset smoothed"
     unique_id: medeltemperatur_all_smoothed
     unit_of_measurement: "°C"
     device_class: temperature
     state_class: measurement
     icon: mdi:home-floor-0
+    availability: >
+      {{ expand(
+          'sensor.bathroom_temperature_smoothed',
+          'sensor.lumi_lumi_sensor_ht_agl02_temperature',
+          'sensor.laundry_temperature_smoothed',
+          'sensor.entre_hall_temperatur',
+          'sensor.mi_3_temperatur',
+          'sensor.bathroom_upstairs_temperature_smoothed',
+          'sensor.mi_4_temperatur',
+          'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'
+        )
+        | map(attribute='state')
+        | select('is_number')
+        | list
+        | count > 0 }}
     state: >
-      {% set sensors = [
-        'sensor.bathroom_temperature_smoothed',
-        'sensor.lumi_lumi_sensor_ht_agl02_temperature',
-        'sensor.laundry_temperature_smoothed',
-        'sensor.entre_hall_temperatur',      
-        'sensor.mi_3_temperatur',
-        'sensor.bathroom_upstairs_temperature_smoothed',
-        'sensor.mi_4_temperatur',
-        'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'     
-      ] %}
-      {% set valid = sensors
-          | map('states')
-          | reject('in', ['unknown', 'unavailable', 'none'])
-          | map('float')
-          | list %}
-      {% if valid | count > 0 %}
-        {{ (valid | sum / valid | count) | round(1) }}
-      {% else %}
-        unknown
-      {% endif %}
+      {% set values = expand(
+          'sensor.bathroom_temperature_smoothed',
+          'sensor.lumi_lumi_sensor_ht_agl02_temperature',
+          'sensor.laundry_temperature_smoothed',
+          'sensor.entre_hall_temperatur',
+          'sensor.mi_3_temperatur',
+          'sensor.bathroom_upstairs_temperature_smoothed',
+          'sensor.mi_4_temperatur',
+          'sensor.lumi_lumi_sensor_ht_agl03_temperature_2'
+        )
+        | map(attribute='state')
+        | select('is_number')
+        | map('float')
+        | list %}
+      {{ ((values | sum) / (values | count)) | round(1) }}
