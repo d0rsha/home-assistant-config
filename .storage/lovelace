@@ -3864,7 +3864,7 @@
                     {
                       "type": "state-label",
                       "entity": "sensor.nibe_f1145_supply_pump_speed_ep14",
-                      "prefix": "",
+                      "prefix": ": ",
                       "style": {
                         "top": "50%",
                         "left": "58%"
@@ -3873,10 +3873,46 @@
                     {
                       "type": "state-label",
                       "entity": "sensor.nibe_f1145_ep14_gp2_brine_pump_status",
+                      "prefix": ": ",
+                      "style": {
+                        "top": "77%",
+                        "left": "19%"
+                      }
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.nibe_f1145_supply_pump_state_ep14",
+                      "prefix": "",
+                      "style": {
+                        "top": "50%",
+                        "left": "50%"
+                      }
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.nibe_f1145_compressor_state_ep14",
+                      "prefix": "",
+                      "style": {
+                        "top": "59%",
+                        "left": "44%"
+                      }
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.nibe_f1145_brine_pump_state_ep14",
                       "prefix": "",
                       "style": {
                         "top": "77%",
-                        "left": "18%"
+                        "left": "12%"
+                      }
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.nibe_f1145_priority",
+                      "prefix": "",
+                      "style": {
+                        "top": "34%",
+                        "left": "74%"
                       }
                     }
                   ],
