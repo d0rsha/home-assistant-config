@@ -3746,8 +3746,69 @@
               "type": "grid",
               "cards": [
                 {
-                  "type": "heading",
-                  "heading": "New section"
+                  "type": "vertical-stack",
+                  "cards": [
+                    {
+                      "type": "vertical-stack",
+                      "cards": [
+                        {
+                          "type": "history-graph",
+                          "hours_to_show": 8,
+                          "refresh_interval": 0,
+                          "show_names": true,
+                          "entities": [
+                            {
+                              "entity": "sensor.nibe_f1145_priority",
+                              "name": "Priority"
+                            },
+                            {
+                              "entity": "sensor.nibe_f1145_compressor_state_ep14",
+                              "name": "Compressor"
+                            },
+                            {
+                              "entity": "sensor.nibe_f1145_supply_pump_state_ep14",
+                              "name": "Supply pump"
+                            },
+                            {
+                              "entity": "sensor.nibe_f1145_brine_pump_state_ep14",
+                              "name": "Brine pump"
+                            },
+                            {
+                              "entity": "sensor.nibe_f1145_nibe_alarm_code",
+                              "name": "Alarm"
+                            },
+                            {
+                              "entity": "sensor.nibe_f1145_bt2_supply_temp_s1",
+                              "name": "Supply"
+                            },
+                            {
+                              "entity": "sensor.nibe_f1145_calc_supply_s1",
+                              "name": "Calc supply"
+                            },
+                            {
+                              "entity": "sensor.nibe_f1145_eb100_ep14_bt3_return_temp",
+                              "name": "Return"
+                            },
+                            {
+                              "entity": "sensor.nibe_f1145_eb100_ep14_bt10_brine_in_temp",
+                              "name": "Brine In"
+                            },
+                            {
+                              "entity": "sensor.nibe_f1145_eb100_ep14_bt11_brine_out_temp",
+                              "name": "Brine Out"
+                            },
+                            {
+                              "entity": "sensor.nibe_f1145_bt6_hw_load",
+                              "name": "HW"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "grid_options": {
+                    "columns": "full"
+                  }
                 }
               ],
               "column_span": 2
@@ -3755,10 +3816,6 @@
             {
               "type": "grid",
               "cards": [
-                {
-                  "type": "heading",
-                  "heading": "New section"
-                },
                 {
                   "type": "picture-elements",
                   "elements": [
@@ -3914,9 +3971,19 @@
                         "top": "34%",
                         "left": "74%"
                       }
+                    },
+                    {
+                      "type": "state-label",
+                      "entity": "sensor.nibe_f1145_nibe_alarm_code",
+                      "prefix": "Larm: ",
+                      "style": {
+                        "top": "4%",
+                        "left": "9%"
+                      }
                     }
                   ],
-                  "image": "/local/assets/dashboard/nibe_schematics_dark.jpg",
+                  "image": "/local/assets/dashboard/nibe_schematics_light.jpg",
+                  "dark_mode_image": "/local/assets/dashboard/nibe_schematics_dark.jpg",
                   "grid_options": {
                     "columns": "full"
                   }
