@@ -3800,6 +3800,9 @@
                             {
                               "entity": "sensor.nibe_f1145_bt6_hw_load",
                               "name": "HW"
+                            },
+                            {
+                              "entity": "sensor.nibe_f1145_degree_minutes_16_bit"
                             }
                           ]
                         }
