@@ -975,6 +975,7 @@
   - entity_id:
     - climate.zeke
     trigger: state
+    attribute: hvac_action
   conditions: []
   actions:
   - target:
