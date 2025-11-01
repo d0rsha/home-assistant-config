@@ -507,6 +507,7 @@
       - action: homeassistant.turn_on
         target:
           label_id: auto_belysning_barnrum
+        data: {}
     - conditions:
       - condition: trigger
         id: 'off'
@@ -575,14 +576,19 @@
               entity_id: sensor.season
               state: winter
           sequence:
-          - target:
-              entity_id: input_boolean.hvac_auto_control
-            action: input_boolean.turn_on
           - device_id: 439ab72d0a12b6536ad5cc48d71d60c5
             domain: climate
             entity_id: f1260d8d12a0d5939b238360a06f42d4
             type: set_hvac_mode
             hvac_mode: heat
+          - delay:
+              hours: 0
+              minutes: 0
+              seconds: 30
+              milliseconds: 0
+          - target:
+              entity_id: input_boolean.hvac_auto_control
+            action: input_boolean.turn_on
     - conditions:
       - condition: trigger
         id: morning_off
@@ -969,17 +975,29 @@
     action: switch.turn_on
   mode: single
 - id: '1759925253597'
-  alias: HVAC auto kontroll
-  description: Om HVAC ändras manuellt, stäng av auto-flaggan
+  alias: HVAC – stäng av auto vid manuell ändring
+  description: Om HVAC ändras manuellt (läge eller utvalda attribut), stäng av auto-flaggan.
+    Ska triggas även när användaren ändrar med fjärrkontroll.
   triggers:
-  - entity_id:
-    - climate.zeke
-    trigger: state
-    attribute: hvac_action
-  conditions: []
+  - trigger: state
+    entity_id: climate.zeke
+  - trigger: state
+    entity_id: climate.zeke
+    attribute: temperature
+  - trigger: state
+    entity_id: climate.zeke
+    attribute: fan_mode
+  - trigger: state
+    entity_id: climate.zeke
+    attribute: preset_mode
+  - trigger: state
+    entity_id: climate.zeke
+    attribute: swing_mode
+  - trigger: state
+    entity_id: climate.zeke
+    attribute: swing_horizontal_mode
   actions:
-  - target:
+  - action: input_boolean.turn_off
+    target:
       entity_id: input_boolean.hvac_auto_control
-    action: input_boolean.turn_off
-    data: {}
   mode: single
