@@ -1,0 +1,129 @@
+###############################################################################
+# Nibe F1145 – Estimated Power + Energy + Utility Meters (package)
+# - Uses 3×400 V assumption and a tunable motor power factor (default 0.93)
+# - If available, subtracts internal electric add-on (kW) and adds back as PF≈1
+###############################################################################
+
+# --- Tweakable helper(s) -----------------------------------------------------
+input_number:
+  nibe_pf_motor:
+    name: Nibe PF (motor)
+    min: 0.70
+    max: 1.00
+    step: 0.01
+    mode: slider
+
+# --- Estimated instantaneous real power (W) ----------------------------------
+template:
+  - trigger:
+      # 1) vanliga state-förändringar (ifall strömmen faktiskt ändras)
+      - platform: state
+        entity_id:
+          - sensor.nibe_f1145_nibe_eb100_be1_current
+          - sensor.nibe_f1145_nibe_eb100_be2_current
+          - sensor.nibe_f1145_nibe_eb100_be3_current
+          - sensor.nibe_f1145_nibe_int_el_add_power
+          - input_number.nibe_pf_motor
+
+      # 2) attributet 'timestamp' ändras ofta även när state är samma
+      - platform: state
+        entity_id:
+          - sensor.nibe_f1145_nibe_eb100_be1_current
+          - sensor.nibe_f1145_nibe_eb100_be2_current
+          - sensor.nibe_f1145_nibe_eb100_be3_current
+          - sensor.nibe_f1145_nibe_int_el_add_power
+        attribute: timestamp      
+   
+    sensor:
+      ###############################################################################
+      # Estimated power consumption
+      - name: "Nibe Estimated Power"
+        unique_id: nibe_estimated_power_w
+        device_class: power
+        state_class: measurement
+        unit_of_measurement: "W"
+        state: >
+          {% set i1 = states('sensor.nibe_f1145_nibe_eb100_be1_current')|float(0) %}
+          {% set i2 = states('sensor.nibe_f1145_nibe_eb100_be2_current')|float(0) %}
+          {% set i3 = states('sensor.nibe_f1145_nibe_eb100_be3_current')|float(0) %}
+          {% set pf = states('input_number.nibe_pf_motor')|float(0.93) %}
+          {% set i_avg = (i1 + i2 + i3) / 3.0 %}
+          {# Apparent power for 3×400 V: S = √3 * 400 * I_avg #}
+          {% set S = 1.732 * 400 * i_avg %}
+          {# Internal add-on power (kW → W). If entity missing/unavailable, assume 0. #}
+          {% set kW_add = states('sensor.nibe_f1145_nibe_int_el_add_power')|float(0) %}
+          {% set P_add = kW_add * 1000.0 %}
+          {# Real power ≈ PF_motor*(S - P_add) + P_add, with clamp #}
+          {% set motor_apparent = [S - P_add, 0.0]|max %}
+          {% set P = pf * motor_apparent + P_add %}
+          {{ P | round(0) }}
+
+      ###############################################################################
+      # Simple estimated power consumption without add-on adjustment
+      - name: "Nibe Estimated Power (simple)"
+        unique_id: nibe_estimated_power_w_simple
+        device_class: power
+        state_class: measurement
+        unit_of_measurement: "W"
+        state: >
+          {% set i1 = states('sensor.nibe_f1145_nibe_eb100_be1_current')|float(0) %}
+          {% set i2 = states('sensor.nibe_f1145_nibe_eb100_be2_current')|float(0) %}
+          {% set i3 = states('sensor.nibe_f1145_nibe_eb100_be3_current')|float(0) %}
+          {% set pf = states('input_number.nibe_pf_motor')|float(0.93) %}
+          {% set i_avg = (i1 + i2 + i3) / 3.0 %}
+          {{ (pf * 1.732 * 400 * i_avg) | round(0) }}
+
+  - sensor:
+      - name: "Nibe Energy"
+        unique_id: nibe_estimated_energy_kwh
+        device_class: energy
+        state_class: total
+        unit_of_measurement: "kWh"
+        state: "{{ states('sensor.nibe_estimated_energy') }}"
+        availability: "{{ states('sensor.nibe_estimated_energy') not in ['unknown','unavailable',''] }}"
+
+  - sensor:
+      - name: "Nibe Int Add Power (W)"
+        unique_id: nibe_int_add_power_w
+        device_class: power
+        state_class: measurement
+        unit_of_measurement: "W"
+        state: >
+          {{ (states('sensor.nibe_f1145_nibe_int_el_add_power') | float(0)) * 1000 }}
+
+  - sensor:
+      - name: "Nibe Int Add Energy"
+        unique_id: nibe_int_add_energy_kwh
+        device_class: energy
+        state_class: total
+        unit_of_measurement: "kWh"
+        state: "{{ states('sensor.nibe_int_add_energy_raw') }}"
+        availability: "{{ states('sensor.nibe_int_add_energy_raw') not in ['unknown','unavailable',''] }}"
+
+
+# --- Integrate power → energy (kWh) ------------------------------------------
+sensor:
+  - platform: integration
+    source: sensor.nibe_estimated_power
+    name: "Nibe Estimated Energy"
+    unit_prefix: k
+    unit_time: h
+    method: trapezoidal
+    round: 3
+
+  - platform: integration
+    source: sensor.nibe_int_add_power_w
+    name: "Nibe Int Add Energy (raw)"
+    unique_id: nibe_int_add_energy_raw
+    unit_prefix: k
+    unit_time: h
+    method: trapezoidal
+    round: 3
+
+# --- Utility meters (daily, monthly) -----------------------------------------
+utility_meter:
+  nibe_energy_daily:
+    name: "Nibe Energy Daily"
+    source: sensor.nibe_estimated_energy
+    cycle: daily
+
