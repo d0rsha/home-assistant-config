@@ -394,12 +394,89 @@ nibepi_publish_discovery_temp:
             "state_topic": "homeassistant/nibe/modbus/47206",
             "json_attributes_topic": "homeassistant/nibe/modbus/47206/json",
             "value_template": "{{ value|float(0) }}",
+            "entity_category": "diagnostic",
             "device": {
               "identifiers": ["nibepi_modbus"],
               "name": "Nibe F1145",
               "manufacturer": "NIBE",
               "model": "F1145"
             }
+          }
+          {% endraw %}
+    - service: mqtt.publish
+      data:
+        topic: homeassistant/sensor/47046/config
+        retain: true
+        payload: >-
+          {% raw %}
+          {
+            "name": "Stop temperature Periodic HW",
+            "uniq_id": "nibe_modbus_47046",
+            "device_class": "temperature",
+            "state_class": "measurement",
+            "unit_of_measurement": "°C",
+            "state_topic": "homeassistant/nibe/modbus/47046",
+            "json_attributes_topic": "homeassistant/nibe/modbus/47046/json",
+            "entity_category": "diagnostic",
+            "value_template": "{{ value | float(0) }}",
+            "device": { "identifiers":["nibepi_modbus"], "name":"Nibe F1145", "manufacturer":"NIBE", "model":"F1145" }
+          }
+          {% endraw %}
+    - service: mqtt.publish
+      data:
+        topic: homeassistant/sensor/47047/config
+        retain: true
+        payload: >-
+          {% raw %}
+          {
+            "name": "Stop temperature HW Luxury",
+            "uniq_id": "nibe_modbus_47047",
+            "device_class": "temperature",
+            "state_class": "measurement",
+            "unit_of_measurement": "°C",
+            "state_topic": "homeassistant/nibe/modbus/47047",
+            "json_attributes_topic": "homeassistant/nibe/modbus/47047/json",
+            "entity_category": "diagnostic",
+            "value_template": "{{ value | float(0) }}",
+            "device": { "identifiers":["nibepi_modbus"], "name":"Nibe F1145", "manufacturer":"NIBE", "model":"F1145" }
+          }
+          {% endraw %}
+    - service: mqtt.publish
+      data:
+        topic: homeassistant/sensor/47048/config
+        retain: true
+        payload: >-
+          {% raw %}
+          {
+            "name": "Stop temperature HW Normal",
+            "uniq_id": "nibe_modbus_47048",
+            "device_class": "temperature",
+            "state_class": "measurement",
+            "unit_of_measurement": "°C",
+            "state_topic": "homeassistant/nibe/modbus/47048",
+            "json_attributes_topic": "homeassistant/nibe/modbus/47048/json",
+            "entity_category": "diagnostic",
+            "value_template": "{{ value | float(0) }}",
+            "device": { "identifiers":["nibepi_modbus"], "name":"Nibe F1145", "manufacturer":"NIBE", "model":"F1145" }
+          }
+          {% endraw %}
+    - service: mqtt.publish
+      data:
+        topic: homeassistant/sensor/47049/config
+        retain: true
+        payload: >-
+          {% raw %}
+          {
+            "name": "Stop temperature HW Economy",
+            "uniq_id": "nibe_modbus_47049",
+            "device_class": "temperature",
+            "state_class": "measurement",
+            "unit_of_measurement": "°C",
+            "state_topic": "homeassistant/nibe/modbus/47049",
+            "json_attributes_topic": "homeassistant/nibe/modbus/47049/json",
+            "entity_category": "diagnostic",
+            "value_template": "{{ value | float(0) }}",
+            "device": { "identifiers":["nibepi_modbus"], "name":"Nibe F1145", "manufacturer":"NIBE", "model":"F1145" }
           }
           {% endraw %}
 nibepi_publish_discovery_enums:
@@ -418,6 +495,7 @@ nibepi_publish_discovery_enums:
             "uniq_id": "nibe_modbus_47007",
             "state_topic": "homeassistant/nibe/modbus/47007",
             "json_attributes_topic": "homeassistant/nibe/modbus/47007/json",
+            "entity_category": "diagnostic",
             "state_class": "measurement",
             "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
           }
@@ -435,6 +513,7 @@ nibepi_publish_discovery_enums:
             "uniq_id": "nibe_modbus_47011",
             "state_topic": "homeassistant/nibe/modbus/47011",
             "json_attributes_topic": "homeassistant/nibe/modbus/47011/json",
+            "entity_category": "diagnostic",
             "state_class": "measurement",
             "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
           }
@@ -503,6 +582,7 @@ nibepi_publish_discovery_enums:
             "uniq_id": "nibe_modbus_47442",
             "state_topic": "homeassistant/nibe/modbus/47442",
             "json_attributes_topic": "homeassistant/nibe/modbus/47442/json",
+            "entity_category": "diagnostic",
             "value_template": "{% set m={0:'Manual',1:'Radiator',2:'Floor Heating',3:'Radiator + Floor Heating'} %}{{ m.get((value|default('')|int(0)), value) }}",
             "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
           }
@@ -520,6 +600,7 @@ nibepi_publish_discovery_enums:
             "uniq_id": "nibe_modbus_43427",
             "state_topic": "homeassistant/nibe/modbus/43427",
             "json_attributes_topic": "homeassistant/nibe/modbus/43427/json",
+            "entity_category": "diagnostic",
             "value_template": "{% set m={20:'Stopped',40:'Starting',60:'Running',100:'Stopping'} %}{{ m.get((value|default('')|int(0)), value) }}",
             "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
           }
@@ -537,6 +618,7 @@ nibepi_publish_discovery_enums:
             "uniq_id": "nibe_modbus_43431",
             "state_topic": "homeassistant/nibe/modbus/43431",
             "json_attributes_topic": "homeassistant/nibe/modbus/43431/json",
+            "entity_category": "diagnostic",
             "value_template": "{% set m={10:'Off',15:'Starting',20:'On',40:'10-day Mode',80:'Calibration'} %}{{ m.get((value|default('')|int(0)), value) }}",
             "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
           }
@@ -554,6 +636,7 @@ nibepi_publish_discovery_enums:
             "uniq_id": "nibe_modbus_43433",
             "state_topic": "homeassistant/nibe/modbus/43433",
             "json_attributes_topic": "homeassistant/nibe/modbus/43433/json",
+            "entity_category": "diagnostic",
             "value_template": "{% set m={10:'Off',15:'Starting',20:'On',40:'10-day Mode',80:'Calibration'} %}{{ m.get((value|default('')|int(0)), value) }}",
             "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
           }
