@@ -350,8 +350,8 @@
       button_up_long_max_loop_repeats: 1
       button_up_long_loop: true
 - id: notify_ev_charge_needed
-  alias: Notify EV Charging Needed
-  description: Notify if conditions are met for charging the car
+  alias: Start EV Charge when solar power
+  description: Notify when conditions are met for charging the car
   triggers:
   - trigger: state
     entity_id:
@@ -368,7 +368,7 @@
     above: 2000
   - condition: numeric_state
     entity_id: sensor.energy_production_today_remaining_2
-    above: 4
+    above: 2
   - condition: not
     conditions:
     - condition: or
@@ -386,7 +386,13 @@
   - condition: state
     entity_id: input_boolean.ev_charger_request_sent
     state: 'off'
+  - condition: state
+    entity_id: input_boolean.ev_auto_charge_enabled
+    state: 'on'
   actions:
+  - action: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.ev_auto_charge_enabled
   - action: switch.turn_on
     entity_id: switch.skoda_superb_combi_charging
   - action: notify.anders
@@ -981,23 +987,58 @@
   triggers:
   - trigger: state
     entity_id: climate.zeke
+    id: triggered_by_state
   - trigger: state
     entity_id: climate.zeke
     attribute: temperature
+    id: temperature
   - trigger: state
     entity_id: climate.zeke
     attribute: fan_mode
+    id: fan
   - trigger: state
     entity_id: climate.zeke
     attribute: preset_mode
+    id: preset
   - trigger: state
     entity_id: climate.zeke
     attribute: swing_mode
+    id: swing_v
   - trigger: state
     entity_id: climate.zeke
     attribute: swing_horizontal_mode
+    id: swing_h
+  conditions:
+  - condition: template
+    value_template: "{{ trigger.from_state is not none\n   and trigger.from_state.state
+      not in ['unknown','unavailable']\n   and trigger.to_state.state not in ['unknown','unavailable']
+      }}\n"
+  - condition: or
+    conditions:
+    - condition: template
+      value_template: '{{ trigger.id != ''triggered_by_state'' }}'
+    - condition: template
+      value_template: '{{ trigger.from_state.state != trigger.to_state.state }}'
   actions:
   - action: input_boolean.turn_off
     target:
       entity_id: input_boolean.hvac_auto_control
+  mode: single
+- id: '1762291835353'
+  alias: EV charge - stäng av auto
+  description: EV charge - stäng av auto
+  triggers:
+  - device_id: 9497d4e0227e3207ec70f2e19d1c301c
+    domain: easee
+    entity_id: sensor.garage_status
+    type: completed
+    trigger: device
+  conditions:
+  - condition: state
+    entity_id: input_boolean.ev_auto_charge_enabled
+    state: 'on'
+  actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.ev_auto_charge_enabled
   mode: single

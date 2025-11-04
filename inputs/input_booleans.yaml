@@ -1,6 +1,9 @@
 ev_charger_request_sent:
   name: EV Charger Request Sent Today
   icon: mdi:car-electric
+ev_auto_charge_enabled:
+  name: EV – Auto charge
+  icon: mdi:car-electric
 washer_ready:
   name: Tvättmaskin klar-flagga
   icon: mdi:washing-machine
