@@ -19,7 +19,8 @@ input_select:
 #################################################################
 
 automation:
-  - alias: Washer started
+  - id: washer_started
+    alias: Washer started
     trigger:
       - platform: numeric_state
         entity_id: sensor.uttag_tvattmaskin_power
@@ -33,8 +34,10 @@ automation:
       - service: input_select.select_option
         target: { entity_id: input_select.washer_state }
         data: { option: "Running" }
+    mode: single
 
-  - alias: Washer finished or emptied
+  - id: washer_finished_or_emptied
+    alias: Washer finished or emptied
     trigger:
       - platform: numeric_state
         entity_id: sensor.uttag_tvattmaskin_power
@@ -50,7 +53,6 @@ automation:
         state: "Running"
     action:
       - choose:
-          # Lucka redan öppen → hoppa direkt till Emptied
           - conditions:
               - condition: state
                 entity_id: binary_sensor.lumi_lumi_magnet_agl02_2
@@ -59,7 +61,6 @@ automation:
               - service: input_select.select_option
                 target: { entity_id: input_select.washer_state }
                 data: { option: "Emptied" }
-          # Annars → Finished
           - conditions: []
             sequence:
               - service: input_select.select_option
@@ -67,8 +68,10 @@ automation:
                 data: { option: "Finished" }
               - service: script.chime
                 data: { message: "Tvättmaskinen är klar." }
+    mode: single
 
-  - alias: Washer emptied
+  - id: washer_emptied
+    alias: Washer emptied
     trigger:
       - platform: state
         entity_id: binary_sensor.lumi_lumi_magnet_agl02_2
@@ -82,8 +85,10 @@ automation:
       - service: input_select.select_option
         target: { entity_id: input_select.washer_state }
         data: { option: "Emptied" }
+    mode: single
 
-  - alias: Washer back to Idle
+  - id: washer_back_to_idle
+    alias: Washer back to Idle
     trigger:
       - platform: state
         entity_id: binary_sensor.lumi_lumi_magnet_agl02_2
@@ -97,12 +102,14 @@ automation:
       - service: input_select.select_option
         target: { entity_id: input_select.washer_state }
         data: { option: "Idle" }
+    mode: single
 
 #################################################################
 ## Torktumlare
 #################################################################
 
-  - alias: Dryer started
+  - id: dryer_started
+    alias: Dryer started
     trigger:
       - platform: numeric_state
         entity_id: sensor.ikea_of_sweden_inspelning_smart_plug_power
@@ -116,8 +123,10 @@ automation:
       - service: input_select.select_option
         target: { entity_id: input_select.dryer_state }
         data: { option: "Running" }
+    mode: single
 
-  - alias: Dryer finished or emptied
+  - id: dryer_finished_or_emptied
+    alias: Dryer finished or emptied
     trigger:
       - platform: numeric_state
         entity_id: sensor.ikea_of_sweden_inspelning_smart_plug_power
@@ -148,8 +157,10 @@ automation:
                 data: { option: "Finished" }
               - service: script.chime
                 data: { message: "Torktumlaren är klar." }
+    mode: single
 
-  - alias: Dryer emptied
+  - id: dryer_emptied
+    alias: Dryer emptied
     trigger:
       - platform: state
         entity_id: binary_sensor.lumi_lumi_magnet_agl02
@@ -163,8 +174,10 @@ automation:
       - service: input_select.select_option
         target: { entity_id: input_select.dryer_state }
         data: { option: "Emptied" }
+    mode: single
 
-  - alias: Dryer back to Idle
+  - id: dryer_back_to_idle
+    alias: Dryer back to Idle
     trigger:
       - platform: state
         entity_id: binary_sensor.lumi_lumi_magnet_agl02
@@ -178,12 +191,14 @@ automation:
       - service: input_select.select_option
         target: { entity_id: input_select.dryer_state }
         data: { option: "Idle" }
+    mode: single
 
 #################################################################
 ## Diskmaskin
 #################################################################
 
-  - alias: Dishwasher started
+  - id: dishwasher_started
+    alias: Dishwasher started
     trigger:
       - platform: numeric_state
         entity_id: sensor.uttag_diskmaskinen_power
@@ -197,8 +212,10 @@ automation:
       - service: input_select.select_option
         target: { entity_id: input_select.dishwasher_state }
         data: { option: "Running" }
+    mode: single
 
-  - alias: Dishwasher finished or emptied
+  - id: dishwasher_finished_or_emptied
+    alias: Dishwasher finished or emptied
     trigger:
       - platform: numeric_state
         entity_id: sensor.uttag_diskmaskinen_power
@@ -212,8 +229,10 @@ automation:
       - service: input_select.select_option
         target: { entity_id: input_select.dishwasher_state }
         data: { option: "Finished" }
+    mode: single
 
-  - alias: Dishwasher back to Idle
+  - id: dishwasher_back_to_idle
+    alias: Dishwasher back to Idle
     trigger:
       - platform: numeric_state
         entity_id: sensor.uttag_diskmaskinen_power
@@ -223,3 +242,4 @@ automation:
       - service: input_select.select_option
         target: { entity_id: input_select.dishwasher_state }
         data: { option: "Idle" }
+    mode: single
