@@ -26,10 +26,7 @@ automation:
         entity_id: sensor.uttag_tvattmaskin_power
         above: 100
         for: "00:01:00"
-    condition:
-      - condition: state
-        entity_id: input_select.washer_state
-        state: "Idle"
+    condition: []
     action:
       - service: input_select.select_option
         target: { entity_id: input_select.washer_state }
@@ -115,10 +112,7 @@ automation:
         entity_id: sensor.ikea_of_sweden_inspelning_smart_plug_power
         above: 100
         for: "00:01:00"
-    condition:
-      - condition: state
-        entity_id: input_select.dryer_state
-        state: "Idle"
+    condition: []
     action:
       - service: input_select.select_option
         target: { entity_id: input_select.dryer_state }
@@ -204,10 +198,7 @@ automation:
         entity_id: sensor.uttag_diskmaskinen_power
         above: 100
         for: "00:01:00"
-    condition:
-      - condition: state
-        entity_id: input_select.dishwasher_state
-        state: "Idle"
+    condition: []
     action:
       - service: input_select.select_option
         target: { entity_id: input_select.dishwasher_state }
