@@ -100,6 +100,17 @@ template:
         state: "{{ states('sensor.nibe_int_add_energy_raw') }}"
         availability: "{{ states('sensor.nibe_int_add_energy_raw') not in ['unknown','unavailable',''] }}"
 
+  - sensor:
+      - name: "Nibe ΔT (BT2-BT3)"
+        unique_id: nibe_delta_t_bt
+        unit_of_measurement: "°C"
+        state_class: measurement
+        device_class: temperature
+        state: >
+          {% set bt2 = states('sensor.nibe_f1145_bt2_supply_temp_s1')|float(0) %}
+          {% set bt3 = states('sensor.nibe_f1145_eb100_ep14_bt3_return_temp')|float(0) %}
+          {{ (bt2 - bt3) | round(1) }}
+
 
 # --- Integrate power → energy (kWh) ------------------------------------------
 sensor:

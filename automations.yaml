@@ -977,8 +977,9 @@
     hours: /4
   actions:
   - target:
-      entity_id: switch.shelly_1_gen4
+      entity_id: switch.shelly1g4_7c2c677de830
     action: switch.turn_on
+    data: {}
   mode: single
 - id: '1759925253597'
   alias: HVAC – stäng av auto vid manuell ändring

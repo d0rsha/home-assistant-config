@@ -3698,6 +3698,9 @@
                             },
                             {
                               "entity": "sensor.nibe_f1145_degree_minutes_16_bit"
+                            },
+                            {
+                              "entity": "sensor.nibe_dt_bt2_bt3"
                             }
                           ]
                         }
