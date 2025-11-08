@@ -67,6 +67,9 @@ logger:
     custom_components.hacs: debug
     aiogithubapi: debug
     custom_components.pax_ble: debug
+    myskoda: debug
+    myskoda.mqtt: debug
+    myskoda.rest_api: debug
 
 ##########################################
 ### Cloudflare tunnel
