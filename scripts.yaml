@@ -106,6 +106,32 @@ tom_robban:
   alias: Töm robban
   description: 'Robban går till position för att tömma behållare. '
   icon: mdi:robot-vacuum-alert
+announce:
+  alias: Announce message
+  description: Speak a short announcement via the HA Voice media player (with optional chime).
+  fields:
+    message:
+      description: Text to announce
+      example: "Maten är klar!"
+      required: true
+    chime:
+      description: Optional chime style (e.g., bright, soft, none)
+      example: "bright"
+      required: false
+    volume:
+      description: Playback volume (0.0–1.0)
+      example: 1
+      required: false
+  sequence:
+    - action: chime_tts.say
+      target:
+        entity_id: media_player.home_assistant_voice_09517d_media_player
+      data:
+        message: "{{ message }}"
+        chime_path: "{{ chime | default('bright') }}"
+        language: sv
+        volume_level: "{{ volume | default(1) }}"
+        cache: true
 chime:
   sequence:
   - variables:

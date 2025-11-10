@@ -63,7 +63,7 @@ automation:
               - service: input_select.select_option
                 target: { entity_id: input_select.washer_state }
                 data: { option: "Finished" }
-              - service: script.chime
+              - service: script.announce
                 data: { message: "Tvättmaskinen är klar." }
     mode: single
 
@@ -149,7 +149,7 @@ automation:
               - service: input_select.select_option
                 target: { entity_id: input_select.dryer_state }
                 data: { option: "Finished" }
-              - service: script.chime
+              - service: script.announce
                 data: { message: "Torktumlaren är klar." }
     mode: single
 
