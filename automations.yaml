@@ -1043,3 +1043,105 @@
     target:
       entity_id: input_boolean.ev_auto_charge_enabled
   mode: single
+- id: '1762984724421'
+  alias: Lampa utanför tvättstuga
+  description: Styr lampan utifrån washer_state/dryer_state
+  triggers:
+  - trigger: state
+    entity_id:
+    - input_select.dryer_state
+    - input_select.washer_state
+  conditions: []
+  actions:
+  - variables:
+      dryer: '{{ states(''input_select.dryer_state'') }}'
+      washer: '{{ states(''input_select.washer_state'') }}'
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ dryer == ''Finished'' }}'
+      sequence:
+      - action: light.turn_on
+        target:
+          entity_id: light.koksbord_1_lampa
+        data:
+          brightness_pct: 100
+          rgb_color:
+          - 255
+          - 112
+          - 86
+    - conditions:
+      - condition: template
+        value_template: '{{ washer == ''Finished'' }}'
+      sequence:
+      - action: light.turn_on
+        target:
+          entity_id: light.koksbord_1_lampa
+        data:
+          brightness_pct: 100
+          rgb_color:
+          - 0
+          - 0
+          - 255
+    default:
+    - action: light.turn_off
+      target:
+        entity_id: light.koksbord_1_lampa
+  mode: restart
+- id: '1762984900797'
+  alias: Tvättmaskin – klar
+  description: Announcement direkt när washer_state blir Finished. Påminnelse efter
+    30 min om den fortfarande är Finished.
+  triggers:
+  - trigger: state
+    entity_id: input_select.washer_state
+    to: Finished
+    for: 00:00:02
+  conditions: []
+  actions:
+  - action: script.announce
+    data:
+      message: Tvättmaskin är klar.
+  - wait_for_trigger:
+    - trigger: state
+      entity_id: input_select.washer_state
+      from: Finished
+    timeout: 00:30:00
+    continue_on_timeout: true
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ wait.trigger is none }}'
+      sequence:
+      - action: notify.all_devices
+        data:
+          message: Tvättmaskinen är klar. Glöm inte att hänga tvätten!
+  mode: restart
+- id: '1762984987852'
+  alias: Torktumlare – klar
+  description: Announcement direkt när dryer_state blir Finished. Påminnelse efter
+    30 min om den fortfarande är Finished.
+  triggers:
+  - trigger: state
+    entity_id: input_select.dryer_state
+    to: Finished
+  conditions: []
+  actions:
+  - action: script.announce
+    data:
+      message: Torktumlaren är klar.
+  - wait_for_trigger:
+    - trigger: state
+      entity_id: input_select.dryer_state
+      from: Finished
+    timeout: 00:30:00
+    continue_on_timeout: true
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ wait.trigger is none }}'
+      sequence:
+      - action: notify.all_devices
+        data:
+          message: Torktumlaren är klar.
+  mode: restart
