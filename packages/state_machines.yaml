@@ -63,8 +63,6 @@ automation:
               - service: input_select.select_option
                 target: { entity_id: input_select.washer_state }
                 data: { option: "Finished" }
-              - service: script.announce
-                data: { message: "Tvättmaskinen är klar." }
     mode: single
 
   - id: washer_emptied
@@ -149,8 +147,6 @@ automation:
               - service: input_select.select_option
                 target: { entity_id: input_select.dryer_state }
                 data: { option: "Finished" }
-              - service: script.announce
-                data: { message: "Torktumlaren är klar." }
     mode: single
 
   - id: dryer_emptied
