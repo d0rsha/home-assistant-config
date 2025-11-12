@@ -96,15 +96,11 @@ tom_robban:
       minutes: 0
       seconds: 10
       milliseconds: 0
-  - action: tts.google_cloud_say
-    metadata: {}
+  - action: script.announce
     data:
-      cache: true
-      entity_id: media_player.kok
       message: Hej famlijen. Robban vill bli tömd hälsar Nabu
-      language: sv-SE
   alias: Töm robban
-  description: 'Robban går till position för att tömma behållare. '
+  description: 'Robban går till position för att tömma behållare.'
   icon: mdi:robot-vacuum-alert
 announce:
   alias: Announce message
