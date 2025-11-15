@@ -386,9 +386,6 @@
   - condition: state
     entity_id: input_boolean.ev_charger_request_sent
     state: 'off'
-  - condition: state
-    entity_id: input_boolean.ev_auto_charge_enabled
-    state: 'on'
   actions:
   - action: input_boolean.turn_on
     target:
