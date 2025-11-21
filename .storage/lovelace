@@ -16,6 +16,18 @@
               "show_name": true,
               "show_state": true,
               "show_icon": true,
+              "entity": "sensor.inomhustemp",
+              "name": {
+                "type": "entity"
+              },
+              "icon": "mdi:temperature-celsius",
+              "show_entity_picture": false
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
               "entity": "sensor.medeltemperatur_hela_huset_smoothed",
               "icon": "mdi:home-thermometer-outline"
             },

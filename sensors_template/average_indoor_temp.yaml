@@ -22,6 +22,41 @@ sensor:
   # ============================================================
 
   # ---------------------------------------------------------
+  # 🌡️ Inomhustemp
+  # ---------------------------------------------------------
+  - name: "Inomhustemp"
+    unique_id: inomhustemp
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    icon: mdi:home-floor-0
+    availability: >
+      {{ expand(
+          'sensor.sensor.lumi_lumi_sensor_ht_agl02_temperature',
+          'sensor.sensor.entre_hall_temperatur',
+          'sensor.mi_3_temperatur',
+          'sensor.lumi_lumi_sensor_ht_agl03_temperature_2',
+          'sensor.mi_4_temperatur'
+        )
+        | map(attribute='state')
+        | select('is_number')
+        | list
+        | count > 0 }}
+    state: >
+      {% set values = expand(
+          'sensor.sensor.lumi_lumi_sensor_ht_agl02_temperature',
+          'sensor.sensor.entre_hall_temperatur',
+          'sensor.mi_3_temperatur',
+          'sensor.lumi_lumi_sensor_ht_agl03_temperature_2',
+          'sensor.mi_4_temperatur'
+        )
+        | map(attribute='state')
+        | select('is_number')
+        | map('float')
+        | list %}
+      {{ ((values | sum) / (values | count)) | round(1) }}
+
+  # ---------------------------------------------------------
   # 🌡️ Medeltemperatur Golvvärme (snabb)
   # ---------------------------------------------------------
   - name: "Medeltemperatur golvvärme"
