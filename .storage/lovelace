@@ -3713,6 +3713,9 @@
                             },
                             {
                               "entity": "sensor.nibe_dt_bt2_bt3"
+                            },
+                            {
+                              "entity": "sensor.nibe_f1145_dm_start_heating"
                             }
                           ]
                         }
