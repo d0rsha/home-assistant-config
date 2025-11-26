@@ -47,21 +47,6 @@
           ],
           "cards": [
             {
-              "type": "conditional",
-              "conditions": [
-                {
-                  "condition": "state",
-                  "entity": "binary_sensor.backups_stale",
-                  "state_not": "off"
-                }
-              ],
-              "card": {
-                "type": "markdown",
-                "content": "Backups are stale! Please visit the \"Home Assistant Google Drive Backup\" add-on status page for details.",
-                "title": "Stale Backups!"
-              }
-            },
-            {
               "type": "picture-elements",
               "elements": [
                 {
