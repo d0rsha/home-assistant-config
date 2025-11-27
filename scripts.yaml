@@ -100,34 +100,35 @@ tom_robban:
     data:
       message: Hej famlijen. Robban vill bli tömd hälsar Nabu
   alias: Töm robban
-  description: 'Robban går till position för att tömma behållare.'
+  description: Robban går till position för att tömma behållare.
   icon: mdi:robot-vacuum-alert
 announce:
   alias: Announce message
-  description: Speak a short announcement via the HA Voice media player (with optional chime).
+  description: Speak a short announcement via the HA Voice media player (with optional
+    chime).
   fields:
     message:
       description: Text to announce
-      example: "Maten är klar!"
+      example: Maten är klar!
       required: true
     chime:
       description: Optional chime style (e.g., bright, soft, none)
-      example: "bright"
+      example: bright
       required: false
     volume:
       description: Playback volume (0.0–1.0)
       example: 1
       required: false
   sequence:
-    - action: chime_tts.say
-      target:
-        entity_id: media_player.home_assistant_voice_09517d_media_player
-      data:
-        message: "{{ message }}"
-        chime_path: "{{ chime | default('bright') }}"
-        language: sv
-        volume_level: "{{ volume | default(1) }}"
-        cache: true
+  - action: chime_tts.say
+    target:
+      entity_id: media_player.home_assistant_voice_09517d_media_player
+    data:
+      message: '{{ message }}'
+      chime_path: '{{ chime | default(''bright'') }}'
+      language: sv
+      volume_level: '{{ volume | default(1) }}'
+      cache: true
 chime:
   sequence:
   - variables:
@@ -168,693 +169,772 @@ chime:
   description: Announces a message through the kitchen media player and restores the
     last played radio afterward.
 nibepi_publish_discovery_temp:
-  alias: "Publish NibePi MQTT Discovery – Temperatures"
+  alias: Publish NibePi MQTT Discovery – Temperatures
   sequence:
-### 🌡️ TEMPERATURER ###
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/40004/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "BT1 Outdoor Temperature",
-            "uniq_id": "nibe_modbus_40004",
-            "device_class": "temperature",
-            "state_class": "measurement",
-            "unit_of_measurement": "°C",
-            "state_topic": "homeassistant/nibe/modbus/40004",
-            "json_attributes_topic": "homeassistant/nibe/modbus/40004/json",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/40008/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "BT2 Supply Temp S1",
-            "uniq_id": "nibe_modbus_40008",
-            "device_class": "temperature",
-            "state_class": "measurement",
-            "unit_of_measurement": "°C",
-            "state_topic": "homeassistant/nibe/modbus/40008",
-            "json_attributes_topic": "homeassistant/nibe/modbus/40008/json",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/40012/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "BT3 Return Temp",
-            "uniq_id": "nibe_modbus_40012",
-            "device_class": "temperature",
-            "state_class": "measurement",
-            "unit_of_measurement": "°C",
-            "state_topic": "homeassistant/nibe/modbus/40012",
-            "json_attributes_topic": "homeassistant/nibe/modbus/40012/json",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/40013/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "BT7 HW Top",
-            "uniq_id": "nibe_modbus_40013",
-            "device_class": "temperature",
-            "state_class": "measurement",
-            "unit_of_measurement": "°C",
-            "state_topic": "homeassistant/nibe/modbus/40013",
-            "json_attributes_topic": "homeassistant/nibe/modbus/40013/json",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/40014/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "BT6 HW Load",
-            "uniq_id": "nibe_modbus_40014",
-            "device_class": "temperature",
-            "state_class": "measurement",
-            "unit_of_measurement": "°C",
-            "state_topic": "homeassistant/nibe/modbus/40014",
-            "json_attributes_topic": "homeassistant/nibe/modbus/40014/json",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/40015/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "BT10 Brine In Temp",
-            "uniq_id": "nibe_modbus_40015",
-            "device_class": "temperature",
-            "state_class": "measurement",
-            "unit_of_measurement": "°C",
-            "state_topic": "homeassistant/nibe/modbus/40015",
-            "json_attributes_topic": "homeassistant/nibe/modbus/40015/json",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/40016/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "BT11 Brine Out Temp",
-            "uniq_id": "nibe_modbus_40016",
-            "device_class": "temperature",
-            "state_class": "measurement",
-            "unit_of_measurement": "°C",
-            "state_topic": "homeassistant/nibe/modbus/40016",
-            "json_attributes_topic": "homeassistant/nibe/modbus/40016/json",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/40017/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "BT12 Condensor Out",
-            "uniq_id": "nibe_modbus_40017",
-            "device_class": "temperature",
-            "state_class": "measurement",
-            "unit_of_measurement": "°C",
-            "state_topic": "homeassistant/nibe/modbus/40017",
-            "json_attributes_topic": "homeassistant/nibe/modbus/40017/json",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/40018/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "BT14 Hot Gas Temp",
-            "uniq_id": "nibe_modbus_40018",
-            "device_class": "temperature",
-            "state_class": "measurement",
-            "unit_of_measurement": "°C",
-            "state_topic": "homeassistant/nibe/modbus/40018",
-            "json_attributes_topic": "homeassistant/nibe/modbus/40018/json",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/40019/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "BT15 Liquid Line Temp",
-            "uniq_id": "nibe_modbus_40019",
-            "device_class": "temperature",
-            "state_class": "measurement",
-            "unit_of_measurement": "°C",
-            "state_topic": "homeassistant/nibe/modbus/40019",
-            "json_attributes_topic": "homeassistant/nibe/modbus/40019/json",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/40022/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "BT17 Suction Temp",
-            "uniq_id": "nibe_modbus_40022",
-            "device_class": "temperature",
-            "state_class": "measurement",
-            "unit_of_measurement": "°C",
-            "state_topic": "homeassistant/nibe/modbus/40022",
-            "json_attributes_topic": "homeassistant/nibe/modbus/40022/json",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/43009/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Calc. Supply S1",
-            "uniq_id": "nibe_modbus_43009",
-            "device_class": "temperature",
-            "state_class": "measurement",
-            "unit_of_measurement": "°C",
-            "state_topic": "homeassistant/nibe/modbus/43009",
-            "json_attributes_topic": "homeassistant/nibe/modbus/43009/json",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/43005/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name":"Degree Minutes (16 bit)",
-            "uniq_id":"nibe_modbus_43005",
-            "state_class":"measurement",
-            "unit_of_measurement":"DM",
-            "state_topic":"homeassistant/nibe/modbus/43005",
-            "json_attributes_topic":"homeassistant/nibe/modbus/43005/json",
-            "value_template":"{{ value | float(0) }}",
-            "device":{"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/47206/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "DM Start Heating",
-            "uniq_id": "nibe_modbus_47206",
-            "unit_of_measurement": "DM",
-            "state_topic": "homeassistant/nibe/modbus/47206",
-            "json_attributes_topic": "homeassistant/nibe/modbus/47206/json",
-            "value_template": "{{ value|float(0) }}",
-            "entity_category": "diagnostic",
-            "device": {
-              "identifiers": ["nibepi_modbus"],
-              "name": "Nibe F1145",
-              "manufacturer": "NIBE",
-              "model": "F1145"
-            }
-          }
-          {% endraw %}
-    - service: mqtt.publish
-      data:
-        topic: homeassistant/sensor/47046/config
-        retain: true
-        payload: >-
-          {% raw %}
-          {
-            "name": "Stop temperature Periodic HW",
-            "uniq_id": "nibe_modbus_47046",
-            "device_class": "temperature",
-            "state_class": "measurement",
-            "unit_of_measurement": "°C",
-            "state_topic": "homeassistant/nibe/modbus/47046",
-            "json_attributes_topic": "homeassistant/nibe/modbus/47046/json",
-            "entity_category": "diagnostic",
-            "value_template": "{{ value | float(0) }}",
-            "device": { "identifiers":["nibepi_modbus"], "name":"Nibe F1145", "manufacturer":"NIBE", "model":"F1145" }
-          }
-          {% endraw %}
-    - service: mqtt.publish
-      data:
-        topic: homeassistant/sensor/47047/config
-        retain: true
-        payload: >-
-          {% raw %}
-          {
-            "name": "Stop temperature HW Luxury",
-            "uniq_id": "nibe_modbus_47047",
-            "device_class": "temperature",
-            "state_class": "measurement",
-            "unit_of_measurement": "°C",
-            "state_topic": "homeassistant/nibe/modbus/47047",
-            "json_attributes_topic": "homeassistant/nibe/modbus/47047/json",
-            "entity_category": "diagnostic",
-            "value_template": "{{ value | float(0) }}",
-            "device": { "identifiers":["nibepi_modbus"], "name":"Nibe F1145", "manufacturer":"NIBE", "model":"F1145" }
-          }
-          {% endraw %}
-    - service: mqtt.publish
-      data:
-        topic: homeassistant/sensor/47048/config
-        retain: true
-        payload: >-
-          {% raw %}
-          {
-            "name": "Stop temperature HW Normal",
-            "uniq_id": "nibe_modbus_47048",
-            "device_class": "temperature",
-            "state_class": "measurement",
-            "unit_of_measurement": "°C",
-            "state_topic": "homeassistant/nibe/modbus/47048",
-            "json_attributes_topic": "homeassistant/nibe/modbus/47048/json",
-            "entity_category": "diagnostic",
-            "value_template": "{{ value | float(0) }}",
-            "device": { "identifiers":["nibepi_modbus"], "name":"Nibe F1145", "manufacturer":"NIBE", "model":"F1145" }
-          }
-          {% endraw %}
-    - service: mqtt.publish
-      data:
-        topic: homeassistant/sensor/47049/config
-        retain: true
-        payload: >-
-          {% raw %}
-          {
-            "name": "Stop temperature HW Economy",
-            "uniq_id": "nibe_modbus_47049",
-            "device_class": "temperature",
-            "state_class": "measurement",
-            "unit_of_measurement": "°C",
-            "state_topic": "homeassistant/nibe/modbus/47049",
-            "json_attributes_topic": "homeassistant/nibe/modbus/47049/json",
-            "entity_category": "diagnostic",
-            "value_template": "{{ value | float(0) }}",
-            "device": { "identifiers":["nibepi_modbus"], "name":"Nibe F1145", "manufacturer":"NIBE", "model":"F1145" }
-          }
-          {% endraw %}
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/40004/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"BT1 Outdoor Temperature\",\n  \"uniq_id\":
+        \"nibe_modbus_40004\",\n  \"device_class\": \"temperature\",\n  \"state_class\":
+        \"measurement\",\n  \"unit_of_measurement\": \"°C\",\n  \"state_topic\": \"homeassistant/nibe/modbus/40004\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/40004/json\",\n  \"device\":
+        {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
+        {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/40008/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"BT2 Supply Temp S1\",\n  \"uniq_id\": \"nibe_modbus_40008\",\n
+        \ \"device_class\": \"temperature\",\n  \"state_class\": \"measurement\",\n
+        \ \"unit_of_measurement\": \"°C\",\n  \"state_topic\": \"homeassistant/nibe/modbus/40008\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/40008/json\",\n  \"device\":
+        {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
+        {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/40012/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"BT3 Return Temp\",\n  \"uniq_id\": \"nibe_modbus_40012\",\n
+        \ \"device_class\": \"temperature\",\n  \"state_class\": \"measurement\",\n
+        \ \"unit_of_measurement\": \"°C\",\n  \"state_topic\": \"homeassistant/nibe/modbus/40012\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/40012/json\",\n  \"device\":
+        {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
+        {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/40013/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"BT7 HW Top\",\n  \"uniq_id\": \"nibe_modbus_40013\",\n
+        \ \"device_class\": \"temperature\",\n  \"state_class\": \"measurement\",\n
+        \ \"unit_of_measurement\": \"°C\",\n  \"state_topic\": \"homeassistant/nibe/modbus/40013\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/40013/json\",\n  \"device\":
+        {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
+        {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/40014/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"BT6 HW Load\",\n  \"uniq_id\": \"nibe_modbus_40014\",\n
+        \ \"device_class\": \"temperature\",\n  \"state_class\": \"measurement\",\n
+        \ \"unit_of_measurement\": \"°C\",\n  \"state_topic\": \"homeassistant/nibe/modbus/40014\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/40014/json\",\n  \"device\":
+        {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
+        {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/40015/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"BT10 Brine In Temp\",\n  \"uniq_id\": \"nibe_modbus_40015\",\n
+        \ \"device_class\": \"temperature\",\n  \"state_class\": \"measurement\",\n
+        \ \"unit_of_measurement\": \"°C\",\n  \"state_topic\": \"homeassistant/nibe/modbus/40015\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/40015/json\",\n  \"device\":
+        {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
+        {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/40016/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"BT11 Brine Out Temp\",\n  \"uniq_id\":
+        \"nibe_modbus_40016\",\n  \"device_class\": \"temperature\",\n  \"state_class\":
+        \"measurement\",\n  \"unit_of_measurement\": \"°C\",\n  \"state_topic\": \"homeassistant/nibe/modbus/40016\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/40016/json\",\n  \"device\":
+        {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
+        {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/40017/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"BT12 Condensor Out\",\n  \"uniq_id\": \"nibe_modbus_40017\",\n
+        \ \"device_class\": \"temperature\",\n  \"state_class\": \"measurement\",\n
+        \ \"unit_of_measurement\": \"°C\",\n  \"state_topic\": \"homeassistant/nibe/modbus/40017\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/40017/json\",\n  \"device\":
+        {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
+        {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/40018/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"BT14 Hot Gas Temp\",\n  \"uniq_id\": \"nibe_modbus_40018\",\n
+        \ \"device_class\": \"temperature\",\n  \"state_class\": \"measurement\",\n
+        \ \"unit_of_measurement\": \"°C\",\n  \"state_topic\": \"homeassistant/nibe/modbus/40018\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/40018/json\",\n  \"device\":
+        {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
+        {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/40019/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"BT15 Liquid Line Temp\",\n  \"uniq_id\":
+        \"nibe_modbus_40019\",\n  \"device_class\": \"temperature\",\n  \"state_class\":
+        \"measurement\",\n  \"unit_of_measurement\": \"°C\",\n  \"state_topic\": \"homeassistant/nibe/modbus/40019\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/40019/json\",\n  \"device\":
+        {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
+        {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/40022/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"BT17 Suction Temp\",\n  \"uniq_id\": \"nibe_modbus_40022\",\n
+        \ \"device_class\": \"temperature\",\n  \"state_class\": \"measurement\",\n
+        \ \"unit_of_measurement\": \"°C\",\n  \"state_topic\": \"homeassistant/nibe/modbus/40022\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/40022/json\",\n  \"device\":
+        {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
+        {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/43009/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Calc. Supply S1\",\n  \"uniq_id\": \"nibe_modbus_43009\",\n
+        \ \"device_class\": \"temperature\",\n  \"state_class\": \"measurement\",\n
+        \ \"unit_of_measurement\": \"°C\",\n  \"state_topic\": \"homeassistant/nibe/modbus/43009\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/43009/json\",\n  \"device\":
+        {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
+        {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/43005/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\":\"Degree Minutes (16 bit)\",\n  \"uniq_id\":\"nibe_modbus_43005\",\n
+        \ \"state_class\":\"measurement\",\n  \"unit_of_measurement\":\"DM\",\n  \"state_topic\":\"homeassistant/nibe/modbus/43005\",\n
+        \ \"json_attributes_topic\":\"homeassistant/nibe/modbus/43005/json\",\n  \"value_template\":\"{{
+        value | float(0) }}\",\n  \"device\":{\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/47206/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"DM Start Heating\",\n  \"uniq_id\": \"nibe_modbus_47206\",\n
+        \ \"unit_of_measurement\": \"DM\",\n  \"state_topic\": \"homeassistant/nibe/modbus/47206\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/47206/json\",\n  \"value_template\":
+        \"{{ value|float(0) }}\",\n  \"entity_category\": \"diagnostic\",\n  \"device\":
+        {\n    \"identifiers\": [\"nibepi_modbus\"],\n    \"name\": \"Nibe F1145\",\n
+        \   \"manufacturer\": \"NIBE\",\n    \"model\": \"F1145\"\n  }\n} {% endraw
+        %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/47046/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Stop temperature Periodic HW\",\n  \"uniq_id\":
+        \"nibe_modbus_47046\",\n  \"device_class\": \"temperature\",\n  \"state_class\":
+        \"measurement\",\n  \"unit_of_measurement\": \"°C\",\n  \"state_topic\": \"homeassistant/nibe/modbus/47046\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/47046/json\",\n  \"entity_category\":
+        \"diagnostic\",\n  \"value_template\": \"{{ value | float(0) }}\",\n  \"device\":
+        { \"identifiers\":[\"nibepi_modbus\"], \"name\":\"Nibe F1145\", \"manufacturer\":\"NIBE\",
+        \"model\":\"F1145\" }\n} {% endraw %}"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/47047/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Stop temperature HW Luxury\",\n  \"uniq_id\":
+        \"nibe_modbus_47047\",\n  \"device_class\": \"temperature\",\n  \"state_class\":
+        \"measurement\",\n  \"unit_of_measurement\": \"°C\",\n  \"state_topic\": \"homeassistant/nibe/modbus/47047\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/47047/json\",\n  \"entity_category\":
+        \"diagnostic\",\n  \"value_template\": \"{{ value | float(0) }}\",\n  \"device\":
+        { \"identifiers\":[\"nibepi_modbus\"], \"name\":\"Nibe F1145\", \"manufacturer\":\"NIBE\",
+        \"model\":\"F1145\" }\n} {% endraw %}"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/47048/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Stop temperature HW Normal\",\n  \"uniq_id\":
+        \"nibe_modbus_47048\",\n  \"device_class\": \"temperature\",\n  \"state_class\":
+        \"measurement\",\n  \"unit_of_measurement\": \"°C\",\n  \"state_topic\": \"homeassistant/nibe/modbus/47048\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/47048/json\",\n  \"entity_category\":
+        \"diagnostic\",\n  \"value_template\": \"{{ value | float(0) }}\",\n  \"device\":
+        { \"identifiers\":[\"nibepi_modbus\"], \"name\":\"Nibe F1145\", \"manufacturer\":\"NIBE\",
+        \"model\":\"F1145\" }\n} {% endraw %}"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/47049/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Stop temperature HW Economy\",\n  \"uniq_id\":
+        \"nibe_modbus_47049\",\n  \"device_class\": \"temperature\",\n  \"state_class\":
+        \"measurement\",\n  \"unit_of_measurement\": \"°C\",\n  \"state_topic\": \"homeassistant/nibe/modbus/47049\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/47049/json\",\n  \"entity_category\":
+        \"diagnostic\",\n  \"value_template\": \"{{ value | float(0) }}\",\n  \"device\":
+        { \"identifiers\":[\"nibepi_modbus\"], \"name\":\"Nibe F1145\", \"manufacturer\":\"NIBE\",
+        \"model\":\"F1145\" }\n} {% endraw %}"
 nibepi_publish_discovery_enums:
-  alias: "Publish NibePi MQTT Discovery – Enums & Status"
+  alias: Publish NibePi MQTT Discovery – Enums & Status
   sequence:
-### ⚙️ ENUMS & STATUS ###
-    # --- Heat Curve S1 ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/47007/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Heat Curve S1",
-            "uniq_id": "nibe_modbus_47007",
-            "state_topic": "homeassistant/nibe/modbus/47007",
-            "json_attributes_topic": "homeassistant/nibe/modbus/47007/json",
-            "entity_category": "diagnostic",
-            "state_class": "measurement",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- Heat Offset S1 ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/47011/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Heat Offset S1",
-            "uniq_id": "nibe_modbus_47011",
-            "state_topic": "homeassistant/nibe/modbus/47011",
-            "json_attributes_topic": "homeassistant/nibe/modbus/47011/json",
-            "entity_category": "diagnostic",
-            "state_class": "measurement",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- Hot Water Comfort Mode ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/47041/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Hot Water Comfort Mode",
-            "uniq_id": "nibe_modbus_47041",
-            "state_topic": "homeassistant/nibe/modbus/47041",
-            "json_attributes_topic": "homeassistant/nibe/modbus/47041/json",
-            "value_template": "{% set m={0:'Economy',1:'Normal',2:'Luxury',4:'Smart Control'} %}{{ m.get((value|default('')|int(0)), value) }}",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- Temporary Lux ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/48132/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Temporary Lux",
-            "uniq_id": "nibe_modbus_48132",
-            "state_topic": "homeassistant/nibe/modbus/48132",
-            "json_attributes_topic": "homeassistant/nibe/modbus/48132/json",
-            "value_template": "{% set m={0:'Off',1:'3h',2:'6h',3:'12h',4:'One time increase'} %}{{ m.get((value|default('')|int(0)), value) }}",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- Priority ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/43086/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Priority",
-            "uniq_id": "nibe_modbus_43086",
-            "state_topic": "homeassistant/nibe/modbus/43086",
-            "json_attributes_topic": "homeassistant/nibe/modbus/43086/json",
-            "value_template": "{% set m={10:'Off',20:'Hot Water',30:'Heat',40:'Pool',41:'Pool 2',50:'Transfer',60:'Cooling'} %}{{ m.get((value|default('')|int(0)), value) }}",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- Preset Flow Climate System ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/47442/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Preset Flow Climate System",
-            "uniq_id": "nibe_modbus_47442",
-            "state_topic": "homeassistant/nibe/modbus/47442",
-            "json_attributes_topic": "homeassistant/nibe/modbus/47442/json",
-            "entity_category": "diagnostic",
-            "value_template": "{% set m={0:'Manual',1:'Radiator',2:'Floor Heating',3:'Radiator + Floor Heating'} %}{{ m.get((value|default('')|int(0)), value) }}",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- Compressor State ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/43427/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Compressor State EP14",
-            "uniq_id": "nibe_modbus_43427",
-            "state_topic": "homeassistant/nibe/modbus/43427",
-            "json_attributes_topic": "homeassistant/nibe/modbus/43427/json",
-            "entity_category": "diagnostic",
-            "value_template": "{% set m={20:'Stopped',40:'Starting',60:'Running',100:'Stopping'} %}{{ m.get((value|default('')|int(0)), value) }}",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- Supply Pump State ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/43431/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Supply Pump State EP14",
-            "uniq_id": "nibe_modbus_43431",
-            "state_topic": "homeassistant/nibe/modbus/43431",
-            "json_attributes_topic": "homeassistant/nibe/modbus/43431/json",
-            "entity_category": "diagnostic",
-            "value_template": "{% set m={10:'Off',15:'Starting',20:'On',40:'10-day Mode',80:'Calibration'} %}{{ m.get((value|default('')|int(0)), value) }}",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- Brine Pump State ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/43433/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Brine Pump State EP14",
-            "uniq_id": "nibe_modbus_43433",
-            "state_topic": "homeassistant/nibe/modbus/43433",
-            "json_attributes_topic": "homeassistant/nibe/modbus/43433/json",
-            "entity_category": "diagnostic",
-            "value_template": "{% set m={10:'Off',15:'Starting',20:'On',40:'10-day Mode',80:'Calibration'} %}{{ m.get((value|default('')|int(0)), value) }}",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- Alarm Code ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/45001/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Alarm Code",
-            "uniq_id": "nibe_modbus_45001",
-            "state_topic": "homeassistant/nibe/modbus/45001",
-            "json_attributes_topic": "homeassistant/nibe/modbus/45001/json",
-            "entity_category": "diagnostic",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/47007/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Heat Curve S1\",\n  \"uniq_id\": \"nibe_modbus_47007\",\n
+        \ \"state_topic\": \"homeassistant/nibe/modbus/47007\",\n  \"json_attributes_topic\":
+        \"homeassistant/nibe/modbus/47007/json\",\n  \"entity_category\": \"diagnostic\",\n
+        \ \"state_class\": \"measurement\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/47011/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Heat Offset S1\",\n  \"uniq_id\": \"nibe_modbus_47011\",\n
+        \ \"state_topic\": \"homeassistant/nibe/modbus/47011\",\n  \"json_attributes_topic\":
+        \"homeassistant/nibe/modbus/47011/json\",\n  \"entity_category\": \"diagnostic\",\n
+        \ \"state_class\": \"measurement\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/47041/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Hot Water Comfort Mode\",\n  \"uniq_id\":
+        \"nibe_modbus_47041\",\n  \"state_topic\": \"homeassistant/nibe/modbus/47041\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/47041/json\",\n  \"value_template\":
+        \"{% set m={0:'Economy',1:'Normal',2:'Luxury',4:'Smart Control'} %}{{ m.get((value|default('')|int(0)),
+        value) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/48132/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Temporary Lux\",\n  \"uniq_id\": \"nibe_modbus_48132\",\n
+        \ \"state_topic\": \"homeassistant/nibe/modbus/48132\",\n  \"json_attributes_topic\":
+        \"homeassistant/nibe/modbus/48132/json\",\n  \"value_template\": \"{% set
+        m={0:'Off',1:'3h',2:'6h',3:'12h',4:'One time increase'} %}{{ m.get((value|default('')|int(0)),
+        value) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/43086/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Priority\",\n  \"uniq_id\": \"nibe_modbus_43086\",\n
+        \ \"state_topic\": \"homeassistant/nibe/modbus/43086\",\n  \"json_attributes_topic\":
+        \"homeassistant/nibe/modbus/43086/json\",\n  \"value_template\": \"{% set
+        m={10:'Off',20:'Hot Water',30:'Heat',40:'Pool',41:'Pool 2',50:'Transfer',60:'Cooling'}
+        %}{{ m.get((value|default('')|int(0)), value) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/47442/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Preset Flow Climate System\",\n  \"uniq_id\":
+        \"nibe_modbus_47442\",\n  \"state_topic\": \"homeassistant/nibe/modbus/47442\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/47442/json\",\n  \"entity_category\":
+        \"diagnostic\",\n  \"value_template\": \"{% set m={0:'Manual',1:'Radiator',2:'Floor
+        Heating',3:'Radiator + Floor Heating'} %}{{ m.get((value|default('')|int(0)),
+        value) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/43427/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Compressor State EP14\",\n  \"uniq_id\":
+        \"nibe_modbus_43427\",\n  \"state_topic\": \"homeassistant/nibe/modbus/43427\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/43427/json\",\n  \"entity_category\":
+        \"diagnostic\",\n  \"value_template\": \"{% set m={20:'Stopped',40:'Starting',60:'Running',100:'Stopping'}
+        %}{{ m.get((value|default('')|int(0)), value) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/43431/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Supply Pump State EP14\",\n  \"uniq_id\":
+        \"nibe_modbus_43431\",\n  \"state_topic\": \"homeassistant/nibe/modbus/43431\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/43431/json\",\n  \"entity_category\":
+        \"diagnostic\",\n  \"value_template\": \"{% set m={10:'Off',15:'Starting',20:'On',40:'10-day
+        Mode',80:'Calibration'} %}{{ m.get((value|default('')|int(0)), value) }}\",\n
+        \ \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
+        {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/43433/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Brine Pump State EP14\",\n  \"uniq_id\":
+        \"nibe_modbus_43433\",\n  \"state_topic\": \"homeassistant/nibe/modbus/43433\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/43433/json\",\n  \"entity_category\":
+        \"diagnostic\",\n  \"value_template\": \"{% set m={10:'Off',15:'Starting',20:'On',40:'10-day
+        Mode',80:'Calibration'} %}{{ m.get((value|default('')|int(0)), value) }}\",\n
+        \ \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
+        {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/45001/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Alarm Code\",\n  \"uniq_id\": \"nibe_modbus_45001\",\n
+        \ \"state_topic\": \"homeassistant/nibe/modbus/45001\",\n  \"json_attributes_topic\":
+        \"homeassistant/nibe/modbus/45001/json\",\n  \"entity_category\": \"diagnostic\",\n
+        \ \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
+        {% endraw %}\n"
 nibepi_publish_discovery_power:
-  alias: "Publish NibePi MQTT Discovery – Power & Current"
+  alias: Publish NibePi MQTT Discovery – Power & Current
   sequence:
-### ⚡ POWER & CURRENT ###
-    # --- Internal Electric Add Power ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/43084/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Internal Electric Add Power",
-            "uniq_id": "nibe_modbus_43084",
-            "device_class": "power",
-            "state_class": "measurement",
-            "unit_of_measurement": "kW",
-            "state_topic": "homeassistant/nibe/modbus/43084",
-            "json_attributes_topic": "homeassistant/nibe/modbus/43084/json",
-            "value_template": "{{ value|float(0) }}",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- L1 Current ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/40083/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "EB100-BE1 Current L1",
-            "uniq_id": "nibe_modbus_40083",
-            "device_class": "current",
-            "state_class": "measurement",
-            "unit_of_measurement": "A",
-            "state_topic": "homeassistant/nibe/modbus/40083",
-            "json_attributes_topic": "homeassistant/nibe/modbus/40083/json",
-            "value_template": "{{ value|float(0) }}",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- L2 Current ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/40081/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "EB100-BE2 Current L2",
-            "uniq_id": "nibe_modbus_40081",
-            "device_class": "current",
-            "state_class": "measurement",
-            "unit_of_measurement": "A",
-            "state_topic": "homeassistant/nibe/modbus/40081",
-            "json_attributes_topic": "homeassistant/nibe/modbus/40081/json",
-            "value_template": "{{ value|float(0) }}",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- L3 Current ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/40079/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "EB100-BE3 Current L3",
-            "uniq_id": "nibe_modbus_40079",
-            "device_class": "current",
-            "state_class": "measurement",
-            "unit_of_measurement": "A",
-            "state_topic": "homeassistant/nibe/modbus/40079",
-            "json_attributes_topic": "homeassistant/nibe/modbus/40079/json",
-            "value_template": "{{ value|float(0) }}",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- Supply Pump Speed ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/43437/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Supply Pump Speed",
-            "uniq_id": "nibe_modbus_43437",
-            "state_class": "measurement",
-            "unit_of_measurement": "%",
-            "state_topic": "homeassistant/nibe/modbus/43437",
-            "json_attributes_topic": "homeassistant/nibe/modbus/43437/json",
-            "value_template": "{{ value|float(0) }}",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- Brine Pump Speed ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/47418/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Brine Pump Speed",
-            "uniq_id": "nibe_modbus_47418",
-            "state_class": "measurement",
-            "unit_of_measurement": "%",
-            "state_topic": "homeassistant/nibe/modbus/47418",
-            "json_attributes_topic": "homeassistant/nibe/modbus/47418/json",
-            "value_template": "{{ value|float(0) }}",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- Brine Pump Status ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/43439/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Brine Pump Status",
-            "uniq_id": "nibe_modbus_43439",
-            "state_class": "measurement",
-            "unit_of_measurement": "%",
-            "state_topic": "homeassistant/nibe/modbus/43439",
-            "json_attributes_topic": "homeassistant/nibe/modbus/43439/json",
-            "value_template": "{{ value|float(0) }}",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- Speed Circ. Pump HW ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/47413/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Speed Circ. Pump HW",
-            "uniq_id": "nibe_modbus_47413",
-            "state_class": "measurement",
-            "unit_of_measurement": "%",
-            "state_topic": "homeassistant/nibe/modbus/47413",
-            "json_attributes_topic": "homeassistant/nibe/modbus/47413/json",
-            "value_template": "{{ value|float(0) }}",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
-
-    # --- Speed Circ. Pump Heat ---
-    - service: mqtt.publish
-      data:
-        topic: "homeassistant/sensor/47414/config"
-        retain: true
-        payload: >
-          {% raw %}
-          {
-            "name": "Speed Circ. Pump Heat",
-            "uniq_id": "nibe_modbus_47414",
-            "state_class": "measurement",
-            "unit_of_measurement": "%",
-            "state_topic": "homeassistant/nibe/modbus/47414",
-            "json_attributes_topic": "homeassistant/nibe/modbus/47414/json",
-            "value_template": "{{ value|float(0) }}",
-            "device": {"identifiers":["nibepi_modbus"],"name":"Nibe F1145","manufacturer":"NIBE","model":"F1145"}
-          }
-          {% endraw %}
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/43084/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Internal Electric Add Power\",\n  \"uniq_id\":
+        \"nibe_modbus_43084\",\n  \"device_class\": \"power\",\n  \"state_class\":
+        \"measurement\",\n  \"unit_of_measurement\": \"kW\",\n  \"state_topic\": \"homeassistant/nibe/modbus/43084\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/43084/json\",\n  \"value_template\":
+        \"{{ value|float(0) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/40083/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"EB100-BE1 Current L1\",\n  \"uniq_id\":
+        \"nibe_modbus_40083\",\n  \"device_class\": \"current\",\n  \"state_class\":
+        \"measurement\",\n  \"unit_of_measurement\": \"A\",\n  \"state_topic\": \"homeassistant/nibe/modbus/40083\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/40083/json\",\n  \"value_template\":
+        \"{{ value|float(0) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/40081/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"EB100-BE2 Current L2\",\n  \"uniq_id\":
+        \"nibe_modbus_40081\",\n  \"device_class\": \"current\",\n  \"state_class\":
+        \"measurement\",\n  \"unit_of_measurement\": \"A\",\n  \"state_topic\": \"homeassistant/nibe/modbus/40081\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/40081/json\",\n  \"value_template\":
+        \"{{ value|float(0) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/40079/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"EB100-BE3 Current L3\",\n  \"uniq_id\":
+        \"nibe_modbus_40079\",\n  \"device_class\": \"current\",\n  \"state_class\":
+        \"measurement\",\n  \"unit_of_measurement\": \"A\",\n  \"state_topic\": \"homeassistant/nibe/modbus/40079\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/40079/json\",\n  \"value_template\":
+        \"{{ value|float(0) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/43437/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Supply Pump Speed\",\n  \"uniq_id\": \"nibe_modbus_43437\",\n
+        \ \"state_class\": \"measurement\",\n  \"unit_of_measurement\": \"%\",\n  \"state_topic\":
+        \"homeassistant/nibe/modbus/43437\",\n  \"json_attributes_topic\": \"homeassistant/nibe/modbus/43437/json\",\n
+        \ \"value_template\": \"{{ value|float(0) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/47418/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Brine Pump Speed\",\n  \"uniq_id\": \"nibe_modbus_47418\",\n
+        \ \"state_class\": \"measurement\",\n  \"unit_of_measurement\": \"%\",\n  \"state_topic\":
+        \"homeassistant/nibe/modbus/47418\",\n  \"json_attributes_topic\": \"homeassistant/nibe/modbus/47418/json\",\n
+        \ \"value_template\": \"{{ value|float(0) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/43439/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Brine Pump Status\",\n  \"uniq_id\": \"nibe_modbus_43439\",\n
+        \ \"state_class\": \"measurement\",\n  \"unit_of_measurement\": \"%\",\n  \"state_topic\":
+        \"homeassistant/nibe/modbus/43439\",\n  \"json_attributes_topic\": \"homeassistant/nibe/modbus/43439/json\",\n
+        \ \"value_template\": \"{{ value|float(0) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/47413/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Speed Circ. Pump HW\",\n  \"uniq_id\":
+        \"nibe_modbus_47413\",\n  \"state_class\": \"measurement\",\n  \"unit_of_measurement\":
+        \"%\",\n  \"state_topic\": \"homeassistant/nibe/modbus/47413\",\n  \"json_attributes_topic\":
+        \"homeassistant/nibe/modbus/47413/json\",\n  \"value_template\": \"{{ value|float(0)
+        }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
+  - service: mqtt.publish
+    data:
+      topic: homeassistant/sensor/47414/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Speed Circ. Pump Heat\",\n  \"uniq_id\":
+        \"nibe_modbus_47414\",\n  \"state_class\": \"measurement\",\n  \"unit_of_measurement\":
+        \"%\",\n  \"state_topic\": \"homeassistant/nibe/modbus/47414\",\n  \"json_attributes_topic\":
+        \"homeassistant/nibe/modbus/47414/json\",\n  \"value_template\": \"{{ value|float(0)
+        }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}"
+nibe_oversatt_larmkod_2:
+  alias: Nibe – översätt larmkod
+  description: Returnerar titel, beskrivning och severity för en Nibe-larmkod.
+  mode: single
+  fields:
+    alarm_code:
+      description: Larmkod från Nibe (t.ex. 55)
+      example: 55
+      required: true
+  sequence:
+  - variables:
+      alarms:
+        '1':
+          title: Sensor fault BT1
+          description: Sensor not connected/defective. Calculated flow temperature
+            is set to minimum calculated flow temperature.
+          severity: critical
+        '2':
+          title: Sensor fault BT2
+          description: Sensor not connected/defective (heating medium return). Addition
+            blocked. GM is calculated with 'condenser out' sensor; heating blocked
+            if this is also missing.
+          severity: critical
+        '3':
+          title: Sensor fault BT3
+          description: Sensor not connected/defective (heating medium return). Compressor
+            blocked during hot water loading.
+          severity: critical
+        '6':
+          title: Sensor fault BT6
+          description: Sensor not connected/defective (hot water controlling). Automatic
+            reset.
+          severity: warning
+        '7':
+          title: Sensor fault BT7
+          description: Sensor not connected/defective (hot water peak). Automatic
+            reset.
+          severity: warning
+        '10':
+          title: Sensor fault BT10
+          description: Sensor not connected/defective (brine in). Brine pump GP2 switches
+            to manual speed if auto-control is selected. Automatic reset after 60
+            s normal operation.
+          severity: warning
+        '11':
+          title: Sensor fault BT11
+          description: Sensor not connected/defective (condenser out). Compressor
+            blocked.
+          severity: critical
+        '12':
+          title: Sensor fault BT12
+          description: 'Sensor not connected/defective (condenser return). BT2 is
+            used for max condenser out control; if BT2 also missing: heating mode
+            and compressor in HW mode are blocked.'
+          severity: critical
+        '16':
+          title: Sensor fault BT16
+          description: Sensor not connected/defective (evaporator). Automatic reset.
+          severity: warning
+        '20':
+          title: Sensor fault BT20 (exhaust air)
+          description: 'Sensor not connected/defective (exhaust air). For ground source:
+            FLM pump blocked. For exhaust air: automatic reset.'
+          severity: warning
+        '21':
+          title: Sensor fault BT21 (extract air)
+          description: 'Sensor not connected/defective (extract air). For ground source:
+            FLM pump blocked. For exhaust air: automatic reset.'
+          severity: warning
+        '25':
+          title: Sensor fault BT25
+          description: Sensor not connected/defective (external heating medium return).
+            External addition blocked.
+          severity: warning
+        '26':
+          title: Sensor fault BT26
+          description: Sensor not connected/defective (brine, collector in). FLM pump
+            blocked.
+          severity: warning
+        '27':
+          title: Sensor fault BP8
+          description: Sensor not connected/defective (low pressure sensor). Compressor
+            blocked.
+          severity: critical
+        '28':
+          title: Sensor fault BT71
+          description: 'Sensor not connected/defective (external heating medium return).
+            Together with alarm 25: heating is blocked.'
+          severity: warning
+        '29':
+          title: Sensor fault BT29
+          description: Sensor not connected/defective (compressor oil temperature).
+            Compressor blocked.
+          severity: critical
+        '31':
+          title: Sensor fault BT63
+          description: Sensor not connected/defective (heating medium supply after
+            immersion heater). Internal electric addition blocked. Automatic reset.
+          severity: warning
+        '32':
+          title: Sensor fault BS1
+          description: Air flow is out of range of the air velocity sensor. Compressor
+            blocked; automatic reset.
+          severity: warning
+        '40':
+          title: Compressor phase 1 missing
+          description: Compressor phase missing or below 160 V for more than 30 minutes.
+            Compressor blocked.
+          severity: critical
+        '41':
+          title: Compressor phase 2 missing
+          description: Compressor phase missing or below 160 V for more than 30 minutes.
+            Compressor blocked.
+          severity: critical
+        '42':
+          title: Compressor phase 3 missing
+          description: Compressor phase missing or below 160 V for more than 30 minutes.
+            Compressor blocked.
+          severity: critical
+        '43':
+          title: Faulty phase sequence
+          description: Phases are connected in wrong sequence. Compressor blocked.
+          severity: critical
+        '44':
+          title: Overheated softstart
+          description: Fuses for the soft start card defective. Compressor blocked.
+          severity: critical
+        '45':
+          title: Phase fault
+          description: Motor protection on single phase (e.g. Norway) probably triggered.
+          severity: critical
+        '50':
+          title: High pressure alarm
+          description: High pressure switch has triggered repeatedly. Compressor blocked.
+            Manual reset required.
+          severity: critical
+        '54':
+          title: Motor protection alarm
+          description: Motor protection breaker has triggered.
+          severity: critical
+        '55':
+          title: Hot gas alarm
+          description: Compressor stopped due to too high hot gas temperature. Compressor
+            blocked. Manual reset required.
+          severity: critical
+        '58':
+          title: Pressure switch
+          description: High or low pressure switch has triggered. Compressor blocked.
+          severity: critical
+        '60':
+          title: Low HTF out
+          description: Outgoing brine below configured minimum temperature. Compressor
+            blocked.
+          severity: critical
+        '63':
+          title: Low air flow
+          description: Too low air flow at air flow sensor BS1. Compressor blocked.
+          severity: critical
+        '64':
+          title: Low exhaust air temperature
+          description: Exhaust air temperature below 16°C and not above 17°C within
+            60 minutes. Compressor blocked; auto reset after exhaust air >17°C for
+            60 minutes.
+          severity: warning
+        '65':
+          title: High condensation water level (external)
+          description: Alarm from external level monitor. Compressor blocked.
+          severity: critical
+        '66':
+          title: High condensation water level (internal)
+          description: Alarm from level monitor in condensation water container. Compressor
+            blocked.
+          severity: critical
+        '67':
+          title: Antifreeze protection supply air
+          description: Supply air temperature below 5°C. Fans stop and compressor
+            blocked; immersion heater block lifted.
+          severity: critical
+        '70':
+          title: Perm. com. error input card
+          description: No communication with input card. Calculated flow set to minimum;
+            manual reset required.
+          severity: critical
+        '71':
+          title: Perm. com. error base card
+          description: No communication with base card. Compressor blocked; manual
+            reset required.
+          severity: critical
+        '72':
+          title: Perm. com. error softstart card
+          description: No communication with softstart card. Compressor blocked.
+          severity: critical
+        '75':
+          title: Perm. com. error base card
+          description: No communication with base card AA26. Compressor blocked; manual
+            reset required.
+          severity: critical
+        '83':
+          title: Unsuccessful defrosting
+          description: Defrost stop conditions not met (F750/F110). Defrost discontinued;
+            compressor and immersion heater stopped.
+          severity: warning
+        '100':
+          title: Perm. com. error inverter
+          description: Permanent communication fault with inverter. Compressor blocked.
+          severity: critical
+        '140':
+          title: Compressor phase 1 missing (temporary)
+          description: Phase 1 briefly missing.
+          severity: warning
+        '141':
+          title: Compressor phase 2 missing (temporary)
+          description: Phase 2 briefly missing.
+          severity: warning
+        '142':
+          title: Compressor phase 3 missing (temporary)
+          description: Phase 3 briefly missing.
+          severity: warning
+        '150':
+          title: High condenser out
+          description: Condenser out has reached max permitted temperature. Automatic
+            reset.
+          severity: warning
+        '155':
+          title: Hot gas alarm (temporary)
+          description: Hot gas temperature (BT14) temporarily above 135°C. Compressor
+            stopped; auto reset when below 90°C.
+          severity: warning
+        '160':
+          title: Low HTF out (temporary)
+          description: Brine out has reached set minimum temperature. Automatic reset.
+          severity: warning
+        '161':
+          title: High HTF in
+          description: Brine in has reached set maximum temperature. Automatic reset.
+          severity: warning
+        '162':
+          title: High condenser out (temporary)
+          description: Condenser out has reached max permitted temperature. Automatic
+            reset.
+          severity: warning
+        '163':
+          title: High condenser in
+          description: Condenser exceeds max temperature.
+          severity: warning
+        '170':
+          title: Com. error input card
+          description: Temporary communication error with input card.
+          severity: warning
+        '171':
+          title: Com. error base card
+          description: Temporary communication error with base card.
+          severity: warning
+        '172':
+          title: Com. error softstart card
+          description: Temporary communication error with softstart card.
+          severity: warning
+        '180':
+          title: Freeze protection active
+          description: Outdoor temperature below 3°C while heating not permitted;
+            freeze protection allows room heating.
+          severity: info
+        '181':
+          title: Failed periodic increase
+          description: Periodic increase did not reach stop temperature within 5 hours.
+          severity: warning
+        '182':
+          title: Load monitor activated
+          description: One or more power steps cannot be activated because phase current
+            too high.
+          severity: warning
+        '183':
+          title: Defrosting
+          description: Defrost in progress.
+          severity: info
+        '184':
+          title: Filter alarm
+          description: Air filter needs cleaning.
+          severity: info
+        '185':
+          title: Anti-freeze supply air
+          description: Supply air (BT22) or return from heating battery (BT69) below
+            5°C. Fans stopped, compressor blocked; immersion heater block lifted.
+          severity: critical
+        '255':
+          title: Motor protection alarm, brine pump
+          description: Motor protection on brine pump triggered. Current compressor
+            blocked; automatic reset.
+          severity: critical
+        '261':
+          title: 'Heat pump alarm: temperature deviation'
+          description: Temperature deviation on heat exchanger sensor 5 times within
+            60 minutes or continuously for 60 minutes. Compressor blocked.
+          severity: critical
+        '262':
+          title: 'Heat pump alarm: overheat power transistor'
+          description: Overheated power transistor in inverter. Compressor blocked.
+          severity: critical
+        '263':
+          title: 'Heat pump alarm: incorrect inverter voltage'
+          description: Incorrect voltage out from inverter. Compressor blocked.
+          severity: critical
+        '264':
+          title: 'Heat pump alarm: inverter communication'
+          description: Communication between inverter circuit board and control card
+            interrupted. Compressor blocked.
+          severity: critical
+        '265':
+          title: 'Heat pump alarm: power transistor error'
+          description: Continuous error on power transistor for 15 minutes. Compressor
+            blocked.
+          severity: critical
+        '266':
+          title: 'Heat pump alarm: low refrigerant amount'
+          description: Low refrigerant amount detected. Compressor blocked.
+          severity: critical
+        '290':
+          title: Fan alarm
+          description: Tachometer signal from fan indicates zero speed. Compressor,
+            immersion heater and defrost stopped.
+          severity: critical
+        '291':
+          title: Charge pump alarm
+          description: Tachometer signal from charge pump indicates zero speed. Compressor,
+            immersion heater and defrost stopped.
+          severity: critical
+        '340':
+          title: Anti-freeze supply air
+          description: Supply air temperature (BT22) below 11°C. HW load blocked;
+            auto reset when supply air >16°C.
+          severity: warning
+        '351':
+          title: Uncertain sensor accuracy (BT10/BT11)
+          description: More than 2 K difference between brine sensors BT10 and BT11
+            at calibration. GP2 switches to manual speed.
+          severity: warning
+        '352':
+          title: Uncertain sensor accuracy (BT2/BT3)
+          description: More than 2 K difference between HM sensors BT2 and BT3 at
+            calibration. GP1 switches to manual speed.
+          severity: warning
+        '353':
+          title: Uncertain sensor accuracy (BT3/BT12)
+          description: More than 2 K difference between HM sensors BT3 and BT12 at
+            calibration. GP1 switches to manual speed.
+          severity: warning
+        '356':
+          title: Failed sensor calibration
+          description: Calibration difference more than 2 K between BT3 and BT63.
+            GP1 switches to manual operation.
+          severity: warning
+        '403':
+          title: Sensor fault on EB101
+          description: Sensor fault detected on EB101 (MHI-EMMY). Compressor blocked;
+            GP12/GP1 may switch to manual speed.
+          severity: critical
+        '404':
+          title: Sensor fault on EB101
+          description: Sensor fault detected on EB101 (MHI-EMMY). Compressor blocked.
+          severity: critical
+        '412':
+          title: Sensor fault on EB101-BT12
+          description: Sensor fault detected on EB101-BT12. Compressor blocked; pumps
+            may switch to manual speed.
+          severity: critical
+        '415':
+          title: Sensor fault on EB101-BT15
+          description: Sensor fault detected on EB101-BT15. Compressor blocked.
+          severity: critical
+        '995':
+          title: External alarm
+          description: Alarm according to configuration on AUX input. Auto reset when
+            contact closes.
+          severity: warning
+        '996':
+          title: Blocked external addition
+          description: External additional heat blocked via AUX input. Auto reset
+            when contact closes.
+          severity: info
+        '997':
+          title: Blocked external compressor
+          description: External compressor block via AUX input. Auto reset when contact
+            closes; compressor blocked while active.
+          severity: warning
+      code: '{{ alarm_code | int }}'
+      result: "{{ alarms.get(\n  code,\n  {\n    'title': 'Unknown alarm code',\n
+        \   'description': 'No description available for code ' ~ code,\n    'severity':
+        'unknown'\n  }\n) }}\n"
+  - stop: Result
+    response_variable: result
