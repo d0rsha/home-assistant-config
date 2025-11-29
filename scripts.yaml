@@ -358,8 +358,7 @@ nibepi_publish_discovery_temp:
 nibepi_publish_discovery_enums:
   alias: Publish NibePi MQTT Discovery – Enums & Status
   sequence:
-  - service: mqtt.publish
-    data:
+  - data:
       topic: homeassistant/sensor/47007/config
       retain: true
       payload: "{% raw %} {\n  \"name\": \"Heat Curve S1\",\n  \"uniq_id\": \"nibe_modbus_47007\",\n
@@ -367,8 +366,8 @@ nibepi_publish_discovery_enums:
         \"homeassistant/nibe/modbus/47007/json\",\n  \"entity_category\": \"diagnostic\",\n
         \ \"state_class\": \"measurement\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
         F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
-  - service: mqtt.publish
-    data:
+    action: mqtt.publish
+  - data:
       topic: homeassistant/sensor/47011/config
       retain: true
       payload: "{% raw %} {\n  \"name\": \"Heat Offset S1\",\n  \"uniq_id\": \"nibe_modbus_47011\",\n
@@ -376,8 +375,8 @@ nibepi_publish_discovery_enums:
         \"homeassistant/nibe/modbus/47011/json\",\n  \"entity_category\": \"diagnostic\",\n
         \ \"state_class\": \"measurement\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
         F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
-  - service: mqtt.publish
-    data:
+    action: mqtt.publish
+  - data:
       topic: homeassistant/sensor/47041/config
       retain: true
       payload: "{% raw %} {\n  \"name\": \"Hot Water Comfort Mode\",\n  \"uniq_id\":
@@ -386,8 +385,8 @@ nibepi_publish_discovery_enums:
         \"{% set m={0:'Economy',1:'Normal',2:'Luxury',4:'Smart Control'} %}{{ m.get((value|default('')|int(0)),
         value) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
         F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
-  - service: mqtt.publish
-    data:
+    action: mqtt.publish
+  - data:
       topic: homeassistant/sensor/48132/config
       retain: true
       payload: "{% raw %} {\n  \"name\": \"Temporary Lux\",\n  \"uniq_id\": \"nibe_modbus_48132\",\n
@@ -396,8 +395,8 @@ nibepi_publish_discovery_enums:
         m={0:'Off',1:'3h',2:'6h',3:'12h',4:'One time increase'} %}{{ m.get((value|default('')|int(0)),
         value) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
         F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
-  - service: mqtt.publish
-    data:
+    action: mqtt.publish
+  - data:
       topic: homeassistant/sensor/43086/config
       retain: true
       payload: "{% raw %} {\n  \"name\": \"Priority\",\n  \"uniq_id\": \"nibe_modbus_43086\",\n
@@ -406,8 +405,8 @@ nibepi_publish_discovery_enums:
         m={10:'Off',20:'Hot Water',30:'Heat',40:'Pool',41:'Pool 2',50:'Transfer',60:'Cooling'}
         %}{{ m.get((value|default('')|int(0)), value) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
         F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
-  - service: mqtt.publish
-    data:
+    action: mqtt.publish
+  - data:
       topic: homeassistant/sensor/47442/config
       retain: true
       payload: "{% raw %} {\n  \"name\": \"Preset Flow Climate System\",\n  \"uniq_id\":
@@ -417,8 +416,8 @@ nibepi_publish_discovery_enums:
         Heating',3:'Radiator + Floor Heating'} %}{{ m.get((value|default('')|int(0)),
         value) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
         F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
-  - service: mqtt.publish
-    data:
+    action: mqtt.publish
+  - data:
       topic: homeassistant/sensor/43427/config
       retain: true
       payload: "{% raw %} {\n  \"name\": \"Compressor State EP14\",\n  \"uniq_id\":
@@ -427,8 +426,8 @@ nibepi_publish_discovery_enums:
         \"diagnostic\",\n  \"value_template\": \"{% set m={20:'Stopped',40:'Starting',60:'Running',100:'Stopping'}
         %}{{ m.get((value|default('')|int(0)), value) }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
         F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
-  - service: mqtt.publish
-    data:
+    action: mqtt.publish
+  - data:
       topic: homeassistant/sensor/43431/config
       retain: true
       payload: "{% raw %} {\n  \"name\": \"Supply Pump State EP14\",\n  \"uniq_id\":
@@ -438,8 +437,8 @@ nibepi_publish_discovery_enums:
         Mode',80:'Calibration'} %}{{ m.get((value|default('')|int(0)), value) }}\",\n
         \ \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
         {% endraw %}\n"
-  - service: mqtt.publish
-    data:
+    action: mqtt.publish
+  - data:
       topic: homeassistant/sensor/43433/config
       retain: true
       payload: "{% raw %} {\n  \"name\": \"Brine Pump State EP14\",\n  \"uniq_id\":
@@ -449,8 +448,8 @@ nibepi_publish_discovery_enums:
         Mode',80:'Calibration'} %}{{ m.get((value|default('')|int(0)), value) }}\",\n
         \ \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
         {% endraw %}\n"
-  - service: mqtt.publish
-    data:
+    action: mqtt.publish
+  - data:
       topic: homeassistant/sensor/45001/config
       retain: true
       payload: "{% raw %} {\n  \"name\": \"Alarm Code\",\n  \"uniq_id\": \"nibe_modbus_45001\",\n
@@ -458,6 +457,16 @@ nibepi_publish_discovery_enums:
         \"homeassistant/nibe/modbus/45001/json\",\n  \"entity_category\": \"diagnostic\",\n
         \ \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
         {% endraw %}\n"
+    action: mqtt.publish
+  - data:
+      topic: homeassistant/sensor/43416/config
+      retain: true
+      payload: "{% raw %} {\n  \"name\": \"Compressor starts\",\n  \"uniq_id\": \"nibe_modbus_43416\",\n
+        \ \"state_topic\": \"homeassistant/nibe/modbus/43416\",\n  \"json_attributes_topic\":
+        \"homeassistant/nibe/modbus/43416/json\",\n  \"entity_category\": \"diagnostic\",\n
+        \ \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
+        {% endraw %}\n"
+    action: mqtt.publish
 nibepi_publish_discovery_power:
   alias: Publish NibePi MQTT Discovery – Power & Current
   sequence:
@@ -549,392 +558,95 @@ nibepi_publish_discovery_power:
         }}\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
         F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}"
 nibe_oversatt_larmkod_2:
-  alias: Nibe – översätt larmkod
-  description: Returnerar titel, beskrivning och severity för en Nibe-larmkod.
+  alias: Nibe – alarm lookup
   mode: single
   fields:
     alarm_code:
-      description: Larmkod från Nibe (t.ex. 55)
-      example: 55
+      description: Nibe alarm code (e.g. 55, 160, 162)
+      example: 162
       required: true
   sequence:
   - variables:
-      alarms:
-        '1':
+      code: '{{ alarm_code | int }}'
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ code == 1 }}'
+      sequence:
+      - variables:
+          title: No active alarm
+          description: No alarm is currently active.
+          severity: info
+    - conditions:
+      - condition: template
+        value_template: '{{ code == 1 }}'
+      sequence:
+      - variables:
           title: Sensor fault BT1
           description: Sensor not connected/defective. Calculated flow temperature
             is set to minimum calculated flow temperature.
           severity: critical
-        '2':
+    - conditions:
+      - condition: template
+        value_template: '{{ code == 2 }}'
+      sequence:
+      - variables:
           title: Sensor fault BT2
-          description: Sensor not connected/defective (heating medium return). Addition
-            blocked. GM is calculated with 'condenser out' sensor; heating blocked
-            if this is also missing.
+          description: Sensor not connected/defective (heating medium sensor). Addition
+            blocked; GM calculated with condenser out if available.
           severity: critical
-        '3':
-          title: Sensor fault BT3
-          description: Sensor not connected/defective (heating medium return). Compressor
-            blocked during hot water loading.
-          severity: critical
-        '6':
-          title: Sensor fault BT6
-          description: Sensor not connected/defective (hot water controlling). Automatic
-            reset.
-          severity: warning
-        '7':
-          title: Sensor fault BT7
-          description: Sensor not connected/defective (hot water peak). Automatic
-            reset.
-          severity: warning
-        '10':
-          title: Sensor fault BT10
-          description: Sensor not connected/defective (brine in). Brine pump GP2 switches
-            to manual speed if auto-control is selected. Automatic reset after 60
-            s normal operation.
-          severity: warning
-        '11':
-          title: Sensor fault BT11
-          description: Sensor not connected/defective (condenser out). Compressor
-            blocked.
-          severity: critical
-        '12':
-          title: Sensor fault BT12
-          description: 'Sensor not connected/defective (condenser return). BT2 is
-            used for max condenser out control; if BT2 also missing: heating mode
-            and compressor in HW mode are blocked.'
-          severity: critical
-        '16':
-          title: Sensor fault BT16
-          description: Sensor not connected/defective (evaporator). Automatic reset.
-          severity: warning
-        '20':
-          title: Sensor fault BT20 (exhaust air)
-          description: 'Sensor not connected/defective (exhaust air). For ground source:
-            FLM pump blocked. For exhaust air: automatic reset.'
-          severity: warning
-        '21':
-          title: Sensor fault BT21 (extract air)
-          description: 'Sensor not connected/defective (extract air). For ground source:
-            FLM pump blocked. For exhaust air: automatic reset.'
-          severity: warning
-        '25':
-          title: Sensor fault BT25
-          description: Sensor not connected/defective (external heating medium return).
-            External addition blocked.
-          severity: warning
-        '26':
-          title: Sensor fault BT26
-          description: Sensor not connected/defective (brine, collector in). FLM pump
-            blocked.
-          severity: warning
-        '27':
-          title: Sensor fault BP8
-          description: Sensor not connected/defective (low pressure sensor). Compressor
-            blocked.
-          severity: critical
-        '28':
-          title: Sensor fault BT71
-          description: 'Sensor not connected/defective (external heating medium return).
-            Together with alarm 25: heating is blocked.'
-          severity: warning
-        '29':
-          title: Sensor fault BT29
-          description: Sensor not connected/defective (compressor oil temperature).
-            Compressor blocked.
-          severity: critical
-        '31':
-          title: Sensor fault BT63
-          description: Sensor not connected/defective (heating medium supply after
-            immersion heater). Internal electric addition blocked. Automatic reset.
-          severity: warning
-        '32':
-          title: Sensor fault BS1
-          description: Air flow is out of range of the air velocity sensor. Compressor
-            blocked; automatic reset.
-          severity: warning
-        '40':
-          title: Compressor phase 1 missing
-          description: Compressor phase missing or below 160 V for more than 30 minutes.
-            Compressor blocked.
-          severity: critical
-        '41':
-          title: Compressor phase 2 missing
-          description: Compressor phase missing or below 160 V for more than 30 minutes.
-            Compressor blocked.
-          severity: critical
-        '42':
-          title: Compressor phase 3 missing
-          description: Compressor phase missing or below 160 V for more than 30 minutes.
-            Compressor blocked.
-          severity: critical
-        '43':
-          title: Faulty phase sequence
-          description: Phases are connected in wrong sequence. Compressor blocked.
-          severity: critical
-        '44':
-          title: Overheated softstart
-          description: Fuses for the soft start card defective. Compressor blocked.
-          severity: critical
-        '45':
-          title: Phase fault
-          description: Motor protection on single phase (e.g. Norway) probably triggered.
-          severity: critical
-        '50':
-          title: High pressure alarm
-          description: High pressure switch has triggered repeatedly. Compressor blocked.
-            Manual reset required.
-          severity: critical
-        '54':
-          title: Motor protection alarm
-          description: Motor protection breaker has triggered.
-          severity: critical
-        '55':
+    - conditions:
+      - condition: template
+        value_template: '{{ code == 55 }}'
+      sequence:
+      - variables:
           title: Hot gas alarm
-          description: Compressor stopped due to too high hot gas temperature. Compressor
-            blocked. Manual reset required.
-          severity: critical
-        '58':
-          title: Pressure switch
-          description: High or low pressure switch has triggered. Compressor blocked.
-          severity: critical
-        '60':
-          title: Low HTF out
-          description: Outgoing brine below configured minimum temperature. Compressor
-            blocked.
-          severity: critical
-        '63':
-          title: Low air flow
-          description: Too low air flow at air flow sensor BS1. Compressor blocked.
-          severity: critical
-        '64':
-          title: Low exhaust air temperature
-          description: Exhaust air temperature below 16°C and not above 17°C within
-            60 minutes. Compressor blocked; auto reset after exhaust air >17°C for
-            60 minutes.
-          severity: warning
-        '65':
-          title: High condensation water level (external)
-          description: Alarm from external level monitor. Compressor blocked.
-          severity: critical
-        '66':
-          title: High condensation water level (internal)
-          description: Alarm from level monitor in condensation water container. Compressor
-            blocked.
-          severity: critical
-        '67':
-          title: Antifreeze protection supply air
-          description: Supply air temperature below 5°C. Fans stop and compressor
-            blocked; immersion heater block lifted.
-          severity: critical
-        '70':
-          title: Perm. com. error input card
-          description: No communication with input card. Calculated flow set to minimum;
-            manual reset required.
-          severity: critical
-        '71':
-          title: Perm. com. error base card
-          description: No communication with base card. Compressor blocked; manual
+          description: Compressor stopped due to too high hot gas temperature. Manual
             reset required.
           severity: critical
-        '72':
-          title: Perm. com. error softstart card
-          description: No communication with softstart card. Compressor blocked.
-          severity: critical
-        '75':
-          title: Perm. com. error base card
-          description: No communication with base card AA26. Compressor blocked; manual
-            reset required.
-          severity: critical
-        '83':
-          title: Unsuccessful defrosting
-          description: Defrost stop conditions not met (F750/F110). Defrost discontinued;
-            compressor and immersion heater stopped.
-          severity: warning
-        '100':
-          title: Perm. com. error inverter
-          description: Permanent communication fault with inverter. Compressor blocked.
-          severity: critical
-        '140':
-          title: Compressor phase 1 missing (temporary)
-          description: Phase 1 briefly missing.
-          severity: warning
-        '141':
-          title: Compressor phase 2 missing (temporary)
-          description: Phase 2 briefly missing.
-          severity: warning
-        '142':
-          title: Compressor phase 3 missing (temporary)
-          description: Phase 3 briefly missing.
-          severity: warning
-        '150':
-          title: High condenser out
-          description: Condenser out has reached max permitted temperature. Automatic
-            reset.
-          severity: warning
-        '155':
-          title: Hot gas alarm (temporary)
-          description: Hot gas temperature (BT14) temporarily above 135°C. Compressor
-            stopped; auto reset when below 90°C.
-          severity: warning
-        '160':
+    - conditions:
+      - condition: template
+        value_template: '{{ code == 160 }}'
+      sequence:
+      - variables:
           title: Low HTF out (temporary)
-          description: Brine out has reached set minimum temperature. Automatic reset.
-          severity: warning
-        '161':
-          title: High HTF in
-          description: Brine in has reached set maximum temperature. Automatic reset.
-          severity: warning
-        '162':
-          title: High condenser out (temporary)
-          description: Condenser out has reached max permitted temperature. Automatic
+          description: Brine out has reached the configured minimum temperature. Automatic
             reset.
           severity: warning
-        '163':
-          title: High condenser in
-          description: Condenser exceeds max temperature.
-          severity: warning
-        '170':
-          title: Com. error input card
-          description: Temporary communication error with input card.
-          severity: warning
-        '171':
-          title: Com. error base card
-          description: Temporary communication error with base card.
-          severity: warning
-        '172':
-          title: Com. error softstart card
-          description: Temporary communication error with softstart card.
-          severity: warning
-        '180':
-          title: Freeze protection active
-          description: Outdoor temperature below 3°C while heating not permitted;
-            freeze protection allows room heating.
-          severity: info
-        '181':
-          title: Failed periodic increase
-          description: Periodic increase did not reach stop temperature within 5 hours.
-          severity: warning
-        '182':
-          title: Load monitor activated
-          description: One or more power steps cannot be activated because phase current
-            too high.
-          severity: warning
-        '183':
-          title: Defrosting
-          description: Defrost in progress.
-          severity: info
-        '184':
-          title: Filter alarm
-          description: Air filter needs cleaning.
-          severity: info
-        '185':
-          title: Anti-freeze supply air
-          description: Supply air (BT22) or return from heating battery (BT69) below
-            5°C. Fans stopped, compressor blocked; immersion heater block lifted.
-          severity: critical
-        '255':
-          title: Motor protection alarm, brine pump
-          description: Motor protection on brine pump triggered. Current compressor
-            blocked; automatic reset.
-          severity: critical
-        '261':
-          title: 'Heat pump alarm: temperature deviation'
-          description: Temperature deviation on heat exchanger sensor 5 times within
-            60 minutes or continuously for 60 minutes. Compressor blocked.
-          severity: critical
-        '262':
-          title: 'Heat pump alarm: overheat power transistor'
-          description: Overheated power transistor in inverter. Compressor blocked.
-          severity: critical
-        '263':
-          title: 'Heat pump alarm: incorrect inverter voltage'
-          description: Incorrect voltage out from inverter. Compressor blocked.
-          severity: critical
-        '264':
-          title: 'Heat pump alarm: inverter communication'
-          description: Communication between inverter circuit board and control card
-            interrupted. Compressor blocked.
-          severity: critical
-        '265':
-          title: 'Heat pump alarm: power transistor error'
-          description: Continuous error on power transistor for 15 minutes. Compressor
-            blocked.
-          severity: critical
-        '266':
-          title: 'Heat pump alarm: low refrigerant amount'
-          description: Low refrigerant amount detected. Compressor blocked.
-          severity: critical
-        '290':
-          title: Fan alarm
-          description: Tachometer signal from fan indicates zero speed. Compressor,
-            immersion heater and defrost stopped.
-          severity: critical
-        '291':
-          title: Charge pump alarm
-          description: Tachometer signal from charge pump indicates zero speed. Compressor,
-            immersion heater and defrost stopped.
-          severity: critical
-        '340':
-          title: Anti-freeze supply air
-          description: Supply air temperature (BT22) below 11°C. HW load blocked;
-            auto reset when supply air >16°C.
-          severity: warning
-        '351':
-          title: Uncertain sensor accuracy (BT10/BT11)
-          description: More than 2 K difference between brine sensors BT10 and BT11
-            at calibration. GP2 switches to manual speed.
-          severity: warning
-        '352':
-          title: Uncertain sensor accuracy (BT2/BT3)
-          description: More than 2 K difference between HM sensors BT2 and BT3 at
-            calibration. GP1 switches to manual speed.
-          severity: warning
-        '353':
-          title: Uncertain sensor accuracy (BT3/BT12)
-          description: More than 2 K difference between HM sensors BT3 and BT12 at
-            calibration. GP1 switches to manual speed.
-          severity: warning
-        '356':
-          title: Failed sensor calibration
-          description: Calibration difference more than 2 K between BT3 and BT63.
-            GP1 switches to manual operation.
-          severity: warning
-        '403':
-          title: Sensor fault on EB101
-          description: Sensor fault detected on EB101 (MHI-EMMY). Compressor blocked;
-            GP12/GP1 may switch to manual speed.
-          severity: critical
-        '404':
-          title: Sensor fault on EB101
-          description: Sensor fault detected on EB101 (MHI-EMMY). Compressor blocked.
-          severity: critical
-        '412':
-          title: Sensor fault on EB101-BT12
-          description: Sensor fault detected on EB101-BT12. Compressor blocked; pumps
-            may switch to manual speed.
-          severity: critical
-        '415':
-          title: Sensor fault on EB101-BT15
-          description: Sensor fault detected on EB101-BT15. Compressor blocked.
-          severity: critical
-        '995':
-          title: External alarm
-          description: Alarm according to configuration on AUX input. Auto reset when
-            contact closes.
-          severity: warning
-        '996':
-          title: Blocked external addition
-          description: External additional heat blocked via AUX input. Auto reset
-            when contact closes.
-          severity: info
-        '997':
-          title: Blocked external compressor
-          description: External compressor block via AUX input. Auto reset when contact
-            closes; compressor blocked while active.
-          severity: warning
-      code: '{{ alarm_code | int }}'
-      result: "{{ alarms.get(\n  code,\n  {\n    'title': 'Unknown alarm code',\n
-        \   'description': 'No description available for code ' ~ code,\n    'severity':
-        'unknown'\n  }\n) }}\n"
-  - stop: Result
+    - conditions:
+      - condition: template
+        value_template: '{{ code == 161 }}'
+      sequence:
+      - variables:
+          result:
+            title: High HTF in
+            description: Brine in has reached the configured maximum temperature.
+              Automatic reset.
+            severity: warning
+    - conditions:
+      - condition: template
+        value_template: '{{ code == 162 }}'
+      sequence:
+      - variables:
+          result:
+            title: High condenser out (temporary)
+            description: Condenser out has reached max permitted temperature. Automatic
+              reset.
+            severity: warning
+    - conditions:
+      - condition: template
+        value_template: '{{ code == 163 }}'
+      sequence:
+      - variables:
+          result:
+            title: High condenser in
+            description: Condenser exceeds max temperature.
+            severity: warning
+    default:
+    - variables:
+        result:
+          title: Unknown alarm code
+          description: No description available for code {{ code }}.
+          severity: unknown
+  - stop: Lookup done
     response_variable: result
