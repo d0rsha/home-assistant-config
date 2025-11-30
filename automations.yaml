@@ -1142,3 +1142,34 @@
         data:
           message: Torktumlaren är klar.
   mode: restart
+- id: '1764452895311'
+  alias: Nibe – notify on alarm code
+  description: ''
+  triggers:
+  - entity_id: sensor.nibe_f1145_nibe_alarm_code
+    trigger: state
+  conditions:
+  - condition:
+    - condition: template
+      value_template: "{{ trigger.from_state is not none\n   and trigger.from_state.state
+        != trigger.to_state.state\n   and trigger.to_state.state not in ['0', '163',
+        'unknown', 'unavailable'] }}\n"
+  actions:
+  - response_variable: alarm_info
+    data:
+      alarm_code: '{{ trigger.to_state.state | int }}'
+    action: script.nibe_alarm_lookup
+  - data:
+      title: 'Nibe alarm {{ trigger.to_state.state }} – {{ alarm_info.title }}
+
+        '
+      message: '{{ alarm_info.description }} (severity: {{ alarm_info.severity }})
+
+        '
+    action: notify.person_anders
+  - action: persistent_notification.create
+    metadata: {}
+    data:
+      message: '{{ alarm_info.description }} (severity: {{ alarm_info.severity }})'
+      title: Nibe alarm {{ trigger.to_state.state }} – {{ alarm_info.title }}
+      notification_id: Nibe alarm {{ trigger.to_state.state }}
