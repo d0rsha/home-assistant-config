@@ -980,10 +980,10 @@
         != trigger.to_state.state\n   and trigger.to_state.state not in ['0', 'unknown',
         'unavailable'] }}\n"
   actions:
-  - response_variable: alarm_info
+  - action: script.nibe_alarm_lookup
+    response_variable: alarm_info
     data:
       alarm_code: '{{ trigger.to_state.state | int }}'
-    action: script.nibe_oversatt_larmkod
   - data:
       title: 'Nibe alarm {{ trigger.to_state.state }} – {{ alarm_info.title }}
 
