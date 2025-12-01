@@ -462,10 +462,10 @@ nibepi_publish_discovery_enums:
       topic: homeassistant/sensor/43416/config
       retain: true
       payload: "{% raw %} {\n  \"name\": \"Compressor starts\",\n  \"uniq_id\": \"nibe_modbus_43416\",\n
-        \ \"state_topic\": \"homeassistant/nibe/modbus/43416\",\n  \"json_attributes_topic\":
-        \"homeassistant/nibe/modbus/43416/json\",\n  \"entity_category\": \"diagnostic\",\n
-        \ \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n}
-        {% endraw %}\n"
+        \ \"state_class\": \"measurement\",\n  \"state_topic\": \"homeassistant/nibe/modbus/43416\",\n
+        \ \"json_attributes_topic\": \"homeassistant/nibe/modbus/43416/json\",\n  \"entity_category\":
+        \"diagnostic\",\n  \"device\": {\"identifiers\":[\"nibepi_modbus\"],\"name\":\"Nibe
+        F1145\",\"manufacturer\":\"NIBE\",\"model\":\"F1145\"}\n} {% endraw %}\n"
     action: mqtt.publish
 nibepi_publish_discovery_power:
   alias: Publish NibePi MQTT Discovery – Power & Current
