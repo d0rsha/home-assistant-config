@@ -983,7 +983,7 @@
   - response_variable: alarm_info
     data:
       alarm_code: '{{ trigger.to_state.state | int }}'
-    action: script.nibe_test_2
+    action: script.nibe_oversatt_larmkod
   - data:
       title: 'Nibe alarm {{ trigger.to_state.state }} – {{ alarm_info.title }}
 
