@@ -4,12 +4,6 @@ ev_charger_request_sent:
 ev_auto_charge_enabled:
   name: EV – Auto charge
   icon: mdi:car-electric
-washer_ready:
-  name: Tvättmaskin klar-flagga
-  icon: mdi:washing-machine
-dryer_ready:
-  name: Torktumlare klar-flagga
-  icon: mdi:tumble-dryer
 hvac_auto_control:
   name: HVAC styrs automatiskt
   icon: mdi:home-automation
