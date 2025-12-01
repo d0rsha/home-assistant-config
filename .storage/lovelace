@@ -636,11 +636,13 @@
                 },
                 {
                   "type": "image",
-                  "entity": "light.nedervaning",
+                  "entity": "light.soffbordet_lampa",
                   "tap_action": {
                     "action": "toggle"
                   },
-                  "image": "/local/assets/icon/light_bulb_off.png",
+                  "image": {
+                    "media_content_id": "/local/assets/icon/light_bulb_off.png"
+                  },
                   "state_image": {
                     "on": "/local/assets/icon/light_bulb_on.png"
                   },
