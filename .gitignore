@@ -38,3 +38,6 @@ image
 secret-envs
 SERVICE_ACCOUNT.JSON
 zigbee2mqtt
+www/mouse_verification*
+glances/glances.conf
+*unused*
