@@ -16,24 +16,48 @@ action:
 sensor:
   - name: Tomorrow lowest price
     unique_id: anders_se3_tomorrow_low_price
+    availability: >
+      {{ tomorrow_price is defined
+         and tomorrow_price is not none
+         and 'SE3' in tomorrow_price
+         and tomorrow_price['SE3'] }}
     state: >
-      {% if not tomorrow_price %}
+      {%- set has_price = (
+          tomorrow_price is defined
+          and tomorrow_price is not none
+          and 'SE3' in tomorrow_price
+          and tomorrow_price['SE3']
+        )
+      -%}
+      {%- if not has_price -%}
         unavailable
-      {% else %}
-        {% set data = namespace(prices=[]) %}
-        {% for state in tomorrow_price['SE3'] %}
-          {% set data.prices = data.prices + [(state.price / 1000)] %}
-        {% endfor %}
-        {{min(data.prices)}}
-      {% endif %}
+      {%- else -%}
+        {%- set data = namespace(prices=[]) -%}
+        {%- for state in tomorrow_price['SE3'] -%}
+          {%- set data.prices = data.prices + [(state.price / 1000)] -%}
+        {%- endfor -%}
+        {{ data.prices | min }}
+      {%- endif -%}
     attributes:
       data: >
-        {% if not tomorrow_price %}
+        {%- set has_price = (
+            tomorrow_price is defined
+            and tomorrow_price is not none
+            and 'SE3' in tomorrow_price
+            and tomorrow_price['SE3']
+          )
+        -%}
+        {%- if not has_price -%}
           []
-        {% else %}
-          {% set data = namespace(prices=[]) %}
-          {% for state in tomorrow_price['SE3'] %}
-            {% set data.prices = data.prices + [{'start':state.start, 'end':state.end, 'price': state.price/1000}] %}
-          {% endfor %}
-          {{data.prices}}
-        {% endif %}
+        {%- else -%}
+          {%- set data = namespace(prices=[]) -%}
+          {%- for state in tomorrow_price['SE3'] -%}
+            {%- set data.prices = data.prices + [{
+              'start': state.start,
+              'end': state.end,
+              'price': (state.price / 1000)
+            }] -%}
+          {%- endfor -%}
+          {{ data.prices }}
+        {%- endif -%}
+

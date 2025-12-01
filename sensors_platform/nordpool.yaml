@@ -1,3 +1,5 @@
+####################################
+### TODO: Migrera till sensor: istället för - platform: template sensor: ###
 ### Nordpool cheapest sequential 3 hours
 - platform: template
   sensors:
@@ -20,8 +22,8 @@
             {%- endif -%}
           {%- endfor -%}
           {{ ns.cheapestHour }}
-        {%- else -%}
-          unavailable
+        {% else %}
+          {{ none }}
         {%- endif -%}
 
 ### Electricity prices in SEK instead of öre.
