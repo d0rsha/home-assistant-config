@@ -991,7 +991,7 @@
       message: '{{ alarm_info.description }} (severity: {{ alarm_info.severity }})
 
         '
-    action: notify.person_anders
+    action: notify.Anders
   - action: persistent_notification.create
     metadata: {}
     data:
