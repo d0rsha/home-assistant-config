@@ -216,7 +216,7 @@
   triggers:
   - entity_id:
     - sensor.p1_meter_effekt
-    above: 6000
+    above: 7000
     trigger: numeric_state
     for:
       hours: 0
@@ -977,24 +977,26 @@
   - condition:
     - condition: template
       value_template: "{{ trigger.from_state is not none\n   and trigger.from_state.state
-        != trigger.to_state.state\n   and trigger.to_state.state not in ['0', 'unknown',
-        'unavailable'] }}\n"
+        != trigger.to_state.state\n   and trigger.to_state.state not in ['0', '163',
+        'unknown', 'unavailable'] }}\n"
   actions:
   - action: script.nibe_alarm_lookup
     response_variable: alarm_info
     data:
       alarm_code: '{{ trigger.to_state.state | int }}'
   - data:
-      title: 'Nibe alarm {{ trigger.to_state.state }} – {{ alarm_info.title }}
+      title: '(severity: {{ alarm_info.severity }}) {{ trigger.to_state.state }}:
+        {{ alarm_info.title }}
 
         '
-      message: '{{ alarm_info.description }} (severity: {{ alarm_info.severity }})
+      message: '{{ alarm_info.description }}
 
         '
     action: notify.Anders
   - action: persistent_notification.create
     metadata: {}
     data:
-      message: '{{ alarm_info.description }} (severity: {{ alarm_info.severity }})'
-      title: Nibe alarm {{ trigger.to_state.state }} – {{ alarm_info.title }}
+      message: '{{ alarm_info.description }}'
+      title: 'severity: ({{ alarm_info.severity }}) {{ trigger.to_state.state }}:
+        {{ alarm_info.title }}'
       notification_id: Nibe alarm {{ trigger.to_state.state }}
