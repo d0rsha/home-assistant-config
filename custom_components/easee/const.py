@@ -16,7 +16,7 @@ from homeassistant.helpers.entity import EntityCategory
 
 DOMAIN = "easee"
 TIMEOUT = 30
-VERSION = "0.9.71"
+VERSION = "0.9.72"
 MIN_HA_VERSION = "2025.7.0"
 CONF_MONITORED_SITES = "monitored_sites"
 MANUFACTURER = "Easee"
@@ -33,7 +33,10 @@ EASEE_PRODUCT_CODES = {
     1: "Easee Home",
     100: "Easee Charge",
     2: "Charge Lite",
+    3: "Charge Max",
+    4: "Charge Up",
     102: "Charge Core",
+    103: "Charge Pro",
     400: "Charge One",
 }
 

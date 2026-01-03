@@ -11,8 +11,17 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import DiscoveryInfoType  # pyright: ignore [reportAttributeAccessIssue]
 
+from myskoda.models.charging import Charging, ChargingStatus
 from myskoda.models.info import CapabilityId
-from myskoda.models.position import Error, ErrorType, Position, Positions, PositionType
+from myskoda.models.position import (
+    Error,
+    ErrorType,
+    ParkingCoordinates,
+    ParkingPositionV3,
+    Position,
+    Positions,
+    PositionType,
+)
 
 from .const import COORDINATORS, DOMAIN
 from .coordinator import MySkodaConfigEntry, MySkodaDataUpdateCoordinator
@@ -65,6 +74,22 @@ class DeviceTracker(MySkodaEntity, TrackerEntity):
                     err for err in pos.errors if err.type == ErrorType.VEHICLE_IN_MOTION
                 )
 
+    def _charging(self) -> Charging | None:
+        if charging := self.vehicle.charging:
+            return charging
+
+    def _status(self) -> ChargingStatus | None:
+        if charging := self._charging():
+            if status := charging.status:
+                return status
+
+    def _vehicle_parking_position(self) -> ParkingPositionV3 | None:
+        return self.vehicle.parking_position
+
+    def _parking_position(self) -> ParkingCoordinates | None:
+        if pp := self._vehicle_parking_position():
+            return pp.parking_position
+
     @property
     def source_type(self) -> SourceType:  # noqa: D102
         return SourceType.GPS
@@ -73,6 +98,8 @@ class DeviceTracker(MySkodaEntity, TrackerEntity):
     def latitude(self) -> float | None:  # noqa: D102
         position = self._vehicle_position()
         if position is None:
+            if pp := self._parking_position():
+                return pp.gps_coordinates.latitude
             return None
         return position.gps_coordinates.latitude
 
@@ -80,6 +107,8 @@ class DeviceTracker(MySkodaEntity, TrackerEntity):
     def longitude(self) -> float | None:  # noqa: D102
         position = self._vehicle_position()
         if position is None:
+            if pp := self._parking_position():
+                return pp.gps_coordinates.longitude
             return None
         return position.gps_coordinates.longitude
 
@@ -87,6 +116,9 @@ class DeviceTracker(MySkodaEntity, TrackerEntity):
     def extra_state_attributes(self) -> dict:
         """Return extra state attributes."""
         attributes = {}
+
+        if pp := self._parking_position():
+            attributes["parking_address"] = pp.formatted_address
 
         if render := self.get_renders().get("main"):
             attributes["entity_picture"] = render
@@ -108,7 +140,6 @@ class DeviceTracker(MySkodaEntity, TrackerEntity):
                     if isinstance(render, dict) and "exterior_side" in render:
                         attributes["entity_picture"] = render["exterior_side"]
                         break
-
         return attributes
 
     @property
@@ -116,6 +147,13 @@ class DeviceTracker(MySkodaEntity, TrackerEntity):
         if err := self._pos_error():
             if err.type == ErrorType.VEHICLE_IN_MOTION:
                 return "vehicle_in_motion"
+
+    @property
+    def battery_level(self) -> int | None:
+        if self.has_all_capabilities([CapabilityId.CHARGING]):
+            if status := self._status():
+                if status.battery.state_of_charge_in_percent is not None:
+                    return min(status.battery.state_of_charge_in_percent, 100)
 
     def required_capabilities(self) -> list[CapabilityId]:
         return [CapabilityId.PARKING_POSITION]
