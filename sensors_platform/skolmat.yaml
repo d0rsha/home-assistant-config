@@ -1,4 +1,0 @@
-  - platform: skolmat
-    name: Stureforsvägen # Name of school here
-    url: "https://skolmaten.se/bjornbarsvagens-fsk" # url to your school page, see below
-    unique_id: "skolmat_this_week" # Optional, better for managing entities, but will change the entity type.

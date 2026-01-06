@@ -114,9 +114,6 @@ media_source:
 #  max_retries: 3
 #  default_measurement: state
 
-## HACS battery Notes Repo
-battery_notes:
-
 spotcast:
   sp_dc: !secret spotcast_sp_dc
   sp_key: !secret spotcast_sp_key

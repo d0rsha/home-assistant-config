@@ -2107,7 +2107,7 @@
                 },
                 {
                   "type": "tile",
-                  "entity": "sensor.stureforsvagen",
+                  "entity": "sensor.stureforsvagen_2",
                   "vertical": false,
                   "features_position": "bottom",
                   "grid_options": {
@@ -2120,12 +2120,12 @@
                     {
                       "type": "markdown",
                       "title": "Dagens lunch",
-                      "content": "{% set data = state_attr('sensor.stureforsvagen', 'calendar') or {} %} {% if not data %} Ingen meny tillgänglig. {% else %}\n  {% set week = now().isocalendar()[1] %}\n  {% set entries = data[week] if week in data else [] %}\n  {% set today = now().strftime('%Y-%m-%d') %}\n  {% set todays = entries | selectattr('date', 'equalto', today) | list %}\n  {% if todays | length == 0 %}\n  Ingen meny för idag.\n  {% else %}\n    {% set day = todays[0] %}\n    {% set courses = day['courses'] %}\n    **{{ day['weekday'] }} ({{ day['date'] }})**: {{ courses | join('<br>') | safe }}\n  {% endif %}\n{% endif %}\n"
+                      "content": "{% set data = state_attr('sensor.stureforsvagen_2', 'calendar') or {} %} {% if not data %} Ingen meny tillgänglig. {% else %}\n  {% set week = now().isocalendar()[1] %}\n  {% set entries = data[week] if week in data else [] %}\n  {% set today = now().strftime('%Y-%m-%d') %}\n  {% set todays = entries | selectattr('date', 'equalto', today) | list %}\n  {% if todays | length == 0 %}\n  Ingen meny för idag.\n  {% else %}\n    {% set day = todays[0] %}\n    {% set courses = day['courses'] %}\n    **{{ day['weekday'] }} ({{ day['date'] }})**: {{ courses | join('<br>') | safe }}\n  {% endif %}\n{% endif %}\n"
                     },
                     {
                       "type": "markdown",
                       "title": "Veckans meny",
-                      "content": "{% set data = state_attr('sensor.stureforsvagen', 'calendar') or {} %} {% if not data %} Ingen meny tillgänglig. {% else %}\n  {% set week = now().isocalendar()[1] %}\n  {% set entries = data[week] if week in data else [] %}\n  {% if entries | length == 0 %}\n  Ingen meny för denna vecka.\n  {% else %}\n    {% for day in entries -%}\n    **{{ day['weekday'] }}**: {{ day['courses'] | join(', ') }}<br>\n    {% endfor %}\n  {% endif %}\n{% endif %}"
+                      "content": "{% set data = state_attr('sensor.stureforsvagen_2', 'calendar') or {} %} {% if not data %} Ingen meny tillgänglig. {% else %}\n  {% set week = now().isocalendar()[1] %}\n  {% set entries = data[week] if week in data else [] %}\n  {% if entries | length == 0 %}\n  Ingen meny för denna vecka.\n  {% else %}\n    {% for day in entries -%}\n    **{{ day['weekday'] }}**: {{ day['courses'] | join(', ') }}<br>\n    {% endfor %}\n  {% endif %}\n{% endif %}"
                     }
                   ]
                 }
