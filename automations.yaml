@@ -1000,3 +1000,47 @@
       title: 'severity: ({{ alarm_info.severity }}) {{ trigger.to_state.state }}:
         {{ alarm_info.title }}'
       notification_id: Nibe alarm {{ trigger.to_state.state }}
+- id: '1767907178106'
+  alias: Sovrum knapp
+  description: ''
+  use_blueprint:
+    path: damru/ikea_E1743-E2201-E2213_ZHA-Z2M_control-anything.yaml
+    input:
+      remote_devices:
+      - ec562cc939e9182fe239741069a592d6
+      on_press_action:
+      - action: light.turn_on
+        metadata: {}
+        target:
+          area_id: sovrum
+        data: {}
+      off_press_action:
+      - action: light.turn_off
+        metadata: {}
+        target:
+          area_id: sovrum
+        data: {}
+      on_hold_action:
+      - action: light.turn_off
+        metadata: {}
+        target:
+          area_id: sovrum
+        data: {}
+      off_hold_action:
+      - action: light.turn_off
+        metadata: {}
+        target:
+          area_id: sovrum
+        data: {}
+      on_double_press_action:
+      - action: light.turn_on
+        metadata: {}
+        target:
+          area_id: sovrum
+        data: {}
+      off_double_press_action:
+      - action: light.turn_off
+        metadata: {}
+        target:
+          area_id: sovrum
+        data: {}
