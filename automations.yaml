@@ -79,14 +79,14 @@
       action_button_center_short:
       - metadata: {}
         data: {}
-        target:
-          floor_id: nedervaning
         action: switch.toggle
+        target:
+          label_id: automatisk_belysning
       - metadata: {}
         data: {}
-        target:
-          floor_id: nedervaning
         action: light.toggle
+        target:
+          label_id: automatisk_belysning
       controller_device: fe60358f1c852f68702ff1aa55f0b0f7
 - id: '1718202810350'
   alias: Knapp Olles rum
