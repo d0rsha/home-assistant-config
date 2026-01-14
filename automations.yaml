@@ -1021,7 +1021,7 @@
           area_id: sovrum
         data: {}
       on_hold_action:
-      - action: light.turn_off
+      - action: light.turn_on
         metadata: {}
         target:
           area_id: sovrum
