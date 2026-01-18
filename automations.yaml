@@ -99,9 +99,9 @@
       action_button_up_short:
       - metadata: {}
         data: {}
-        target:
-          area_id: olles_rum
         action: light.turn_on
+        target:
+          entity_id: light.skyconnect_v1_0_olles_rum
       - action: switch.turn_on
         metadata: {}
         data: {}
@@ -111,9 +111,9 @@
       action_button_down_short:
       - metadata: {}
         data: {}
-        target:
-          area_id: olles_rum
         action: light.turn_off
+        target:
+          entity_id: light.skyconnect_v1_0_olles_rum
       - action: switch.turn_off
         metadata: {}
         data: {}
@@ -178,7 +178,7 @@
       include_button: enable_button_trigger
       include_time: time_enabled
       time: '17:00:00'
-      battery_level: 10
+      battery_level: 7
       exclude_sensors:
         entity_id:
         - sensor.tradfri_on_off_switch_battery_plus
@@ -196,6 +196,8 @@
         - sensor.robban_battery
         - sensor.skoda_superb_combi_battery_percentage
         - sensor.pixel_9_pro_battery_level
+        - binary_sensor.lumi_lumi_vibration_aq1_battery_plus_low
+        - binary_sensor.lumi_lumi_vibration_aq2_battery_plus_low
         device_id:
         - 7d14e7d4bcd8ee6b80815bb2f9e58b05
         - e755edf4ef456fad1297aa1ecc1c0952
