@@ -165,3 +165,8 @@ recorder:
     entities:
       - sensor.nordpool_with_taxes_and_fees
 
+##########################################
+### ZHA custom quirks 
+zha:
+  enable_quirks: true
+  custom_quirks_path: /config/zigbee/custom_zha_quirks
