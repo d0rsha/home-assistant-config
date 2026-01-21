@@ -205,6 +205,7 @@
         - d028a9b165592fe727b1e4a26656d862
         - f326594e961a48756bccbda5b2185cd2
         - 6ae02c72bc76a69da2e234f790c1b89c
+        - de511fc6e097efef74e49b184046601c
       include_easy_notify: enable_easy_notify
       include_persistent_notification: enable_persistent_notification
       sensor_selection: enable_all_and_custom_group_sensors
@@ -212,6 +213,7 @@
       - f326594e961a48756bccbda5b2185cd2
       button_entity: input_button.check_battery_levels
       global_conditions: []
+      custom_group_battery_level: 14
 - id: '1734902601715'
   alias: Energivarning
   description: Huset importerar mycket energi
