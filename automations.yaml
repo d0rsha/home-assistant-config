@@ -198,6 +198,7 @@
         - sensor.pixel_9_pro_battery_level
         - binary_sensor.lumi_lumi_vibration_aq1_battery_plus_low
         - binary_sensor.lumi_lumi_vibration_aq2_battery_plus_low
+        - sensor.lumi_lumi_vibration_aq1_battery
         device_id:
         - 7d14e7d4bcd8ee6b80815bb2f9e58b05
         - e755edf4ef456fad1297aa1ecc1c0952
