@@ -1,0 +1,490 @@
+#################################################################
+## Power spike controller (state machine + paused JSON)
+#################################################################
+input_select:
+  power_spike_state:
+    name: Power spike state
+    options:
+      - Idle
+      - Shedding
+      - Recovering
+      - Suspended
+
+input_text:
+  power_spike_paused_json:
+    name: Power spike paused devices (JSON)
+    initial: "[]"
+
+input_datetime:
+  power_spike_suspend_until:
+    name: Power spike suspend until
+    has_date: true
+    has_time: true
+
+input_number:
+  power_spike_threshold_w:
+    name: Power spike threshold (W)
+    min: 1000
+    max: 13800
+    step: 100
+    mode: box
+    unit_of_measurement: W
+    initial: 7000
+  power_resume_threshold_w:
+    name: Power resume threshold (W)
+    min: 1000
+    max: 13800
+    step: 100
+    mode: box
+    unit_of_measurement: W
+    initial: 5000
+  power_resume_margin_w:
+    name: Power resume margin (W)
+    min: 0
+    max: 2000
+    step: 50
+    mode: box
+    unit_of_measurement: W
+    initial: 300
+  ev_min_running_w:
+    name: EV running min (W)
+    min: 0
+    max: 5000
+    step: 10
+    mode: box
+    unit_of_measurement: W
+    initial: 100
+  zeke_min_running_w:
+    name: Zeke running min (W)
+    min: 0
+    max: 2000
+    step: 10
+    mode: box
+    unit_of_measurement: W
+    initial: 70
+
+input_boolean:
+  ev_charge_intent:
+    name: EV charge intent
+    icon: mdi:car-electric
+
+#################################################################
+## Template permission signals
+#################################################################
+template:
+  - binary_sensor:
+      - name: power_spike_allows_ev
+        unique_id: power_spike_allows_ev
+        state: >-
+          {% set state = states('input_select.power_spike_state') %}
+          {% if state in ['Shedding', 'Suspended'] %}
+            false
+          {% else %}
+            {% set paused = states('input_text.power_spike_paused_json') | default('[]') | from_json %}
+            {% set has_ev = paused | selectattr('id','equalto','ev') | list | count > 0 %}
+            {{ not has_ev }}
+          {% endif %}
+
+#################################################################
+## Scripts
+#################################################################
+script:
+  power_spike_pause_ev:
+    alias: Power spike pause EV
+    fields:
+      auto_resume:
+        description: Auto resume this device later
+        example: true
+      origin:
+        description: Pause origin tag (night_auto/day_manual)
+        example: night_auto
+    sequence:
+      - variables:
+          paused_raw: "{{ states('input_text.power_spike_paused_json') | default('[]') }}"
+          paused: "{{ paused_raw | from_json }}"
+          ev_power_w: "{{ (states('sensor.garage_power') | float(0) * 1000) | int }}"
+          already_paused: "{{ paused | selectattr('id','equalto','ev') | list | count > 0 }}"
+          auto_resume_val: "{{ auto_resume | default(true) }}"
+          origin_val: "{{ origin | default('night_auto') }}"
+          resume_earliest: "{{ (now() + timedelta(minutes=2)).isoformat() }}"
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ not already_paused }}"
+            sequence:
+              - service: easee.action_command
+                data:
+                  device_id: "9497d4e0227e3207ec70f2e19d1c301c"
+                  action_command: pause
+              - service: input_text.set_value
+                data:
+                  entity_id: input_text.power_spike_paused_json
+                  value: >-
+                    {{ (paused + [{
+                      'id': 'ev',
+                      'paused_at': now().isoformat(),
+                      'power_w': ev_power_w,
+                      'origin': origin_val,
+                      'auto_resume': auto_resume_val,
+                      'resume_earliest': resume_earliest,
+                      'details': {'easee_device_id': '9497d4e0227e3207ec70f2e19d1c301c'}
+                    }]) | to_json }}
+    mode: single
+
+  power_spike_pause_zeke:
+    alias: Power spike pause Zeke
+    fields:
+      auto_resume:
+        description: Auto resume this device later
+        example: true
+      origin:
+        description: Pause origin tag (night_auto/day_manual)
+        example: night_auto
+    sequence:
+      - variables:
+          paused_raw: "{{ states('input_text.power_spike_paused_json') | default('[]') }}"
+          paused: "{{ paused_raw | from_json }}"
+          zeke_power_w: "{{ states('sensor.zeke_current_power') | float(0) | int }}"
+          zeke_mode: "{{ states('climate.zeke') }}"
+          zeke_temp: "{{ state_attr('climate.zeke','temperature') }}"
+          already_paused: "{{ paused | selectattr('id','equalto','zeke') | list | count > 0 }}"
+          auto_resume_val: "{{ auto_resume | default(true) }}"
+          origin_val: "{{ origin | default('night_auto') }}"
+          resume_earliest: "{{ (now() + timedelta(minutes=2)).isoformat() }}"
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ not already_paused }}"
+            sequence:
+              - service: climate.turn_off
+                target:
+                  entity_id: climate.zeke
+              - service: input_text.set_value
+                data:
+                  entity_id: input_text.power_spike_paused_json
+                  value: >-
+                    {{ (paused + [{
+                      'id': 'zeke',
+                      'paused_at': now().isoformat(),
+                      'power_w': zeke_power_w,
+                      'origin': origin_val,
+                      'auto_resume': auto_resume_val,
+                      'resume_earliest': resume_earliest,
+                      'details': {'hvac_mode': zeke_mode, 'temperature': zeke_temp}
+                    }]) | to_json }}
+    mode: single
+
+  power_spike_shed_step:
+    alias: Power spike shed step
+    sequence:
+      - variables:
+          ev_power_w: "{{ (states('sensor.garage_power') | float(0) * 1000) | int }}"
+          zeke_power_w: "{{ states('sensor.zeke_current_power') | float(0) | int }}"
+          ev_running: >-
+            {{ states('sensor.garage_status') == 'charging' or
+               ev_power_w > (states('input_number.ev_min_running_w') | float(0)) }}
+          zeke_running: >-
+            {{ states('climate.zeke') != 'off' and
+               zeke_power_w > (states('input_number.zeke_min_running_w') | float(0)) }}
+          pick_ev: >-
+            {{ ev_running and (not zeke_running or ev_power_w >= zeke_power_w) }}
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ pick_ev }}"
+            sequence:
+              - service: script.power_spike_pause_ev
+                data:
+                  auto_resume: true
+                  origin: night_auto
+          - conditions:
+              - condition: template
+                value_template: "{{ zeke_running }}"
+            sequence:
+              - service: script.power_spike_pause_zeke
+                data:
+                  auto_resume: true
+                  origin: night_auto
+    mode: single
+
+  power_spike_resume_step:
+    alias: Power spike resume step
+    sequence:
+      - variables:
+          paused_raw: "{{ states('input_text.power_spike_paused_json') | default('[]') }}"
+          paused: "{{ paused_raw | from_json }}"
+          now_ts: "{{ as_timestamp(now()) }}"
+          candidates: >-
+            {% set ns = namespace(list=[]) %}
+            {% for item in paused %}
+              {% if item.auto_resume %}
+                {% set re = item.resume_earliest if item.resume_earliest is defined else '1970-01-01T00:00:00+00:00' %}
+                {% if as_timestamp(re) <= now_ts %}
+                  {% set ns.list = ns.list + [item] %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+            {{ ns.list }}
+          sorted_candidates: "{{ candidates | sort(attribute='power_w') }}"
+          candidate: "{{ (sorted_candidates | first) if (sorted_candidates | count > 0) else none }}"
+          current_w: "{{ states('sensor.p1_meter_effekt') | float(0) }}"
+          spike_w: "{{ states('input_number.power_spike_threshold_w') | float(0) }}"
+          margin_w: "{{ states('input_number.power_resume_margin_w') | float(0) }}"
+          headroom_ok: >-
+            {{ candidate is not none and
+               (current_w + (candidate.power_w | float(0)) + margin_w) < spike_w }}
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ headroom_ok and candidate.id == 'ev' }}"
+            sequence:
+              - service: easee.action_command
+                data:
+                  device_id: "9497d4e0227e3207ec70f2e19d1c301c"
+                  action_command: resume
+          - conditions:
+              - condition: template
+                value_template: "{{ headroom_ok and candidate.id == 'zeke' }}"
+            sequence:
+              - service: climate.set_hvac_mode
+                data:
+                  hvac_mode: "{{ candidate.details.hvac_mode | default('heat') }}"
+                target:
+                  entity_id: climate.zeke
+              - choose:
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ candidate.details.temperature is not none }}"
+                    sequence:
+                      - service: climate.set_temperature
+                        data:
+                          temperature: "{{ candidate.details.temperature }}"
+                        target:
+                          entity_id: climate.zeke
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ headroom_ok and candidate is not none }}"
+            sequence:
+              - service: input_text.set_value
+                data:
+                  entity_id: input_text.power_spike_paused_json
+                  value: >-
+                    {{ (paused | rejectattr('id','equalto',candidate.id) | list) | to_json }}
+              - delay:
+                  minutes: 2
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: >-
+                  {{ (states('input_text.power_spike_paused_json') | default('[]') | from_json | count) == 0 }}
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.power_spike_state
+                  option: Idle
+    mode: single
+
+  power_spike_suspend_24h:
+    alias: Power spike suspend 24h
+    sequence:
+      - service: input_datetime.set_datetime
+        data:
+          entity_id: input_datetime.power_spike_suspend_until
+          datetime: "{{ (now() + timedelta(hours=24)).isoformat() }}"
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.power_spike_state
+          option: Suspended
+    mode: single
+
+  power_spike_resume_controller:
+    alias: Power spike resume controller
+    sequence:
+      - service: input_datetime.set_datetime
+        data:
+          entity_id: input_datetime.power_spike_suspend_until
+          datetime: "{{ now().isoformat() }}"
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.power_spike_state
+          option: Idle
+    mode: single
+
+#################################################################
+## Automations
+#################################################################
+automation:
+  - id: power_spike_detect
+    alias: Power spike detect
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.p1_meter_effekt
+        above: "{{ states('input_number.power_spike_threshold_w') | float(0) }}"
+        for: "00:02:00"
+    condition:
+      - condition: template
+        value_template: "{{ states('input_select.power_spike_state') != 'Suspended' }}"
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.power_spike_state
+          option: Shedding
+      - choose:
+          - conditions:
+              - condition: time
+                after: "22:00:00"
+                before: "06:00:00"
+            sequence:
+              - service: script.power_spike_shed_step
+              - service: notify.Anders
+                data:
+                  title: "Power spike"
+                  message: "Hög effekt. EV och/eller Zeke pausade automatiskt. Överväg att pausa diskmaskin, torktumlare och tvättmaskin manuellt."
+          - conditions:
+              - condition: time
+                after: "06:00:00"
+                before: "22:00:00"
+            sequence:
+              - variables:
+                  ev_power_w: "{{ (states('sensor.garage_power') | float(0) * 1000) | int }}"
+                  zeke_power_w: "{{ states('sensor.zeke_current_power') | float(0) | int }}"
+                  ev_running: "{{ ev_power_w > (states('input_number.ev_min_running_w') | float(0)) }}"
+                  zeke_running: "{{ states('climate.zeke') != 'off' and zeke_power_w > (states('input_number.zeke_min_running_w') | float(0)) }}"
+              - choose:
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ ev_running or zeke_running }}"
+                    sequence:
+                      - service: notify.Anders
+                        data:
+                          title: "Power spike"
+                          message: "Hög effekt. Vill du pausa variabla laster?"
+                          data:
+                            actions: >-
+                              {% set actions = [] %}
+                              {% if ev_running %}
+                                {% set actions = actions + [{'action': 'POWER_SPIKE_PAUSE_EV', 'title': 'Pausa EV'}] %}
+                              {% endif %}
+                              {% if zeke_running %}
+                                {% set actions = actions + [{'action': 'POWER_SPIKE_PAUSE_ZEKE', 'title': 'Pausa Zeke'}] %}
+                              {% endif %}
+                              {{ actions }}
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ not (ev_running or zeke_running) }}"
+                    sequence:
+                      - service: notify.Anders
+                        data:
+                          title: "Power spike"
+                          message: "Hög effekt, men inga variabla laster är igång."
+    mode: single
+
+  - id: power_spike_action_pause_ev
+    alias: Power spike action pause EV
+    trigger:
+      - platform: event
+        event_type: mobile_app_notification_action
+        event_data:
+          action: POWER_SPIKE_PAUSE_EV
+    action:
+      - service: script.power_spike_pause_ev
+        data:
+          auto_resume: false
+          origin: day_manual
+    mode: single
+
+  - id: power_spike_action_pause_zeke
+    alias: Power spike action pause Zeke
+    trigger:
+      - platform: event
+        event_type: mobile_app_notification_action
+        event_data:
+          action: POWER_SPIKE_PAUSE_ZEKE
+    action:
+      - service: script.power_spike_pause_zeke
+        data:
+          auto_resume: false
+          origin: day_manual
+    mode: single
+
+  - id: power_spike_recover
+    alias: Power spike recover
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.p1_meter_effekt
+        below: "{{ states('input_number.power_resume_threshold_w') | float(0) }}"
+        for: "00:05:00"
+    condition:
+      - condition: template
+        value_template: "{{ states('input_select.power_spike_state') != 'Suspended' }}"
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.power_spike_state
+          option: Recovering
+      - service: script.power_spike_resume_step
+    mode: single
+
+  - id: power_spike_suspend_until_check
+    alias: Power spike suspend until check
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"
+    condition:
+      - condition: state
+        entity_id: input_select.power_spike_state
+        state: Suspended
+      - condition: template
+        value_template: >-
+          {{ as_timestamp(now()) >= as_timestamp(states('input_datetime.power_spike_suspend_until')) }}
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.power_spike_state
+          option: Idle
+    mode: single
+
+  - id: power_spike_ev_executor
+    alias: Power spike EV intent executor
+    trigger:
+      - platform: state
+        entity_id:
+          - input_boolean.ev_charge_intent
+          - binary_sensor.power_spike_allows_ev
+    action:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_boolean.ev_charge_intent
+                state: "on"
+              - condition: state
+                entity_id: binary_sensor.power_spike_allows_ev
+                state: "on"
+            sequence:
+              - service: easee.action_command
+                data:
+                  device_id: "9497d4e0227e3207ec70f2e19d1c301c"
+                  action_command: resume
+          - conditions:
+              - condition: state
+                entity_id: input_boolean.ev_charge_intent
+                state: "on"
+              - condition: state
+                entity_id: binary_sensor.power_spike_allows_ev
+                state: "off"
+            sequence:
+              - service: easee.action_command
+                data:
+                  device_id: "9497d4e0227e3207ec70f2e19d1c301c"
+                  action_command: pause
+          - conditions:
+              - condition: state
+                entity_id: input_boolean.ev_charge_intent
+                state: "off"
+            sequence:
+              - service: easee.action_command
+                data:
+                  device_id: "9497d4e0227e3207ec70f2e19d1c301c"
+                  action_command: pause
+    mode: single
