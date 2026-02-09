@@ -318,9 +318,10 @@ automation:
   - id: power_spike_detect
     alias: Power spike detect
     trigger:
-      - platform: numeric_state
-        entity_id: sensor.p1_meter_effekt
-        above: "{{ states('input_number.power_spike_threshold_w') | float(0) }}"
+      - platform: template
+        value_template: >-
+          {{ states('sensor.p1_meter_effekt') | float(0) >
+             states('input_number.power_spike_threshold_w') | float(0) }}
         for: "00:02:00"
     condition:
       - condition: template
@@ -411,9 +412,10 @@ automation:
   - id: power_spike_recover
     alias: Power spike recover
     trigger:
-      - platform: numeric_state
-        entity_id: sensor.p1_meter_effekt
-        below: "{{ states('input_number.power_resume_threshold_w') | float(0) }}"
+      - platform: template
+        value_template: >-
+          {{ states('sensor.p1_meter_effekt') | float(0) <
+             states('input_number.power_resume_threshold_w') | float(0) }}
         for: "00:05:00"
     condition:
       - condition: template
