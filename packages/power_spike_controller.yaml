@@ -37,7 +37,7 @@ input_number:
     step: 100
     mode: box
     unit_of_measurement: W
-    initial: 5000
+    initial: 4000
   power_resume_margin_w:
     name: Power resume margin (W)
     min: 0
@@ -54,14 +54,6 @@ input_number:
     mode: box
     unit_of_measurement: W
     initial: 100
-  zeke_min_running_w:
-    name: Zeke running min (W)
-    min: 0
-    max: 2000
-    step: 10
-    mode: box
-    unit_of_measurement: W
-    initial: 70
 
 input_boolean:
   ev_charge_intent:
@@ -184,8 +176,7 @@ script:
             {{ states('sensor.garage_status') == 'charging' or
                ev_power_w > (states('input_number.ev_min_running_w') | float(0)) }}
           zeke_running: >-
-            {{ states('climate.zeke') != 'off' and
-               zeke_power_w > (states('input_number.zeke_min_running_w') | float(0)) }}
+            {{ states('climate.zeke') != 'off' }}
           pick_ev: >-
             {{ ev_running and (not zeke_running or ev_power_w >= zeke_power_w) }}
       - choose:
@@ -349,9 +340,8 @@ automation:
             sequence:
               - variables:
                   ev_power_w: "{{ (states('sensor.garage_power') | float(0) * 1000) | int }}"
-                  zeke_power_w: "{{ states('sensor.zeke_current_power') | float(0) | int }}"
                   ev_running: "{{ ev_power_w > (states('input_number.ev_min_running_w') | float(0)) }}"
-                  zeke_running: "{{ states('climate.zeke') != 'off' and zeke_power_w > (states('input_number.zeke_min_running_w') | float(0)) }}"
+                  zeke_running: "{{ states('climate.zeke') != 'off' }}"
               - choose:
                   - conditions:
                       - condition: template
