@@ -2646,6 +2646,16 @@
               "show_icon": true,
               "entity": "binary_sensor.nibepi",
               "name": "NibePi"
+            },
+            {
+              "type": "entity",
+              "show_name": true,
+              "show_state": true,
+              "show_icon": true,
+              "entity": "binary_sensor.zigbee2mqtt_bridge_connection_state",
+              "name": {
+                "type": "device"
+              }
             }
           ]
         },
