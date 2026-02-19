@@ -111,7 +111,7 @@
                 },
                 {
                   "type": "state-label",
-                  "entity": "sensor.mi_7_temperatur",
+                  "entity": "sensor.badrum_nedervaning_temperature",
                   "style": {
                     "top": "39%",
                     "left": "36%",
@@ -1159,7 +1159,7 @@
                   "entity": "light.koksbord_2_lampa"
                 },
                 {
-                  "entity": "light.tradfri_e27_lampa"
+                  "entity": "light.lampa_kok_taket"
                 },
                 {
                   "entity": "light.under_trapp_e27_lampa"
@@ -2309,7 +2309,7 @@
                   "secondary_info": "last-updated"
                 },
                 {
-                  "entity": "sensor.mi_7_temperatur",
+                  "entity": "sensor.badrum_nedervaning_temperature",
                   "secondary_info": "last-updated"
                 },
                 {
@@ -2348,7 +2348,7 @@
                   "secondary_info": "last-updated"
                 },
                 {
-                  "entity": "sensor.mi_7_luftfuktighet",
+                  "entity": "sensor.badrum_nedervaning_humidity",
                   "secondary_info": "last-updated"
                 },
                 {
@@ -2390,7 +2390,7 @@
                   "entity": "sensor.mi_6_kallare_luftfuktighet"
                 },
                 {
-                  "entity": "sensor.mi_7_luftfuktighet"
+                  "entity": "sensor.badrum_nedervaning_humidity"
                 }
               ]
             },
