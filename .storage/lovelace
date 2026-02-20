@@ -2690,10 +2690,6 @@
                               "name": "Compressor"
                             },
                             {
-                              "entity": "sensor.nibe_f1145_supply_pump_state_ep14",
-                              "name": "Supply pump"
-                            },
-                            {
                               "entity": "sensor.nibe_f1145_brine_pump_state_ep14",
                               "name": "Brine pump"
                             },
@@ -2737,6 +2733,9 @@
                             },
                             {
                               "entity": "sensor.nibe_f1145_dm_start_heating"
+                            },
+                            {
+                              "entity": "binary_sensor.elpatron"
                             }
                           ]
                         }
