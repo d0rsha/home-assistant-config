@@ -101,24 +101,28 @@
         data: {}
         action: light.turn_on
         target:
-          entity_id: light.skyconnect_v1_0_olles_rum
+          entity_id:
+          - light.tradfri_e14_lampa
+          - light.taklampa_olles_rum_lampa
       - action: switch.turn_on
         metadata: {}
         data: {}
         target:
-          device_id: 6f205474276711900175565cd22e16f5
+          entity_id: switch.tradfri_uttag_1_brytare
       action_button_up_long: []
       action_button_down_short:
       - metadata: {}
         data: {}
         action: light.turn_off
         target:
-          entity_id: light.skyconnect_v1_0_olles_rum
+          entity_id:
+          - light.tradfri_e14_lampa
+          - light.taklampa_olles_rum_lampa
       - action: switch.turn_off
         metadata: {}
         data: {}
         target:
-          device_id: 6f205474276711900175565cd22e16f5
+          entity_id: switch.tradfri_uttag_1_brytare
       helper_last_controller_event: input_text.knapp_olles_rum_hjalpare
 - id: '1719410217121'
   alias: High water usage warning
@@ -303,39 +307,42 @@
   alias: Bajsknappen automation
   description: Starta boost på badrumsfläkt
   use_blueprint:
-    path: EPMatt/ikea_e1743.yaml
+    path: damru/ikea_E1743-E2201-E2213_ZHA-Z2M_control-anything.yaml
     input:
-      integration: ZHA
-      controller_device: 4dd612cc4136d35a3619d60e7c7d2aaa
-      helper_last_controller_event: input_text.bajsknappen_hjalpare
-      action_button_up_short:
+      remote_devices:
+      - ed2bfb723a524402c0e23a3ca476c71b
+      on_press_action:
       - action: switch.turn_on
         metadata: {}
         data: {}
         target:
           entity_id: switch.pax_levante_50_boostmode
-      action_button_down_short:
+      off_press_action:
       - action: switch.turn_off
         metadata: {}
         data: {}
         target:
           entity_id: switch.pax_levante_50_boostmode
-      action_button_up_long: []
-      action_button_up_double:
+      on_hold_action:
       - action: switch.turn_on
         metadata: {}
         data: {}
         target:
           entity_id: switch.pax_levante_50_boostmode
-      button_up_double_press: true
-      action_button_up_release:
+      off_hold_action:
+      - action: switch.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: switch.pax_levante_50_boostmode
+      on_double_press_action:
       - action: switch.turn_on
         metadata: {}
         data: {}
         target:
           entity_id: switch.pax_levante_50_boostmode
-      button_up_long_max_loop_repeats: 1
-      button_up_long_loop: true
+      off_double_press_action: []
+      on_double_press_exposed: true
 - id: notify_ev_charge_needed
   alias: Start EV Charge when solar power
   description: Notify when conditions are met for charging the car
@@ -872,7 +879,7 @@
       sequence:
       - action: light.turn_on
         target:
-          entity_id: light.koksbord_1_lampa
+          entity_id: light.lampa_utanfor_tvattstuga
         data:
           brightness_pct: 100
           rgb_color:
@@ -885,7 +892,7 @@
       sequence:
       - action: light.turn_on
         target:
-          entity_id: light.koksbord_1_lampa
+          entity_id: light.lampa_utanfor_tvattstuga
         data:
           brightness_pct: 100
           rgb_color:

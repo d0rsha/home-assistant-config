@@ -48,7 +48,7 @@ automation:
       - choose:
           - conditions:
               - condition: state
-                entity_id: binary_sensor.lumi_lumi_magnet_agl02_2
+                entity_id: binary_sensor.magnetkontakt_tvattmaskin_contact
                 state: "on"
             sequence:
               - service: input_select.select_option
@@ -65,7 +65,7 @@ automation:
     alias: Washer emptied
     trigger:
       - platform: state
-        entity_id: binary_sensor.lumi_lumi_magnet_agl02_2
+        entity_id: binary_sensor.magnetkontakt_tvattmaskin_contact
         from: "off"
         to: "on"
     condition:
@@ -82,7 +82,7 @@ automation:
     alias: Washer back to Idle
     trigger:
       - platform: state
-        entity_id: binary_sensor.lumi_lumi_magnet_agl02_2
+        entity_id: binary_sensor.magnetkontakt_tvattmaskin_contact
         from: "on"
         to: "off"
     condition:
@@ -128,7 +128,7 @@ automation:
       - choose:
           - conditions:
               - condition: state
-                entity_id: binary_sensor.lumi_lumi_magnet_agl02
+                entity_id: binary_sensor.magnetkontakt_torktumlare_contact
                 state: "on"
             sequence:
               - service: input_select.select_option
@@ -145,7 +145,7 @@ automation:
     alias: Dryer emptied
     trigger:
       - platform: state
-        entity_id: binary_sensor.lumi_lumi_magnet_agl02
+        entity_id: binary_sensor.magnetkontakt_torktumlare_contact
         from: "off"
         to: "on"
     condition:
@@ -162,7 +162,7 @@ automation:
     alias: Dryer back to Idle
     trigger:
       - platform: state
-        entity_id: binary_sensor.lumi_lumi_magnet_agl02
+        entity_id: binary_sensor.magnetkontakt_torktumlare_contact
         from: "on"
         to: "off"
     condition:
