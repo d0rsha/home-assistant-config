@@ -105,10 +105,7 @@ script:
               - condition: template
                 value_template: "{{ not already_paused }}"
             sequence:
-              - service: easee.action_command
-                data:
-                  device_id: "9497d4e0227e3207ec70f2e19d1c301c"
-                  action_command: pause
+              # Spara till paused FÖRST så att vi har en post även om API-anropet misslyckas
               - service: input_text.set_value
                 data:
                   entity_id: input_text.power_spike_paused_json
@@ -120,8 +117,11 @@ script:
                       'origin': origin_val,
                       'auto_resume': auto_resume_val,
                       'resume_earliest': resume_earliest,
-                      'details': {'easee_device_id': '9497d4e0227e3207ec70f2e19d1c301c'}
+                      'details': {'skoda_switch': 'switch.skoda_superb_combi_charging'}
                     }]) | to_json }}
+              - service: switch.turn_off
+                target:
+                  entity_id: switch.skoda_superb_combi_charging
     mode: single
 
   power_spike_pause_zeke:
@@ -230,10 +230,9 @@ script:
               - condition: template
                 value_template: "{{ headroom_ok and candidate.id == 'ev' }}"
             sequence:
-              - service: easee.action_command
-                data:
-                  device_id: "9497d4e0227e3207ec70f2e19d1c301c"
-                  action_command: resume
+              - service: switch.turn_on
+                target:
+                  entity_id: switch.skoda_superb_combi_charging
           - conditions:
               - condition: template
                 value_template: "{{ headroom_ok and candidate.id == 'zeke' }}"
@@ -466,10 +465,9 @@ automation:
                 entity_id: binary_sensor.power_spike_allows_ev
                 state: "on"
             sequence:
-              - service: easee.action_command
-                data:
-                  device_id: "9497d4e0227e3207ec70f2e19d1c301c"
-                  action_command: resume
+              - service: switch.turn_on
+                target:
+                  entity_id: switch.skoda_superb_combi_charging
           - conditions:
               - condition: state
                 entity_id: input_boolean.ev_charge_intent
@@ -478,19 +476,17 @@ automation:
                 entity_id: binary_sensor.power_spike_allows_ev
                 state: "off"
             sequence:
-              - service: easee.action_command
-                data:
-                  device_id: "9497d4e0227e3207ec70f2e19d1c301c"
-                  action_command: pause
+              - service: switch.turn_off
+                target:
+                  entity_id: switch.skoda_superb_combi_charging
           - conditions:
               - condition: state
                 entity_id: input_boolean.ev_charge_intent
                 state: "off"
             sequence:
-              - service: easee.action_command
-                data:
-                  device_id: "9497d4e0227e3207ec70f2e19d1c301c"
-                  action_command: pause
+              - service: switch.turn_off
+                target:
+                  entity_id: switch.skoda_superb_combi_charging
     mode: single
 
   - id: power_spike_ev_intent_auto_on
