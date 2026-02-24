@@ -342,7 +342,7 @@
         target:
           entity_id: switch.pax_levante_50_boostmode
       off_double_press_action: []
-      on_double_press_exposed: true
+      on_double_press_exposed: false
 - id: notify_ev_charge_needed
   alias: Start EV Charge when solar power
   description: Notify when conditions are met for charging the car
@@ -901,8 +901,9 @@
           - 255
     default:
     - action: light.turn_off
+      data: {}
       target:
-        entity_id: light.koksbord_1_lampa
+        entity_id: light.lampa_utanfor_tvattstuga
   mode: restart
 - id: '1762984900797'
   alias: Tvättmaskin – klar

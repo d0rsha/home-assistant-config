@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
 import os
@@ -19,6 +20,7 @@ from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.event import async_track_utc_time_change
 from homeassistant.helpers.storage import STORAGE_DIR
+from homeassistant.util import dt as dt_util
 
 from .const import (
     DEFAULT_LIBRARY_URL,
@@ -52,6 +54,7 @@ class LibraryUpdater:
     def __init__(self, hass: HomeAssistant):
         """Initialize the library updater."""
         self.hass = hass
+        self._update_lock = asyncio.Lock()
 
         domain_config = self.hass.data.get(MY_KEY)
         if not domain_config:
@@ -60,14 +63,13 @@ class LibraryUpdater:
         self._client = LibraryUpdaterClient(session=async_get_clientsession(hass))
 
         # Fire the library check every 24 hours from just before now
-        refresh_time = datetime.now() - timedelta(hours=0, minutes=1)
+        refresh_time = dt_util.utcnow() - timedelta(hours=0, minutes=1)
         async_track_utc_time_change(
             hass,
             self.timer_update,
             hour=refresh_time.hour,
             minute=refresh_time.minute,
             second=refresh_time.second,
-            local=True,
         )
 
     @callback
@@ -91,6 +93,11 @@ class LibraryUpdater:
     @callback
     async def get_library_updates(self, startup: bool = False) -> None:
         """Make a call to get the latest library.json."""
+        async with self._update_lock:
+            await self._do_get_library_updates(startup)
+
+    async def _do_get_library_updates(self, startup: bool = False) -> None:
+        """Get library updates internally (must be called with lock held)."""
 
         def _update_library_json(library_file: str, content: str) -> None:
             os.makedirs(os.path.dirname(library_file), exist_ok=True)
@@ -125,7 +132,7 @@ class LibraryUpdater:
 
             domain_config = self.hass.data.get(MY_KEY)
             if domain_config:
-                self.hass.data[MY_KEY].library_last_update = datetime.now()
+                self.hass.data[MY_KEY].library_last_update = dt_util.utcnow()
 
             _LOGGER.debug("Updated library")
         else:
@@ -153,7 +160,7 @@ class LibraryUpdater:
                 return True
 
             if library_last_update := self.hass.data[MY_KEY].library_last_update:
-                time_since_last_update = datetime.now() - library_last_update
+                time_since_last_update = dt_util.utcnow() - library_last_update
 
                 time_difference_in_hours = time_since_last_update / timedelta(hours=1)
 
