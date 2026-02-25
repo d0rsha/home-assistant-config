@@ -22,9 +22,6 @@ lovelace:
     - url: /local/vacuum-card.js
       type: module
 
-    - url: /webrtc/webrtc-camera.js
-      type: module
-
 views:
   - title: Home
     icon: "mdi:home"

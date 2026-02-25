@@ -145,10 +145,10 @@
   alias: Musfälla källare rörelse
   description: ''
   triggers:
-  - type: vibration
-    device_id: de511fc6e097efef74e49b184046601c
-    entity_id: f14f0e0ade576144d115e11c124c4a5f
-    domain: binary_sensor
+  - domain: mqtt
+    device_id: bae4167df78d12efebb0aaba9fca6f2f
+    type: action
+    subtype: vibration
     trigger: device
   conditions: []
   actions:
@@ -161,10 +161,10 @@
   alias: Musfälla vinden rörelse
   description: ''
   triggers:
-  - type: vibration
-    device_id: 742d091b2e1d624ef09d03e74623d6b6
-    entity_id: 6efc4412636b4ad9b589dc22548b6c55
-    domain: binary_sensor
+  - domain: mqtt
+    device_id: 992601a754e87963644e7d4b5e8e0296
+    type: action
+    subtype: vibration
     trigger: device
   conditions: []
   actions:
