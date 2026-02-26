@@ -167,6 +167,6 @@ recorder:
 
 ##########################################
 ### ZHA custom quirks 
-zha:
-  enable_quirks: true
-  custom_quirks_path: /config/zigbee/custom_zha_quirks
+#zha:
+#  enable_quirks: true
+#  custom_quirks_path: /config/zigbee/custom_zha_quirks
