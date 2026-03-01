@@ -1039,3 +1039,43 @@
         target:
           area_id: sovrum
         data: {}
+- id: '1772268037680'
+  alias: Wardrobe Light Control
+  description: ''
+  triggers:
+  - entity_id:
+    - binary_sensor.myggspray_wrlss_mtn_sensor_occupancy
+    - binary_sensor.myggspray_wrlss_mtn_sensor_occupancy_2
+    to:
+    - 'on'
+    - 'off'
+    trigger: state
+  actions:
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.entity_id == ''binary_sensor.myggspray_wrlss_mtn_sensor_occupancy_2''
+          }}
+
+          '
+      sequence:
+      - action: 'light.turn_{{ ''on'' if trigger.to_state.state == ''on'' else ''off''
+          }}
+
+          '
+        target:
+          entity_id: light.0x348d13fffe2c7693
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.entity_id == ''binary_sensor.myggspray_wrlss_mtn_sensor_occupancy''
+          }}
+
+          '
+      sequence:
+      - action: 'light.turn_{{ ''on'' if trigger.to_state.state == ''on'' else ''off''
+          }}
+
+          '
+        target:
+          entity_id: light.0x781c9dfffe862858
+  mode: single
