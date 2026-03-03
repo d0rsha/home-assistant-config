@@ -578,14 +578,17 @@
             entity_id: f1260d8d12a0d5939b238360a06f42d4
             type: set_hvac_mode
             hvac_mode: heat
+            enabled: false
           - delay:
               hours: 0
               minutes: 0
               seconds: 30
               milliseconds: 0
+            enabled: false
           - target:
               entity_id: input_boolean.hvac_auto_control
             action: input_boolean.turn_on
+            enabled: false
     - conditions:
       - condition: trigger
         id: morning_off
