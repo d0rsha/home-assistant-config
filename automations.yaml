@@ -499,6 +499,11 @@
       - action: homeassistant.turn_on
         target:
           label_id: automatisk_belysning
+      - action: homeassistant.turn_on
+        metadata: {}
+        target:
+          label_id: natt_belysning
+        data: {}
       - condition: time
         before: '19:00:00'
       - action: homeassistant.turn_on
@@ -599,6 +604,11 @@
       - action: homeassistant.turn_off
         target:
           label_id: auto_belysning_barnrum
+      - action: homeassistant.turn_off
+        metadata: {}
+        target:
+          label_id: natt_belysning
+        data: {}
       - choose:
         - conditions:
           - condition: state
