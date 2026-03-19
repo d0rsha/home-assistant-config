@@ -1,0 +1,53 @@
+title: Seasonal
+views:
+  - title: Seasonal Control
+    path: seasonal-control
+    icon: mdi:leaf
+    badges: []
+    cards:
+      - type: entities
+        title: Season Summary
+        show_header_toggle: false
+        entities:
+          - entity: sensor.season
+            name: Home Assistant season
+          - entity: sensor.effective_season
+            name: Effective season
+          - entity: binary_sensor.heating_season_active
+            name: Heating season active
+          - entity: input_boolean.seasonal_automation_enabled
+            name: Seasonal automation enabled
+
+      - type: entities
+        title: Controls
+        show_header_toggle: false
+        entities:
+          - entity: input_select.seasonal_profile
+            name: Seasonal profile
+          - entity: input_boolean.seasonal_automation_enabled
+            name: Enable seasonal automations
+
+      - type: entities
+        title: Climate
+        show_header_toggle: false
+        entities:
+          - entity: climate.zeke
+          - entity: input_boolean.hvac_auto_control
+            name: HVAC auto control latch
+
+      - type: entities
+        title: Current Automation
+        show_header_toggle: false
+        entities:
+          - entity: automation.automatisk_belysning
+          - entity: input_boolean.hvac_auto_control
+          - entity: binary_sensor.heating_season_active
+
+      - type: history-graph
+        title: Seasonal State History
+        hours_to_show: 168
+        refresh_interval: 60
+        entities:
+          - entity: sensor.season
+          - entity: sensor.effective_season
+          - entity: binary_sensor.heating_season_active

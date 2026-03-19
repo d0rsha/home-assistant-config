@@ -569,14 +569,12 @@
           label_id: automatisk_belysning
       - choose:
         - conditions:
-          - condition: or
-            conditions:
-            - condition: state
-              entity_id: sensor.season
-              state: autumn
-            - condition: state
-              entity_id: sensor.season
-              state: winter
+          - condition: state
+            entity_id: input_boolean.seasonal_automation_enabled
+            state: 'on'
+          - condition: state
+            entity_id: binary_sensor.heating_season_active
+            state: 'on'
           sequence:
           - device_id: 439ab72d0a12b6536ad5cc48d71d60c5
             domain: climate

@@ -1,0 +1,39 @@
+#################################################################
+## Seasonal profile (central override + derived season state)
+#################################################################
+input_select:
+  seasonal_profile:
+    name: Seasonal profile
+    options:
+      - Auto
+      - Winter
+      - Spring
+      - Summer
+      - Autumn
+    initial: Auto
+    icon: mdi:weather-partly-snowy-rainy
+
+input_boolean:
+  seasonal_automation_enabled:
+    name: Seasonal automations enabled
+    icon: mdi:calendar-sync
+    initial: true
+
+template:
+  - sensor:
+      - name: Effective season
+        unique_id: effective_season
+        icon: mdi:leaf
+        state: >-
+          {% set selected = states('input_select.seasonal_profile') %}
+          {% if selected == 'Auto' %}
+            {{ states('sensor.season') }}
+          {% else %}
+            {{ selected | lower }}
+          {% endif %}
+  - binary_sensor:
+      - name: Heating season active
+        unique_id: heating_season_active
+        icon: mdi:radiator
+        state: >-
+          {{ states('sensor.effective_season') in ['autumn', 'winter'] }}

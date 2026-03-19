@@ -102,6 +102,15 @@ media_source:
 # Lovelace UI vs yaml mode enabled/disabled
 # lovelace:
 #   # mode: yaml
+lovelace:
+  dashboards:
+    seasonal-dashboard:
+      mode: yaml
+      title: Seasonal
+      icon: mdi:leaf
+      show_in_sidebar: true
+      require_admin: true
+      filename: dashboards/seasonal_dashboard.yaml
 
 ##########################
 ### InfluxDB
